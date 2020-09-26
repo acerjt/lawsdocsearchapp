@@ -1,39 +1,36 @@
-extends layout
-block stylesheet
-    link(rel="stylesheet" bs-hidden="1" bs-system-element="1" href="/stylesheets/layout/header.css")
-block content
-    div
-        div(class="header-blue")
-            nav(class="navbar navbar-light navbar-expand-md navigation-clean-search")
-                div(class="container-fluid")
-                    div
-                        a(class="navbar-brand", href="?page=home")
-                            img(class="header-logo", src="/images/logo_legalcorpusdocument.png")
-                    div
-                        button.navbar-toggler(data-target='#navcol-1' data-toggle='collapse')
-                            span.sr-only 
-                                | Toggle
-                                | navigation
-                            span.navbar-toggler-icon.crossRotate
-                    div(class="collapse navbar-collapse", id="navcol-1")
-                        div(class="navbar-group")
-                            div(class="navbar-text mr-4")
-                                a(class="travel", href="")
-                                    i(class="fas fa-home")
-                                    |                                     Trang chủ
-                            div(class="navbar-text mr-4")
-                                a(class="signup", href="")
-                                    i(class="fas fa-book")
-                                    |                                     Văn bản pháp luật
-                            div(class="navbar-text mr-4")
-                                a(class="login", href="")
-                                    i(class="fas fa-user")
-                                    |                                     Đăng kí
-                            div(class="navbar-text mr-4")
-                                a(class="login", href="")
-                                    i(class="fas fa-sign-in-alt")
-                                    |                                     Đăng nhập
-                            div(class="navbar-text mr-4")
-                                a(class="login", href="")
-                                    i(class="fas fa-phone")
-                                    |                                     Liên hệ
+div
+    div(class="header-blue")
+        nav(class="navbar navbar-light navbar-expand-md navigation-clean-search")
+            div(class="container-fluid")
+                div
+                    a(class="navbar-brand", href="?page=home")
+                        img(class="header-logo", src="/images/logo_legalcorpusdocument.png")
+                div
+                    button.navbar-toggler(data-target='#navcol-1' data-toggle='collapse')
+                        span.sr-only 
+                            | Toggle
+                            | navigation
+                        span.navbar-toggler-icon.crossRotate
+                div(class="collapse navbar-collapse", id="navcol-1")
+                    div(class="navbar-group")
+                        div(class="navbar-text mr-4")
+                            a(class="travel", href="")
+                                i(class="fas fa-home")
+                                |                                     Trang chủ
+                        div(class="navbar-text mr-4")
+                            a(class="signup", href="")
+                                i(class="fas fa-book")
+                                |                                     Văn bản pháp luật
+                        div(class="navbar-text mr-4")
+                            a(class="login", href="")
+                                i(class="fas fa-user")
+                                |                                     Đăng kí
+                        div(class="navbar-text mr-4")
+                            a(class="login", href="")
+                                i(class="fas fa-sign-in-alt")
+                                |                                     Đăng nhập
+                        div(class="navbar-text mr-4")
+                            a(class="login", href="")
+                                i(class="fas fa-phone")
+                                |                                     Liên hệ
+.invisible-div

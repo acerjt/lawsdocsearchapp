@@ -20,6 +20,12 @@ html
     link(rel="stylesheet" bs-hidden="1" bs-system-element="1" href="/stylesheets/vendor/simple-line-icons.min.css")
     link(rel="stylesheet" bs-hidden="1" bs-system-element="1" href="/stylesheets/vendor/typicons.min.css")
     link(rel="stylesheet" bs-hidden="1" bs-system-element="1" href="/stylesheets/vendor/fontawesome5-overrides.min.css")
+    link(rel="stylesheet" bs-hidden="1" bs-system-element="1" href="/stylesheets/layout/footer.css")
+    link(rel="stylesheet" bs-hidden="1" bs-system-element="1" href="/stylesheets/layout/header.css")
     block stylesheet
   body
+    include header
     block content
+    include footer
+
+
