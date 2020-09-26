@@ -1,0 +1,78 @@
+extends layout
+block stylesheet
+    link(rel="stylesheet" bs-hidden="1" bs-system-element="1" href="/stylesheets/layout/aboutUs.css")
+    link(rel="stylesheet" bs-hidden="1" bs-system-element="1" href="/stylesheets/layout/style.css")
+block content
+    .contact-area
+        .container
+            .row
+                .col-md-12
+                    .location
+                        ul
+                            li
+                                a(href='index.html' title='go to homepage')
+                                    | Trang chủ
+                                    span / 
+                            li   Liên Hệ
+
+            .row(style='justify-content: space-around;')
+                .col-sm-9
+                    .contact-info
+                        #googleMap
+                            
+                        .contact-details
+                            .contact-title
+                                h3(style='font-size:20px; font-weight:500') Liên Hệ chúng tôi
+                            .contact-form
+                                .form-title
+                                    h4 Thông tin liên hệ
+                                .form-content
+                                    ul
+                                        li
+                                            .form-box
+                                                .form-name
+                                                    label
+                                                        | Họ và Tên
+                                                        em *
+                                                    input(type='text')
+                                            .form-box
+                                                .form-name
+                                                    label
+                                                        | Email 
+                                                        em *
+                                                    input(type='email')
+                                        li
+                                            .form-box
+                                                .form-name
+                                                    label Số điện thoại
+                                                    input(type='text')
+                                        li
+                                            .form-box
+                                                .form-name
+                                                    label
+                                                        | Câu hỏi 
+                                                        em *
+                                                    textarea(cols='5' rows='3')
+                            .buttons-set
+                                p
+                                    em *
+                                    |  Yêu cầu điền thông tin
+                                button(type='submit') Gửi yêu cầu
+    //-script(src='/script/contactUs.js')
+    script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyBuU_0_uLMnFM-2oWod_fzC0atPZj7dHlU')
+    script.
+        function initialize() {
+            var mapOptions = {
+                zoom: 15,
+                scrollwheel: false,
+                center: new google.maps.LatLng(23.81033, 90.41252)
+            };
+            var map = new google.maps.Map(document.getElementById('googleMap'),mapOptions)
+            var marker = new google.maps.Marker({
+                position: map.getCenter(),
+                animation:google.maps.Animation.BOUNCE,
+                icon: 'img/contact/map-marker.png',
+                map: map
+            })
+        }
+        google.maps.event.addDomListener(window, 'load', initialize)

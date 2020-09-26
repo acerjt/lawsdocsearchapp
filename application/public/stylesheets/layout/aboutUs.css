@@ -1,0 +1,17 @@
+    .about-us .container .about-page .row {
+        margin-bottom: 15px
+    }
+    
+    .about-us .container .about-page .row .col-md-7.col-sm-7 .about-page-content blockquote ul {
+        list-style-type: disc;
+        margin-left: 15px
+    }
+    
+    .about-us .container .about-page .row .col-md-5.col-sm-5 .about-img {
+        margin-top: 50px
+    }
+    
+    .about-us .container .team-member .row {
+        text-align: center;
+        justify-content: center;
+    }

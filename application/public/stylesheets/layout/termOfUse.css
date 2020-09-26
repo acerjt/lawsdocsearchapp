@@ -1,0 +1,26 @@
+.about-page  .title h3{
+    margin-bottom:15px; 
+    margin-left: 10px;
+    font-family: "Montserrat", sans-serif;
+    font-weight: 700;
+    color: 000;
+    margin: 0 0 10px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.75 rem;
+
+  }
+  .about-page .content{
+        color: #000;
+        
+  }
+  .about-page .content .part{
+    font-weight:bold;
+     margin-bottom:5px;
+  }
+  .about-page .content .part-content{
+    margin-bottom:5px;
+  }
+  .list-part-content{
+    list-style-type: decimal;
+    margin-left:30px;
+  }
