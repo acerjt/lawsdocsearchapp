@@ -476,7 +476,7 @@ div.col:empty:before {
 
 .highlight-phone .iphone-mockup {
     position: relative;
-    max-width: 260px;
+    /* max-width: 260px; */
     margin-top: -30px;
     margin-bottom: -230px;
     transform: rotate(0deg);
@@ -1069,3 +1069,13 @@ h3 {
     background-color: #f5f5f5;
     font-size: 5px;
 }
+
+
+/* .content .container {
+    padding: 0 0 0 0;
+    margin: 0 auto;
+}
+
+.content .container .create-order-container .input-link .parse_button {
+    display: inline-flex;
+} */
