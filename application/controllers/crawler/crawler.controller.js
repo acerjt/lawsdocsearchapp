@@ -1,7 +1,7 @@
-const client = require("../../connection/elastic-connect");
+const elastic = require("../../connection/elastic-connect");
+const client = elastic.client;
 const cheerio = require("cheerio");
 const axios = require("axios").default;
-
 const baseURL = "https://vanbanphapluat.co";
 
 const fetchHtml = async (url) => {
@@ -23,14 +23,18 @@ const crawLawsPerPage = async (lawURL) => {
   const searchResults = selector("body").find(
     ".row .items-push > .col-md-12 > .row"
   );
-  return Promise.all(
-    searchResults
-      .map(async (idx, el) => {
-        const elementSelector = selector(el);
-        return extractDeal(elementSelector);
-      })
-      .get()
-  );
+  return searchResults.map(async (idx, el) => {
+    const elementSelector = selector(el);
+    return extractDeal(elementSelector);
+  });
+  // return Promise.all(
+  //   searchResults
+  //     .map(async (idx, el) => {
+  //       const elementSelector = selector(el);
+  //       return extractDeal(elementSelector);
+  //     })
+  //     .get()
+  // );
 };
 
 const extractDeal = async (selector) => {
@@ -110,36 +114,71 @@ const extractDeal = async (selector) => {
     .text()
     .trim();
 
-  return Promise.resolve({
-    href,
-    name,
-    desc,
-    docType,
-    docNum,
-    agencyIssued,
-    signedBy,
-    issuedDate,
-    effectiveDate,
-    dateOfAnnouncement,
-    numOfAnnouncement,
-    field,
-    effectiveStatus,
-  });
-};
+  const lawContent = selector1("body").find(".row > .col-md-8");
 
+  const contentText = lawContent.text();
+  const contentHtml = lawContent.html();
+
+  await client.index({
+    index: "laws",
+    body: {
+      href,
+      name,
+      desc,
+      docType,
+      docNum,
+      agencyIssued,
+      signedBy,
+      issuedDate,
+      effectiveDate,
+      dateOfAnnouncement,
+      numOfAnnouncement,
+      field,
+      effectiveStatus,
+      contentText,
+      contentHtml,
+    },
+  });
+
+  return Promise.resolve();
+  // return Promise.resolve({
+  //   href,
+  //   name,
+  //   desc,
+  //   docType,
+  //   docNum,
+  //   agencyIssued,
+  //   signedBy,
+  //   issuedDate,
+  //   effectiveDate,
+  //   dateOfAnnouncement,
+  //   numOfAnnouncement,
+  //   field,
+  //   effectiveStatus,
+  //   contentText,
+  //   contentHtml
+  // });
+};
 
 module.exports.crawler = async (req, res) => {
   try {
     const numberPagesVBPL = 5; // 11307
-    laws = [];
     for (let page = 1; page <= numberPagesVBPL; page++) {
       const lawURL = `${baseURL}/csdl/van-ban-phap-luat?p=${page}`;
-      await crawLawsPerPage(lawURL).then((rs) => {
-        laws.push(rs);
-      });
+      await crawLawsPerPage(lawURL);
+      console.log(`page ${page} has crawed`);
+      // .then( async (documents) => {
+      //   laws.push(documents);
+      //   await documents.forEach(document => {
+      //     client.index({
+      //       index : 'laws',
+      //       body: document
+      //     })
+      //   })
+      // });
     }
-    res.send(laws)
+    res.send(`<h1>${numberPagesVBPL} pages has crawled</h1>`)
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
 };
