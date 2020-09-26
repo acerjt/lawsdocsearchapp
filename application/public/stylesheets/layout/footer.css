@@ -1,0 +1,197 @@
+.footer-dark {
+    padding: 0px 0;
+    /* color: #fff; */
+    background-color: #fff;
+}
+
+.footer-dark h3 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.footer-dark ul {
+    padding: 0;
+    list-style: none;
+    line-height: 1.6;
+    font-size: 16px;
+    /* font-weight: bold; */
+    margin-bottom: 0;
+}
+
+.footer-dark ul a {
+    color: #000;
+    text-decoration: none;
+    /* opacity: 0.6; */
+}
+
+.footer-dark ul a:hover {
+    opacity: 0.8;
+}
+
+@media (max-width:767px) {
+    .footer-dark .item:not(.social) {
+        text-align: center;
+        padding-bottom: 20px;
+    }
+}
+
+.footer-dark .item.text {
+    margin-bottom: 36px;
+}
+
+@media (max-width:767px) {
+    .footer-dark .item.text {
+        margin-bottom: 0;
+    }
+}
+
+.footer-dark .item.text p {
+    opacity: 0.6;
+    margin-bottom: 0;
+}
+
+.footer-dark .item.social {
+    text-align: center;
+}
+
+@media (max-width:991px) {
+    .footer-dark .item.social {
+        text-align: center;
+        margin-top: 20px;
+    }
+}
+
+.footer-dark .item.social>a {
+    font-size: 20px;
+    width: 36px;
+    height: 36px;
+    line-height: 36px;
+    display: inline-block;
+    text-align: center;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.4);
+    margin: 0 8px;
+    color: #fff;
+    opacity: 0.75;
+}
+
+.footer-dark .item.social>a:hover {
+    opacity: 0.9;
+}
+
+.footer-dark .copyright {
+    text-align: center;
+    padding-top: 24px;
+    opacity: 0.3;
+    font-size: 13px;
+    margin-bottom: 0;
+}
+
+.image_logo {
+    height: 90px;
+    width: 150px;
+    vertical-align: center;
+    border-style: none;
+}
+
+.footer-dark .container {
+    width: 100%;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.image_bank {
+    height: 100px;
+    width: 200px;
+    vertical-align: center;
+    border-style: none;
+}
+
+.footer-dark ul li {
+    margin-top: 8px;
+    cursor: pointer !important;
+    transition-duration: 0.3s !important;
+}
+
+.footer-dark ul li a {
+    cursor: pointer !important;
+    transition: 0.3s !important;
+}
+
+.footer-dark ul li:hover {
+    color: #3f89a8 !important;
+    text-decoration-style: solid !important;
+}
+
+.footer-dark ul li a:hover {
+    color: #3f89a8 !important;
+    text-decoration-style: solid !important;
+    border-bottom: 1px solid #3f89a8;
+}
+
+@media (min-width: 576px) {
+    .footer-contact {
+        flex-direction: column;
+    }
+    .get-app {
+        width: 487px;
+        height: 80px;
+    }
+    .footer-contact-logo {
+        margin: unset;
+        padding: 16px 0px;
+    }
+    body>div.footer-dark>footer>div>div.align-items-center.footer-contact>div.footer-contact-logo>a {
+        padding: 0px 23px;
+    }
+}
+
+@media (min-width: 768px) {
+    .footer-content {
+        display: flex;
+        flex-direction: row;
+    }
+    .footer-div-item {
+        padding: 0px 12px;
+        margin: 0px auto
+    }
+    .footer-contact {
+        flex-direction: row;
+    }
+    .get-app {
+        width: 696px;
+        height: 113px;
+    }
+    body>div.footer-dark>footer>div>div.align-items-center.footer-contact>div.footer-contact-logo>a {
+        padding: 0px 8px;
+    }
+    .footer-dark footer {
+        border-top: 1px solid #E0E0E0
+    }
+    .footer-dark footer .container .footer-content {
+        display: flex;
+        font-family: Graphik, 'Graphik LC Web', 'Helvetica Neue', Arial, sans-serif;
+        font-size: 16px;
+        line-height: 24px;
+        text-decoration-style: solid;
+        font-weight: 400 !important;
+    }
+    .footer-dark footer .container .footer-content .footer-div-item1 {
+        width: 300px;
+        padding-top: 15px;
+    }
+    .footer-dark footer .container .footer-content .footer-div-item2 ul li.content {
+        text-align: center
+    }
+    .footer-dark footer .container .footer-content .footer-div-item2 ul a {
+        color: #bdbbb7
+    }
+    .footer-dark footer .container .align-items-center.footer-contact {
+        display: flex;
+        justify-content: center
+    }
+}

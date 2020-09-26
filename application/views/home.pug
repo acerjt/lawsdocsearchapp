@@ -1,0 +1,304 @@
+extends layout
+block stylesheet
+    link(rel="stylesheet" bs-hidden="1" bs-system-element="1" href="/stylesheets/layout/home.css")
+block content
+    .container(style='padding: 0 0 0 0; margin: 0 auto;')
+        div
+            .create-order-container
+                .input-link
+                .parse_button(style='display: inline-flex;')
+                div
+                    input.parse(type='text' style='height:40px;' placeholder='Gõ từ khóa cần tìm kiếm...')
+                div
+                    button.btn_create(style='margin:0px 0px 0px 15px;height:40px;' role='button' onclick="location.href='?page=createOrder_Step1'")
+                    | Tìm Kiếm
+    .order-guide
+        div(style='color:#4c9fbf')
+            label(for='click-change-icon' style='font-style: italic; margin-right: 10px;') Tìm kiếm nâng cao   
+            input#click-change-icon.style4(data-toggle='collapse' type='checkbox' data-target='#collapseExample' onclick='changeIconCircleDown()' role='button' aria-expanded='false' aria-controls='collapseExample')
+            div
+                #collapseExample.collapse(style='background-color:#e5f3fb; padding: 15px 15px 15px 15px')
+                    form(style='margin-bottom: 0px;')
+                .form-group.row(style='margin-bottom: 0.5rem;')
+                    label.col-sm-2.col-form-label(for='inputDocName') Tên Văn Bản
+                    .col-sm-10(style='width:50%')
+                        input#inputDocName.form-control(style='width:50%' type='text' placeholder='Gõ tên văn bản cần tìm kiếm...')
+
+                .form-group.row(style='margin-bottom: 0.5rem;')
+                    label.col-sm-2.col-form-label(for='inputDocType') Loại Văn Bản
+                    .col-sm-10
+                        select#inputState.form-control(style='width:50%')
+                            option(selected='') Tất cả
+                            option Hiến pháp
+                            option Bộ luật của Quốc hội
+                            option Luật của Quốc hội
+                            option Nghị quyết của Quốc hội 
+                            option Pháp lệnh của Ủy ban thường vụ Quốc hội
+                            option Nghị quyết của Ủy ban thường vụ Quốc hội
+                            
+                .form-group.row(style='margin-bottom: 0.5rem;')
+                    label.col-sm-2.col-form-label(for='inputDocId') Số Hiệu
+                    .col-sm-10(style='width:50%')
+                        input#inputDocId.form-control(style='width:50%' type='text' placeholder='Nhập số hiệu văn bản...')
+                
+                .form-group.row(style='margin-bottom: 0.5rem;')
+                    label.col-sm-2.col-form-label(for='inputDocDate') Ngày Ban Hành
+                    .col-sm-10(style='width:50%')
+                        input#inputDocDate.form-control(style='width:50%' type='date')
+                
+                .form-group.row(style='margin-bottom: 0.5rem;')
+                    label.col-sm-2.col-form-label(for='inputDocStarted') Ngày Hiệu Lực
+                    .col-sm-10(style='width:50%')
+                        input#inputDocStarted.form-control(style='width:50%' type='date')
+                
+                .form-group.row(style='margin-bottom: 0rem;')
+                    label.col-sm-2.col-form-label(for='inputDocType') Loại Văn Bản
+                    .col-sm-10
+                        select#inputState.form-control(style='width:50%')
+                            option(selected='') Tất cả
+                            option Chưa có hiệu lực
+                            option Còn hiệu lực
+                            option Hết hiệu lực
+                            option Không xác định
+            .highlight-phone
+                .container
+                    .row
+                    .col-md-8
+                        .intro
+                            h2(style='font-weight:500') Hệ thống tìm kiếm & tra cứu hiệu lực Văn bản pháp luật
+                            p(style='text-align: left;')
+                            | Chào mừng bạn đến với hệ thống CSDL Văn bản pháp luật. Tại đây bạn có thể tìm kiếm, tra cứu thông tin tổng hợp hơn 300,000 văn bản các loại bao gồm: Văn bản Quy phạm pháp luật, Công văn, Tiêu chuẩn Việt Nam, Văn bản Tiếng
+                            | anh & dự thảo văn bản mới nhất được tổng hợp từ năm 1945 đến nay.
+                            a.btn.btn-primary(role='button' href='#') Tìm kiếm ngay!
+                    .col-sm-4
+                        .d-none.d-md-block.iphone-mockup
+                            img.device(src='img/images/im_library.jpg')
+            
+            div
+                .container(style='background-color:#e5f3fb; margin: 0 auto')
+                    .row
+                        .col-md-3
+                                h2.name(style='font-size:1.5rem; text-align: center') Văn bản pháp luật 
+                                a.description
+                                | Văn bản do cơ quan nhà nước ban hành hoặc phối
+                                | hợp ban hành theo thẩm quyền, hình thức, trình tự, thủ tục.
+                                br
+                                div
+                                    a.learn
+                                    | Tìm hiểu về Văn bản pháp luật  
+                                    i.fas.fa-chevron-right.fa-xs
+                        .col-md-3
+                                h2.name(style='font-size:1.5rem; text-align: center') Công văn
+                                a.description
+                                | Hình thức văn bản hành chính dùng phổ biến trong các cơ quan, tổ chức, doanh nghiệp.
+                                br
+                                a.learn
+                                | Tìm hiểu về Công Văn  
+                                i.fas.fa-chevron-right.fa-xs
+                        .col-md-3
+                                h2.name(style='font-size:1.5rem; text-align: center') Tiêu chuẩn Việt Nam
+                                a.description
+                                | Quy định về đặc tính kỹ thuật và sử dụng làm chuẩn để phân loại, đánh giá chất lượng.
+                                br
+                                a.learn
+                                | Tìm hiểu về Tiêu chuẩn Việt Nam  
+                                i.fas.fa-chevron-right.fa-xs
+                        .col-md-3
+                                h2.name(style='font-size:1.5rem; text-align: center') Dự thảo
+                                a.description(style=' text-align:justify; text-justify: inter-word; text-align-last:center;')
+                                | Bản thảo về một đạo luật do cơ quan, tổ chức,
+                                | cá nhân có quyền trình dự án luật mà mình soạn thảo, chuẩn bị theo các giai
+                                | đoạn của quy trình ban hành văn bản quy phạm pháp luật.
+                                br
+                                a.learn
+                                | Tìm hiểu về Dự thảo  
+                                i.fas.fa-chevron-right.fa-xs
+            
+            .content(style='margin-top:15px,  ')
+                .container(style='margin: 0 auto;')
+                    .row
+                        .col-md-8(style='width:900; padding: 0px 0px 0px 0px')
+                            ul#pills-tab.nav.nav-pills.mb-3(role='tablist')
+                                li.nav-item
+                                    a#pills-home-tab.nav-link.active(data-toggle='pill' href='#pills-home' role='tab' aria-controls='pills-home' aria-selected='true')
+                                    i.fas.fa-book  
+                                    | Văn bản tiếng Việt mới
+                                li.nav-item
+                                    a#pills-profile-tab.nav-link.doceng(data-toggle='pill' href='#pills-profile' role='tab' aria-controls='pills-profile' aria-selected='false')
+                                    i.fas.fa-passport
+                                    | Văn bản tiếng Anh mới
+                            
+                            #pills-tabContent.tab-content(style='margin-bottom: 15px')
+                                #pills-profile.tab-pane.fade(role='tabpanel' aria-labelledby='pills-profile-tab')
+                                    .container(style='margin: 0px 0px 0px 0px;')
+                                        .row
+                                            .col-md-8
+                                                .title
+                                                  | Thông báo 333/TB-VPCP
+                                                .inside
+                                                  | Thông báo 333/TB-VPCP năm 2020 về kết luận của Phó Thủ tướng Vũ Đức Đam tại cuộc
+                                                  | họp Thường trực Ban Chỉ đạo Trung ương Chương trình mục tiêu quốc gia giảm nghèo
+                                                  | bền vững giai đoạn 2016-2020 mở rộng do Văn phòng Chính phủ ban hành
+                                            .col-md-4(style='margin-top:30px')
+                                                .container(style='margin-left:10px')
+                                                    .row
+                                                        .col Ban hành:
+                                                        .col.datecome 16/09/2020
+                                                        .w-100
+                                                        .col Ngày hiệu lực:
+                                                        .col.datestart 16/09/2020
+                                                        .w-100
+                                                        .col Hiệu lực:
+                                                        .col.iseffect Chưa có HL
+                                                        .w-100
+                                                        .col Cập nhật:
+                                                        .col.timeupdate 7 phút trước
+                      
+                                #pills-home.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='pills-home-tab')
+                                    .container(style='margin: 0px 0px 0px 0px;')
+                                        .row
+                                            .col-md-8
+                                                .title
+                                                  | Thông báo 333/TB-VPCP1
+                                                .inside
+                                                  | Thông báo 333/TB-VPCP năm 2020 về kết luận của Phó Thủ tướng Vũ Đức Đam tại cuộc
+                                                  | họp Thường trực Ban Chỉ đạo Trung ương Chương trình mục tiêu quốc gia giảm nghèo
+                                                  | bền vững giai đoạn 2016-2020 mở rộng do Văn phòng Chính phủ ban hành
+                                            .col-md-4(style='margin-top:30px')
+                                                .container(style='margin-left:10px')
+                                                    .row
+                                                        .col Ban hành:
+                                                        .col.datecome 16/09/2020
+                                                        .w-100
+                                                        .col Ngày hiệu lực:
+                                                        .col.datestart 16/09/2020
+                                                        .w-100
+                                                        .col Hiệu lực:
+                                                        .col.iseffect Chưa có HL
+                                                        .w-100
+                                                        .col Cập nhật:
+                                                        .col.timeupdate 7 phút trước
+                            
+                                .navbar-content-md8
+                                    nav.navbar.navbar-light.navbar-expand-md.navigation-clean-search(style='height:40px')
+                                        .container-fluid(style='height:40px')
+                                            #navcol-1.collapse.navbar-collapse(style='font-size: 12px; height:40px')
+                                                .navbar-group(style='height:40px')
+                                                    .navbar-text.mr-4(style='height:40px ')
+                                                        a.travel(href='?page=addTrip_Step0' style='font-size:14px')
+                                                        i.fas.fa-file-word
+                                                        |                                                         Nội dung
+                                                    .navbar-text.mr-4
+                                                        a.signup(href='#' style='font-size:14px')
+                                                        i.fas.fa-project-diagram
+                                                        |                                                         Lược đồ
+                                                    .navbar-text.mr-4
+                                                        a.login(href='' style='font-size:14px')
+                                                        i.fas.fa-file-pdf
+                                                        |                                                         Bản PDF
+                                                    .navbar-text.mr-4
+                                                        a.login(href='' style='font-size:14px')
+                                                        i.fas.fa-history
+                                                        |                                                          Lịch sử
+                                                    .navbar-text.mr-4
+                                                        a.login(href='' style='font-size:14px')
+                                                        i.fas.fa-external-link-alt
+                                                        |                                                         Văn bản liên quan
+        
+                            
+                        .col-md-4(style='width:400')
+                            .panel-top(style='margin-bottom: 15px')
+                                a CSDL VĂN BẢN
+                                br
+                                hr
+                                ul(style='list-style-type: none; padding-inline-start: 0px;')
+                                    li
+                                        a(href='#') Văn bản pháp luật
+                                    li
+                                        a(href='#') Công Văn
+                                    li
+                                        a(href='#') TCVN
+                                    li
+                                        a(href='#') Dự thảo văn bản
+                            .panel-top(style='margin-bottom: 15px')
+                                    a
+                                    |LOẠI VĂN BẢN
+                                    br
+                                    hr
+                                    ul(style='list-style-type: none; padding-inline-start: 0px;')
+                                        li
+                                            a(href='#') Tiêu chuẩn ngành
+                                        li
+                                            a(href='#') Tiêu chuẩn XD Việt Nam
+                                        li
+                                            a(href='#') Quy chuẩn
+                                        li
+                                            a(href='#') Công Văn
+                                        li
+                                            a(href='#') Hiến pháp
+                                        li
+                                            a(href='#') Sắc lệnh
+                                        li
+                                            a(href='#') Nghị quyết
+                                        li
+                                            a(href='#') Nghị định
+                                        li
+                                            a(href='#') Thông tư
+                                        li
+                                            a(href='#') Thông tư liên tịch
+                                        li
+                                            a(href='#') Thông tri
+                                        li
+                                            a(href='#') Chỉ định
+                                        li
+                                             a(href='#') Quyết định
+                                        li
+                                            a(href='#') Thông báo
+                                        li
+                                            a(href='#') Quy định
+                                        li
+                                            a(href='#') Quy chế
+                                        li
+                                             a(href='#') Điều lệ
+                                        li
+                                             a(href='#') Hướng dẫn
+                                        li
+                                             a(href='#') Hiệp định
+                                        li
+                                             a(href='#') Thỏa thuận
+                                        li
+                                            a(href='#') Công điện
+                                        li
+                                            a(href='#')
+                                            | Nghị định thư
+                                        li
+                                            a(href='#')
+                                            | Văn bản hợp nhất
+                                        li
+                                            a(href='#')
+                                            | Công ước
+                                        li
+                                            a(href='#')
+                                            | Điều ước
+                                        li
+                                            a(href='#')
+                                            | Điều ước quốc tế
+                                        li
+                                            a(href='#')
+                                            | Văn bản WTO
+                                        li
+                                            a(href='#')
+                                            | WTO - Cam kết Việt Nam
+                                        li
+                                            a(href='#') Văn bản khác
+    script.
+        function changeIconCircleDown() {
+            let isExpanded = $('#click-change-icon').attr("aria-expanded")
+            if (isExpanded =="true") {
+                $('#icon-fa-arrow-circle-up').removeClass("fa-arrow-circle-up")
+                $('#icon-fa-arrow-circle-up').addClass("fa-arrow-circle-down")
+            } else {
+                $('#icon-fa-arrow-circle-up').removeClass("fa-arrow-circle-down")
+                $('#icon-fa-arrow-circle-up').addClass("fa-arrow-circle-up")
+            }
+        }
