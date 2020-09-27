@@ -22,7 +22,7 @@ div
                                 i(class="fas fa-book")
                                 |                                     Văn bản pháp luật
                         div(class="navbar-text mr-4")
-                            a(class="login", href="")
+                            a(class="login", href="", data-toggle='modal' data-target='#exampleModal')
                                 i(class="fas fa-user")
                                 |                                     Đăng kí
                         div(class="navbar-text mr-4")
@@ -34,3 +34,40 @@ div
                                 i(class="fas fa-phone")
                                 |                                     Liên hệ
 .invisible-div
+
+#exampleModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
+    .modal-dialog(role='document')
+        .register-photo
+            .form-container(style='display: table;max-width: 900px;width: 100%;box-shadow: 1px 1px 5px rgba(0,0,0,0.1);')
+        
+                form(method='post' style='border-bottom-left-radius:5px; border-top-left-radius:5px')
+                    h2.text-left Đăng kí tài khoản.
+                    .form-group
+                        input.form-control(type='text' name='username' placeholder='Tên đăng nhập')
+                    .form-group
+                        input.form-control(type='email' name='email' placeholder='Email')
+                    .form-group
+                        input.form-control(type='password' name='password' placeholder='Mật khẩu')
+                    .form-group
+                        input.form-control(type='password' name='password-repeat' placeholder='Nhập lại mật khẩu')
+                    .form-group
+                        .form-check
+                            label.form-check-label
+                            input.form-check-input(type='checkbox' style='-webkit-appearance: auto;')
+                            |  Tôi đồng ý với 
+                            a(href='?page=term_of_use')
+                                strong Điều khoản và Chính sách sử dụng dữ liệu
+                            | .
+                    .form-group(style='margin-bottom:0px')
+                        a(style='text-align:center; font-size: 15px; margin-bottom:0px' href='#') Bạn đã có tài khoản? Đăng nhập ngay!
+                    .form-group
+                        button.btn.btn-primary.btn-block(type='submit' style='margin:0 auto;margin-top:15px; width:60%; margin-bottom:0px  ') Sign Up
+                form.image-holder(method='post' style='border-bottom-right-radius:5px; border-top-right-radius:5px')
+                    div
+                        h2.text-center Đăng nhập với tài khoản
+                        .form-group
+                            button.btn.btn-primary.btn-block(type='submit' style='margin-top:15px;  margin:auto;width: 100%;') Tài khoản Facebook
+                        .form-group
+                            button.btn.btn-primary.btn-block(type='submit' style='margin-top:15px; margin:auto ; width: 100%;') Tài khoản Twitter
+                        .form-group
+                            button.btn.btn-primary.btn-block(type='submit' style='margin-top:15px; margin:auto; width: 100%;') Tài khoản Google
