@@ -1,7 +1,7 @@
 extends layout
 block stylesheet
-    link(rel="stylesheet" bs-hidden="1" bs-system-element="1" href="/stylesheets/layout/aboutUs.css")
-    link(rel="stylesheet" bs-hidden="1" bs-system-element="1" href="/stylesheets/layout/style.css")
+    link(rel="stylesheet" bs-hidden="1" bs-system-element="1" href="/stylesheets/layout/contactUs.css")
+    //- link(rel="stylesheet" bs-hidden="1" bs-system-element="1" href="/stylesheets/layout/style.css")
 block content
     .contact-area
         .container
@@ -10,19 +10,19 @@ block content
                     .location
                         ul
                             li
-                                a(href='index.html' title='go to homepage')
+                                a(href='/')
                                     | Trang chủ
                                     span / 
                             li   Liên Hệ
 
-            .row(style='justify-content: space-around;')
+            .row.map
                 .col-sm-9
                     .contact-info
                         #googleMap
                             
                         .contact-details
                             .contact-title
-                                h3(style='font-size:20px; font-weight:500') Liên Hệ chúng tôi
+                                h3 Liên Hệ chúng tôi
                             .contact-form
                                 .form-title
                                     h4 Thông tin liên hệ

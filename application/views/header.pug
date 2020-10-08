@@ -30,7 +30,7 @@ div
                                 i(class="fas fa-sign-in-alt")
                                 |                                     Đăng nhập
                         div(class="navbar-text mr-4")
-                            a(class="login", href="/contact")
+                            a(class="login", href="/contactUs")
                                 i(class="fas fa-phone")
                                 |                                     Liên hệ
 .invisible-div
@@ -55,11 +55,11 @@ div
                             label.form-check-label
                             input.form-check-input(type='checkbox' style='-webkit-appearance: auto;')
                             |  Tôi đồng ý với 
-                            a(href='?page=term_of_use')
+                            a(href='/termOfUse')
                                 strong Điều khoản và Chính sách sử dụng dữ liệu
                             | .
                     .form-group(style='margin-bottom:0px')
-                        a(style='text-align:center; font-size: 15px; margin-bottom:0px' href='#') Bạn đã có tài khoản? Đăng nhập ngay!
+                        a(style='text-align:center; font-size: 15px; margin-bottom:0px' href='', data-toggle='modal' data-target='#logInModal') Bạn đã có tài khoản? Đăng nhập ngay!
                     .form-group
                         button.btn.btn-primary.btn-block(type='submit' style='margin:0 auto;margin-top:15px; width:60%; margin-bottom:0px  ') Sign Up
                 form.image-holder(method='post' style='border-bottom-right-radius:5px; border-top-right-radius:5px')

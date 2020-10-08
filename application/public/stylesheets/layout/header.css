@@ -429,6 +429,7 @@ hr {
   font-size: 24px;
   line-height: 1.5;
   margin-bottom: 20px;
+  margin-top: 0.5rem;
 }
 
 .register-photo form .form-control {
@@ -477,7 +478,7 @@ hr {
 @media (min-width: 576px){
   .modal-dialog {
       max-width: 600;
-      margin: 1.75rem auto;
+      margin: 50px auto;
   }   
 }
 
@@ -619,4 +620,14 @@ hr {
   color: #6f7a85;
   opacity: 0.9;
   text-decoration: none;
+}
+.login-dark form .btn-primary:hover {
+  background-color: #3f89a8 !important;
+}
+
+.login-dark form .btn-primary:active {
+  background-color: #3f89a8 !important;
+}
+.register-photo form .btn-primary:active {
+  background-color: #3f89a8 !important;
 }
