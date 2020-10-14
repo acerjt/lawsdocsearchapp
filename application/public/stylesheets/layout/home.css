@@ -363,8 +363,17 @@ div.col:empty:before {
 .container .row .col-md-4 .row .col-md-8 .learn {
     font-size: 15px;
     color: #4c9fbf;
+    cursor: pointer !important;
+    line-height: 24px;
+    text-decoration: none;
+    cursor: pointer !important;
+    list-style-type: none;
 }
-
+.container .row .col-md-4 .row .col-md-8 .learn:hover {
+    
+    cursor: pointer !important;
+   
+}
 @media (min-width: 768px) {
     .container .row .col-md-4 {
         -ms-flex: 0 0 33.333333%;
@@ -397,6 +406,16 @@ div.col:empty:before {
 
 .container .row .col-md-3 .learn {
     color: #4c9fbf;
+    cursor: pointer !important;
+    line-height: 24px;
+    text-decoration: none;
+    cursor: pointer !important;
+    list-style-type: none;
+}
+.container .row .col-md-3 .learn:hover {
+
+    cursor: pointer !important;
+    color: #3f89a8 !important;
 }
 
 .container .row .col-md-3 .topshop {
@@ -472,8 +491,17 @@ div.col:empty:before {
 .highlight-phone .intro .btn-primary {
     background-color: #fff;
     color: #000;
+    margin-top: 15px;
 }
 
+.highlight-phone .intro .btn-primary:hover {
+    background-color: #3f89a8 !important;
+    
+}
+.highlight-phone .intro .btn-primary:active {
+    background-color: #4c9fbf !important;
+    
+}
 .highlight-phone .iphone-mockup {
     position: relative;
     /* max-width: 260px; */
@@ -1052,7 +1080,7 @@ h3 {
 
 .datecome {
     font-weight: 30px;
-    color: rgba(17, 142, 232, 0.85)
+    color: #4c9fbf
 }
 
 .datestart {
@@ -1069,13 +1097,26 @@ h3 {
     background-color: #f5f5f5;
     font-size: 5px;
 }
-
-
-/* .content .container {
-    padding: 0 0 0 0;
-    margin: 0 auto;
+.container div .create-order-container .input-link .parse_button{
+    display: inline-flex;
+}
+.container div .create-order-container .input-link .parse_button div input.parse{
+    height:40px;
+}
+.container div .create-order-container .input-link .parse_button div button.btn_create{
+    margin:0px 0px 0px 15px;
+    height:40px;
+}
+.container div .create-order-container .order-guide div{
+    color:#4c9fbf
+}
+.container div .create-order-container .order-guide div label.search{
+    font-style: italic; 
+    margin-right: 10px;
 }
 
-.content .container .create-order-container .input-link .parse_button {
-    display: inline-flex;
-} */
+
+.container div .create-order-container .order-guide div  input#click-change-icon.style4{
+    margin-left:10px;
+}
+

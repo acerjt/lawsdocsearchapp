@@ -7,15 +7,15 @@ block content
         div
             .create-order-container
                 .input-link
-                    .parse_button(style='display: inline-flex;')
+                    .parse_button
                         div
-                            input.parse(type='text' style='height:40px;' placeholder='Gõ từ khóa cần tìm kiếm...')
+                            input.parse(type='text' placeholder='Gõ từ khóa cần tìm kiếm...')
                         div
-                            button.btn_create(style='margin:0px 0px 0px 15px;height:40px;' role='button' onclick="location.href='?page=createOrder_Step1'")
+                            button.btn_create(role='button' onclick="location.href=''")
                                 | Tìm Kiếm
                 .order-guide
-                    div(style='color:#4c9fbf')
-                        label(for='click-change-icon' style='font-style: italic; margin-right: 10px;') Tìm kiếm nâng cao   
+                    div
+                        label(for='click-change-icon') Tìm kiếm nâng cao   
                         input#click-change-icon.style4(data-toggle='collapse' type='checkbox' data-target='#collapseExample' onclick='changeIconCircleDown()' role='button' aria-expanded='false' aria-controls='collapseExample')
                         div
                             #collapseExample.collapse(style='background-color:#e5f3fb; padding: 15px 15px 15px 15px')
@@ -68,9 +68,9 @@ block content
                     .col-md-8
                         .intro
                             h2(style='font-weight:500') Hệ thống tìm kiếm & tra cứu hiệu lực Văn bản pháp luật
-                            p(style='text-align: left;')
-                            | Chào mừng bạn đến với hệ thống CSDL Văn bản pháp luật. Tại đây bạn có thể tìm kiếm, tra cứu thông tin tổng hợp hơn 300,000 văn bản các loại bao gồm: Văn bản Quy phạm pháp luật, Công văn, Tiêu chuẩn Việt Nam, Văn bản Tiếng
-                            | anh & dự thảo văn bản mới nhất được tổng hợp từ năm 1945 đến nay.
+                            a(style='text-align: left;')
+                                | Chào mừng bạn đến với hệ thống CSDL Văn bản pháp luật. Tại đây bạn có thể tìm kiếm, tra cứu thông tin tổng hợp hơn 300,000 văn bản các loại bao gồm: Văn bản Quy phạm pháp luật, Công văn, Tiêu chuẩn Việt Nam, Văn bản Tiếng
+                                | anh & dự thảo văn bản mới nhất được tổng hợp từ năm 1945 đến nay.
                             a.btn.btn-primary(role='button' href='#') Tìm kiếm ngay!
                     .col-sm-4
                         .d-none.d-md-block.iphone-mockup
@@ -82,38 +82,38 @@ block content
                 .col-md-3
                         h2.name(style='font-size:1.5rem; text-align: center') Văn bản pháp luật 
                         a.description
-                        | Văn bản do cơ quan nhà nước ban hành hoặc phối
-                        | hợp ban hành theo thẩm quyền, hình thức, trình tự, thủ tục.
+                            | Văn bản do cơ quan nhà nước ban hành hoặc phối
+                            | hợp ban hành theo thẩm quyền, hình thức, trình tự, thủ tục.
                         br
                         div
                             a.learn
-                            | Tìm hiểu về Văn bản pháp luật  
+                                | Tìm hiểu về Văn bản pháp luật  
                             i.fas.fa-chevron-right.fa-xs
                 .col-md-3
                         h2.name(style='font-size:1.5rem; text-align: center') Công văn
                         a.description
-                        | Hình thức văn bản hành chính dùng phổ biến trong các cơ quan, tổ chức, doanh nghiệp.
+                            | Hình thức văn bản hành chính dùng phổ biến trong các cơ quan, tổ chức, doanh nghiệp.
                         br
                         a.learn
-                        | Tìm hiểu về Công Văn  
+                            | Tìm hiểu về Công Văn  
                         i.fas.fa-chevron-right.fa-xs
                 .col-md-3
                         h2.name(style='font-size:1.5rem; text-align: center') Tiêu chuẩn Việt Nam
                         a.description
-                        | Quy định về đặc tính kỹ thuật và sử dụng làm chuẩn để phân loại, đánh giá chất lượng.
+                            | Quy định về đặc tính kỹ thuật và sử dụng làm chuẩn để phân loại, đánh giá chất lượng.
                         br
                         a.learn
-                        | Tìm hiểu về Tiêu chuẩn Việt Nam  
+                            | Tìm hiểu về Tiêu chuẩn Việt Nam  
                         i.fas.fa-chevron-right.fa-xs
                 .col-md-3
                         h2.name(style='font-size:1.5rem; text-align: center') Dự thảo
                         a.description(style=' text-align:justify; text-justify: inter-word; text-align-last:center;')
-                        | Bản thảo về một đạo luật do cơ quan, tổ chức,
-                        | cá nhân có quyền trình dự án luật mà mình soạn thảo, chuẩn bị theo các giai
-                        | đoạn của quy trình ban hành văn bản quy phạm pháp luật.
+                            | Bản thảo về một đạo luật do cơ quan, tổ chức,
+                            | cá nhân có quyền trình dự án luật mà mình soạn thảo, chuẩn bị theo các giai
+                            | đoạn của quy trình ban hành văn bản quy phạm pháp luật.
                         br
                         a.learn
-                        | Tìm hiểu về Dự thảo  
+                            | Tìm hiểu về Dự thảo  
                         i.fas.fa-chevron-right.fa-xs
             
     .content(style='margin-top:15px')
@@ -161,11 +161,11 @@ block content
                                         .row
                                             .col-md-8
                                                 .title
-                                                  | Thông báo 333/TB-VPCP1
+                                                    | Thông báo 333/TB-VPCP1
                                                 .inside
-                                                  | Thông báo 333/TB-VPCP năm 2020 về kết luận của Phó Thủ tướng Vũ Đức Đam tại cuộc
-                                                  | họp Thường trực Ban Chỉ đạo Trung ương Chương trình mục tiêu quốc gia giảm nghèo
-                                                  | bền vững giai đoạn 2016-2020 mở rộng do Văn phòng Chính phủ ban hành
+                                                    | Thông báo 333/TB-VPCP năm 2020 về kết luận của Phó Thủ tướng Vũ Đức Đam tại cuộc
+                                                    | họp Thường trực Ban Chỉ đạo Trung ương Chương trình mục tiêu quốc gia giảm nghèo
+                                                    | bền vững giai đoạn 2016-2020 mở rộng do Văn phòng Chính phủ ban hành
                                             .col-md-4(style='margin-top:30px')
                                                 .container(style='margin-left:10px')
                                                     .row
@@ -272,25 +272,25 @@ block content
                                     a(href='#') Công điện
                                 li
                                     a(href='#')
-                                    | Nghị định thư
+                                        | Nghị định thư
                                 li
                                     a(href='#')
-                                    | Văn bản hợp nhất
+                                        | Văn bản hợp nhất
                                 li
                                     a(href='#')
-                                    | Công ước
+                                        | Công ước
                                 li
                                     a(href='#')
-                                    | Điều ước
+                                        | Điều ước
                                 li
                                     a(href='#')
-                                    | Điều ước quốc tế
+                                        | Điều ước quốc tế
                                 li
                                     a(href='#')
-                                    | Văn bản WTO
+                                        | Văn bản WTO
                                 li
                                     a(href='#')
-                                    | WTO - Cam kết Việt Nam
+                                        | WTO - Cam kết Việt Nam
                                 li
                                     a(href='#') Văn bản khác
     script(src='/script/home.js')
