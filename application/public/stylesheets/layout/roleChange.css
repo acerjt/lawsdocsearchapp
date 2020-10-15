@@ -1,0 +1,116 @@
+    .about-us .container .about-page .row {
+        margin-bottom: 15px
+    }
+    
+    .about-us .container .about-page .row .col-md-7.col-sm-7 .about-page-content blockquote ul {
+        list-style-type: disc;
+        margin-left: 15px
+    }
+    
+    .about-us .container .about-page .row .col-md-5.col-sm-5 .about-img {
+        margin-top: 20px
+    }
+    
+    .about-us .container .team-member .row {
+        text-align: center;
+        justify-content: center;
+    }
+    .about-us .container .about-page .row .col-md-7.col-sm-7 .about-page-content{
+        padding: 10px 0px 0px 30px;
+    }
+    .about-us{
+        margin-bottom: 20px;
+    }
+    .about-us .container  .about-page .row .col-md-3.col-sm-5 .about-img img.img-responsive{
+        border: 7px solid transparent;
+        border-radius: 100%;
+        max-width: 100%;
+        margin:auto;
+    }
+    .location {
+        border-bottom: 1px solid #eee;
+        font-family: "Montserrat", sans-serif;
+        margin-bottom: 15px;
+        padding: 30px 0 20px;
+    }
+    ul {
+        list-style: outside none none;
+        margin: 0;
+        padding: 0;
+    }
+    .location ul li {
+        display: inline-block;
+    }
+    .about-us .container  .about-page{
+        margin: 5px 150px;
+    }
+    .btn_create{
+        height: 40px;
+        padding-left: 32px;
+        padding-right: 32px;
+        padding-top: 5px;
+        font-size: 16px;
+        padding: 5px 15px;
+        text-align: center;
+        height: 40px;
+        border: 1px solid #4c9fbf;
+        border-radius: 5px;
+        background: #4c9fbf;
+        box-shadow: none;
+        text-shadow: none;
+        opacity: 0.9;
+        font-size: 20px;
+        text-transform: uppercase;
+        text-transform: none;
+        color: #fff;
+        line-height: 1;
+        outline: none;
+        background-color: #4c9fbf;
+        text-decoration: none;
+        margin:auto;
+        margin-top: 15px;
+    }
+    .about-us .container  .about-page .row .col-md-3.col-sm-5 button.btn_create:hover{
+        cursor: pointer !important;
+        background-color: #3f89a8 !important;
+    }
+    .about-us .container  .about-page .row .col-md-3.col-sm-5 button.btn_create:active{
+        cursor: pointer !important;
+        color: #4c9fbf !important;
+    }
+    .about-us .container  .about-page .row .col-md-3.col-sm-5 button.btn_create i.fa.fa-camera{
+        margin-right: 10px;
+    }
+    .form-control{
+        background: none;
+    border: none;
+    border-bottom: 1px solid #4c9fbf;
+    border-radius: 0;
+    box-shadow: none;
+    outline: none;
+    color: #000;
+    }
+    .form-control:disabled, .form-control[readonly] {
+        background-color: transparent;
+        opacity: 1;
+    }
+    .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+        color: #4c9fbf;
+        background-color: #fff;
+        border-color: #dee2e6 #dee2e6 #fff;
+        font-weight: 500;
+    }
+    .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link {
+        color: #000;
+        font-weight: 400;
+    }
+    .form.kind{
+        border: 1px solid #4c9fbf;
+        padding: 10px 15px;
+    }
+    p.title{
+        color: #4c9fbf; 
+        margin-bottom: 0rem;
+        font-size: 18px;
+    }
+    

@@ -18,4 +18,14 @@ router.get('/termOfUse', function(req, res, next) {
 router.get('/aboutUs', function(req, res, next) {
     res.render('aboutUs', { title: 'Về chúng tôi' });
 });
+
+router.get('/profileUser', function(req, res, next) {
+    res.render('profileUser', { title: 'Trang cá nhân' });
+});
+
+router.get('/roleChange', function(req, res, next) {
+    res.render('roleChange', { title: 'Chuyển đổi' });
+});
+
+
 module.exports = router;
