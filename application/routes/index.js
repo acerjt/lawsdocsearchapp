@@ -27,5 +27,7 @@ router.get('/roleChange', function(req, res, next) {
     res.render('roleChange', { title: 'Chuyển đổi' });
 });
 
-
+router.get('/typeUser', function(req, res, next) {
+    res.render('typeUser', { title: 'Loại thành viên' });
+});
 module.exports = router;

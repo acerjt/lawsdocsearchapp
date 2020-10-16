@@ -12,120 +12,124 @@ block content
                             li
                                 a(href='/' title='go to homepage')
                                     | Trang chủ
-                                    span /
+                                    span / 
                             li  Chuyển đổi loại thành viên
             .about-page
                 .row
-                    .col-md-9.col-sm-7
+                    .col-md-7.col-sm-7
                         .about-page-content
                             h3 Chuyển đổi loại thành viên
                             p.title
-                                |1. Thông tin về bạn
-                            form(style='margin-top: 5px; margin-left:20px')
-                                .form-group.row(style='margin-bottom: 0rem;')
-                                    label.col-sm-2.col-form-label(for='inputDocId') Mã số
-                                    .col-sm-9(style='width:100%')
-                                        input#inputDocId.form-control(style='width:50%' type='text' value='01234' readonly)
-                                .form-group.row(style='margin-bottom: 0rem;')
-                                    label.col-sm-2.col-form-label(for='inputDocName') Họ và Tên
-                                    .col-sm-9(style='width:100%')
-                                        input#inputDocName.form-control(style='width:50%' type='text' value='Phan Minh Toàn' readonly)
-                                .form-group.row(style='margin-bottom: 0rem;')
-                                    label.col-sm-2.col-form-label(for='inputDocName') Email
-                                    .col-sm-9(style='width:100%')
-                                        input#inputDocName.form-control(style='width:50%' type='text' value='16521576@gm.uit.edu.vn' readonly)
-                            
-
-                            p.title
-                                |2. Đăng kí chuyển đổi loại thành viên
-                            form(style='margin-top: 5px; margin-left:20px')
+                                |Đăng kí chuyển đổi loại thành viên
+                            form(style='margin-top: 5px;')
+                                label.title 1. Chi tiết các loại thành viên
                                 .form-group.row(style='margin-bottom: 0rem;')
                                     label.col-sm-12.col-form-label(for='inputDocId') Bạn đăng ký chuyển đổi thành Thành Viên có nhiều tiện ích cao hơn. Mời bạn chọn loại Thành viên mới, bên dưới.
                                 .form.kind
-                                    p Thành viên Basic:
-                                    input#male(type='radio' name='gender' value='male')
-                                    label(for='male') Basic 15: (tối đa 15 người sử dụng cùng lúc) 577.000đ/tháng
-                                    br
-                                    input#female(type='radio' name='gender' value='female')
-                                    label(for='female') Basic 5: (tối đa 05 người sử dụng cùng lúc) 252.000đ/tháng
-                                    br
-                                    input#other(type='radio' name='gender' value='other')
-                                    label(for='other') Basic 1: (tối đa 01 người sử dụng cùng lúc) 97.000đ/tháng
+                                    p.usergroup Thành viên Basic:
+                                    label.container4(for="")
+                                        strong.hightlight Basic 15: 
+                                        | (tối đa 15 người sử dụng cùng lúc) 577.000đ/tháng
+                                        input(type='checkbox' checked='checked')
+                                        span.checkmark2
+                                    label.container4(for="")
+                                        strong.hightlight Basic 5: 
+                                        | (tối đa 05 người sử dụng cùng lúc) 252.000đ/tháng
+                                        input(type='checkbox')
+                                        span.checkmark2
+                                    label.container4(for="")
+                                        strong.hightlight Basic 1: 
+                                        | (tối đa 01 người sử dụng cùng lúc) 97.000đ/tháng
+                                        input(type='checkbox')
+                                        span.checkmark2
+
+
+                                .form.kind
+                                    p.usergroup1 Thành viên LDC Pro:
+                                    .hide Thành viên Legal Document Corpus Pro
+
+                                    label.container4(for="")
+                                        strong.hightlight LDC Pro V: 
+                                        | (tối đa 15 người sử dụng cùng lúc) 577.000đ/tháng
+                                        input(type='checkbox' checked='checked')
+                                        span.checkmark2
+                                    label.container4(for="")
+                                        strong.hightlight LDC Pro II: 
+                                        | (02 người sử dụng cùng lúc) 134.000đ/người/tháng
+                                        input(type='checkbox')
+                                        span.checkmark2
+                                    label.container4(for="")
+                                        strong.hightlight LDC Pro I: 
+                                        | (01 người sử dụng cùng lúc) 169.000đ/người/tháng
+                                        input(type='checkbox')
+                                        span.checkmark2
 
                                 .form-group.row(style='margin-bottom: 0.5rem;')
-                                    label.col-sm-2.col-form-label(for='inputDocName') Họ và Tên
-                                    .col-sm-9(style='width:100%')
-                                        input#inputDocName.form-control(style='width:50%' type='text' value='Phan Minh Toàn' readonly)
+                                    label.col-sm-3.col-form-label(for='inputDocName') Thời gian sử dụng
+                                    .col-sm-9
+                                        select#inputState.form-control(style='width:50%')
+                                            option(selected='') 1 năm
+                                            option 6 tháng
+                                            option 2 năm (giảm 5%)
+                                            option 3 năm (giảm 8%)
+                                            option 5 năm (giảm 15%)
                                 .form-group.row(style='margin-bottom: 0.5rem;')
-                                    label.col-sm-2.col-form-label(for='inputDocName') Email
+                                    label.col-sm-3.col-form-label(for='inputDocName') Tổng số tiền
                                     .col-sm-9(style='width:100%')
-                                        input#inputDocName.form-control(style='width:50%' type='text' value='16521576@gm.uit.edu.vn' readonly)
-                        div
-                            nav
-                                #nav-tab.nav.nav-tabs(role='tablist')
-                                    a#nav-home-tab.nav-item.nav-link.active(data-toggle='tab' href='#nav-home' role='tab' aria-controls='nav-home' aria-selected='true') About
-                                    a#nav-profile-tab.nav-item.nav-link(data-toggle='tab' href='#nav-profile' role='tab' aria-controls='nav-profile' aria-selected='false') Timeline
+                                        input#inputDocName.form-control(style='width:50%; font-weight:500; color:#4c9fbf;' type='text' value='1.000.000' readonly )
+                                
+                                label.container1
+                                    | Có xuất hóa đơn
+                                    input(type='checkbox')
+                                    span.checkmark
+                                textarea#Content_ThongTinHoaDon.textarea(rows='2' cols='20' placeholder='Nhập thông tin xuất hóa đơn')
 
-                                #nav-tabContent.tab-content
-                                    #nav-home.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='nav-home-tab')
-                                        form(style='margin-top: 20px; margin-left:50px')
-                                            .form-group.row(style='margin-bottom: 0.5rem;')
-                                                label.col-sm-3.col-form-label(for='inputDocId') Mã số
-                                                .col-sm-8(style='width:100%')
-                                                    input#inputDocId.form-control(style='width:60%' type='text' placeholder='01234' readonly)
+                                label.container2
+                                    |Yêu cầu khác:
+                                textarea#Content_ThongTinHoaDon.textarea(rows='3' cols='20' placeholder='Nhập thông tin xuất hóa đơn')
 
-                                            .form-group.row(style='margin-bottom: 0.5rem;')
-                                                label.col-sm-3.col-form-label(for='inputDocName') Họ và Tên
-                                                .col-sm-8(style='width:100%')
-                                                    input#inputDocName.form-control(style='width:60%' type='text' placeholder='Phan Minh Toàn' readonly)
+                                label.title.below 2. Phương thức thanh toán
+                                .form.kind
+                                    label.container4(for="")
+                                        | Thẻ ATM nội địa/ Internet Banking
+                                        input(type='checkbox' checked='checked')
+                                        span.checkmark2
+                                    label.container4(for="")
+                                        | Thẻ quốc tế Visa, Master, JCB
+                                        input(type='checkbox')
+                                        span.checkmark2
+                                    label.container4(for="")
+                                        | Ví điện tử ZaloPay - Chi tiết
+                                        input(type='checkbox')
+                                        span.checkmark2
+                                    label.container4(for="")
+                                        | Thanh toán tiền mặt (COD)
+                                        input(type='checkbox')
+                                        span.checkmark2
+                                <div class="form-group row"><button class="btn_create" role="button" onclick="location.href=''">Thanh toán ngay</button></div>
 
-                                            .form-group.row(style='margin-bottom: 0.5rem;')
-                                                label.col-sm-3.col-form-label(for='inputDocType') Giới tính
-                                                .col-sm-8
-                                                    select#inputState.form-control(style='width:60%')
-                                                        option(selected='') Nam
-                                                        option Nữ
-                                                        option Khác
+                    .col-md-5.col-sm-5
+                        .about-page-content
+                            p.title
+                                |Thông tin về bạn
+                            form
+                                .form-group.row.about2
+                                    label.col-sm-12.col-form-label(for='inputDocId') Bạn đang là thành viên 
+                                        strong.hightlight FREE
+                                    label.col-sm-12.col-form-label(for='inputDocId') Tiện ích tra cứu được sử dụng đến ngày 
+                                        strong.hightlight 31/12/2021
+                                .form-group.row(style='margin-bottom: 0rem; margin-left:10px;')
+                                    label.col-sm-3.col-form-label(for='inputDocId') Mã số
+                                    .col-sm-9(style='width:100%')
+                                        input#inputDocId.form-control(style='width:80%' type='text' value='01234' readonly)
+                                .form-group.row(style='margin-bottom: 0rem;margin-left:10px')
+                                    label.col-sm-3.col-form-label(for='inputDocName') Họ và Tên
+                                    .col-sm-9(style='width:100%')
+                                        input#inputDocName.form-control(style='width:80%' type='text' value='Phan Minh Toàn' readonly)
+                                .form-group.row(style='margin-bottom: 0rem; margin-left:10px')
+                                    label.col-sm-3.col-form-label(for='inputDocName') Email
+                                    .col-sm-9(style='width:100%')
+                                        input#inputDocName.form-control(style='width:80%' type='text' value='16521576@gm.uit.edu.vn' readonly)
 
-                                            .form-group.row(style='margin-bottom: 0.5rem;')
-                                                label.col-sm-3.col-form-label(for='inputDocDate') Ngày Sinh
-                                                .col-sm-8(style='width:100%')
-                                                    input#inputDocDate.form-control(style='width:60%' type='date' value='02/10/1998')
-
-                                            .form-group.row(style='margin-bottom: 0.5rem;')
-                                                label.col-sm-3.col-form-label(for='inputDocStarted') Ngày tham gia
-                                                .col-sm-8(style='width:100%')
-                                                    input#inputDocStarted.form-control(style='width:60%' type='date' value='2018-06-12T19:30' readonly)
-
-                                            .form-group.row(style='margin-bottom: 0.5rem;')
-                                                label.col-sm-3.col-form-label(for='inputDocName') Địa chỉ
-                                                .col-sm-8(style='width:100%')
-                                                    input#inputDocName.form-control(style='width:60%' type='text' placeholder='Bắc Bình, Bình Thuận')
-                                            
-                                            .form-group.row(style='margin-bottom: 0.5rem;')
-                                                label.col-sm-3.col-form-label(for='inputDocName') Email
-                                                .col-sm-8(style='width:100%')
-                                                    input#inputDocName.form-control(style='width:60%' type='text' placeholder='16521261@gm.uit.edu.vn')
-                                            
-                                            .form-group.row(style='margin-bottom: 0.5rem;')
-                                                label.col-sm-3.col-form-label(for='inputDocType') Loại tiện ích
-                                                .col-sm-5
-                                                    select#inputState.form-control(style='width:100%' readonly)
-                                                        option(selected='') FREE
-                                                        option Basic 1
-                                                        option Basic 5
-                                                        option Basic 15
-                                                a.col-sm-4.col-form-label(href='') Chuyển loại thành viên
-                                            .form-group.row
-                                                button.btn_create(role='button' onclick="location.href=''")
-                                                    | Cập nhật 
-                                                                     
-
-                                    #nav-profile.tab-pane.fade(role='tabpanel' aria-labelledby='nav-profile-tab') ...
-
-                            
-
-
-                    
        
             

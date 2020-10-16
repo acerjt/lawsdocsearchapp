@@ -16,7 +16,7 @@
         justify-content: center;
     }
     .about-us .container .about-page .row .col-md-7.col-sm-7 .about-page-content{
-        padding: 10px 0px 0px 30px;
+        padding: 10px 30px 0px 30px;
     }
     .about-us{
         margin-bottom: 20px;
@@ -42,7 +42,7 @@
         display: inline-block;
     }
     .about-us .container  .about-page{
-        margin: 5px 150px;
+        margin: 5px 0px;
     }
     .btn_create{
         height: 40px;
@@ -68,7 +68,6 @@
         background-color: #4c9fbf;
         text-decoration: none;
         margin:auto;
-        margin-top: 15px;
     }
     .about-us .container  .about-page .row .col-md-3.col-sm-5 button.btn_create:hover{
         cursor: pointer !important;
@@ -107,10 +106,234 @@
     .form.kind{
         border: 1px solid #4c9fbf;
         padding: 10px 15px;
+        margin-right: 0px;
     }
     p.title{
         color: #4c9fbf; 
         margin-bottom: 0rem;
         font-size: 18px;
+        font-weight: 500;
+    }
+    .form-group.row.about1{
+        background-color: #e5f3fb;
+    }
+    strong.hightlight{
+        color:4c9fbf
+    }
+    input#basic1 {
+        margin-right:10px;
+        
+        
+    }
+    input#basic15 {
+        margin-right:10px;
+       
+    }
+    input#basic5 {
+        margin-right:10px;
+        
+    }
+    .form.kind{
+        margin-bottom:15px;
+    }
+    p.usergroup{
+        font-weight: 500;
+    }
+    .hide {
+        display: none;
+      }
+    p.usergroup1{
+        font-weight: 500;
+    }
+    p.usergroup1:hover + .hide {
+      display: block;
+      color: #4c9fbf;
+      
+    }
+    p.usergroup1:hover{
+        margin-bottom: 0px;
+    }
+    input#isBill:after{
+        background-color: #4c9fbf;
+    }
+    .container1 {
+        display: block;
+        position: relative;
+        padding-left: 30px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 16px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
     }
     
+    /* Hide the browser's default checkbox */
+    .container1 input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+    
+    /* Create a custom checkbox */
+    .checkmark {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 20px;
+      width: 20px;
+      background-color: #e5f3fb;
+    }
+    
+    /* On mouse-over, add a grey background color */
+    .container1:hover input ~ .checkmark {
+      background-color: #4c9fbf;
+    }
+    
+    /* When the checkbox is checked, add a blue background */
+    .container1 input:checked ~ .checkmark {
+      background-color: #4c9fbf;
+    }
+    
+    /* Create the checkmark/indicator (hidden when not checked) */
+    .checkmark:after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
+    
+    /* Show the checkmark when checked */
+    .container1 input:checked ~ .checkmark:after {
+      display: block;
+    }
+    
+    /* Style the checkmark/indicator */
+    .container1 .checkmark:after {
+      left: 8px;
+      top: 3px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2px 2px 0;
+      -webkit-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      transform: rotate(45deg);
+    }
+    textarea#Content_ThongTinHoaDon.textarea{
+        width:-webkit-fill-available;
+        border-color: #4c9fbf;
+       
+    }
+    textarea#Content_ThongTinHoaDon.textarea:focus{
+        width:-webkit-fill-available;
+        border-color: #3f89a8;
+        outline-color: #3f89a8;
+    }
+    .container2 {
+        margin-left:0px;
+        margin-top:15px;
+        margin-bottom: 0px;
+    }
+    
+    .about-page-content{
+        border-radius: 5px;
+        border: 1px solid #e0e0e0;
+        padding: 10px 30px 0px 30px;
+    }
+    .col-md-5.col-sm-5{
+        padding-left: 0px;
+
+    }
+    .form-group.row.about2{
+        background-color: #e5f3fb;
+        margin-bottom: 0;
+        margin-right: 0px;
+        margin-left: 0px;
+    }
+    .col-md-5.col-sm-5 .about-page-content form .form-group.row.about2 {
+        margin-bottom: 0px; 
+        margin-top:10px;
+    }
+    h3{
+        text-align: center;
+    }
+    
+    label.title{
+        margin: 0px 0px 0px 0px;
+        color: #4c9fbf;
+        font-weight: 500;
+    }
+    label.title.below{
+        margin-top: 15px;
+    }
+    .form.kind input:checked ~ .basic15 {
+        background-color: #4c9fbf;
+      }
+
+    .container4 {
+      display: block;
+      position: relative;
+      padding-left: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+    
+    /* Hide the browser's default radio button */
+    .container4 input {
+      position: absolute;
+      opacity: 0;
+      cursor: pointer;
+      height: 0;
+      width: 0;
+    }
+    
+    /* Create a custom radio button */
+    .checkmark2 {
+      position: absolute;
+      top: 4;
+      left: 0;
+      height: 15px;
+      width: 15px;
+      background-color: #eee;
+      border-radius: 50%;
+    }
+    
+    /* On mouse-over, add a grey background color */
+    .container4:hover input ~ .checkmark2 {
+      background-color: #4c9fbf;
+    }
+    
+    /* When the radio button is checked, add a blue background */
+    .container4 input:checked ~ .checkmark2 {
+      background-color: #fff;
+      border: 1px solid #4c9fbf;
+    }
+    
+    /* Create the indicator (the dot/circle - hidden when not checked) */
+    .checkmark2:after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
+    
+    /* Show the indicator (dot/circle) when checked */
+    .container4 input:checked ~ .checkmark2:after {
+      display: block;
+    }
+    
+    /* Style the indicator (dot/circle) */
+    .container4 .checkmark2:after {
+      top: 2px;
+      left: 2px;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #4c9fbf;
+    }
