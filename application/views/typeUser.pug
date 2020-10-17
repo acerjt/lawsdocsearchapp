@@ -12,8 +12,8 @@ block content
                             li
                                 a(href='/' title='go to homepage')
                                     | Trang chủ
-                                    span /
-                            li  Gói dịch vụ
+                                    span / 
+                            li(style="margin-left: 5px")  Gói dịch vụ
             .about-page
                 .row
                     .col-md-12.col-sm-7  
@@ -22,7 +22,7 @@ block content
                                 #nav-tab.nav.nav-tabs(role='tablist')
                                     a#nav-home-tab.nav-item.nav-link.active(data-toggle='tab' href='#nav-home' role='tab' aria-controls='nav-home' aria-selected='true') Thông tin gói dịch vụ
                                     a#nav-profile-tab.nav-item.nav-link(data-toggle='tab' href='#nav-profile' role='tab' aria-controls='nav-profile' aria-selected='false') So sánh gói dịch vụ
-                                    a#nav-profile-tab.nav-item.nav-link(data-toggle='tab' href='#nav-profile' role='tab' aria-controls='nav-profile' aria-selected='false') Phương thức thanh toán
+                                    a#nav-payment-methods-tab.nav-item.nav-link(data-toggle='tab' href='#nav-payment-methods' role='tab' aria-controls='nav-payment-methods' aria-selected='false') Phương thức thanh toán
 
                                 #nav-tabContent.tab-content
                                     #nav-home.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='nav-home-tab')
@@ -149,11 +149,408 @@ block content
                                                     .form-group.row(style='margin-bottom: 0')
                                                         button.btn_create(role='button' onclick="location.href='/roleChange'")
                                                             | Đăng kí
-                                            
-                                                                     
 
-                                    #nav-profile.tab-pane.fade(role='tabpanel' aria-labelledby='nav-profile-tab') ...
+                                    #nav-profile.tab-pane.fade(role='tabpanel' aria-labelledby='nav-profile-tab')
+                                        form
+                                            .form-group.row(style='margin-bottom: 0.5rem;')
+                                                p.title
+                                                    | Bảng so sánh gói dịch vụ.
+                                        table.table
+                                            thead
+                                                tr
+                                                    th(scope='col' colspan='2' style='width:50%') 
+                                                    th(scope='col') Thành viên 
+                                                        strong LDC Pro
+                                                    th(scope='col') Thành viên 
+                                                        strong Basic
+                                                    th(scope='col') Thành viên 
+                                                        strong Free
+                                            tbody
+                                                tr
+                                                    td(colspan='2') 
+                                                        strong Quyền lợi từng loại Thành viên
+                                                    td.center-text
+                                                        strong Đăng kí
+                                                    td.center-text
+                                                        strong Đăng kí
+                                                    td.center-text
+                                                        strong Đăng kí
+                                                tr
+                                                    td 1
+                                                    td Xem toàn bộ 346.000 Văn bản luật, hơn 124.000 Bản án Online;
+                                                    td.center-text
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td.center-text 
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td.center-text 
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    
+                                                tr
+                                                    td 2
+                                                    td Có thể tra cứu:
+                                                        ol.type
+                                                            li Bảng giá đất của tỉnh/thành;
+                                                            li Mẫu Hợp đồng;
+                                                            li Thuật ngữ pháp lý;
+                                                            li Biểu thuế WTO, ASEAN;
+                                                    td.center-text
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td.center-text 
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td.center-text 
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                tr
+                                                    td 3
+                                                    td 	Tra cứu mở rộng, tra cứu theo Văn bản mới;
+                                                    td.center-text 
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td.center-text  
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td.center-text  
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
 
+                                                tr
+                                                    td 4
+                                                    td Có thể xem thuộc tính của Văn bản;
+                                                    td.center-text 
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td.center-text  
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td.center-text  
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+
+                                                tr
+                                                    td 5
+                                                    td Xem ngày ban hành của Văn bản;
+                                                    td.center-text 
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td.center-text  
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td.center-text  
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+
+                                                tr
+                                                    td 6
+                                                    td Được hỗ trợ khi tra cứu trực tuyến;
+                                                    td.center-text 
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td.center-text  
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td.center-text  
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                
+                                                tr
+                                                    td 7
+                                                    td Quản lý Văn bản trong "Văn Bản Của Tôi";
+                                                    td.center-text 
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td.center-text  
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td.center-text  
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+
+                                                tr
+                                                    td 8
+                                                    td 	Nhận Bản tin Văn bản mới qua Email;
+                                                    td.center-text 
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td.center-text  
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td.center-text  
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+
+                                                tr
+                                                    td 9
+                                                    td 	Tra cứu hơn 185.000 Văn bản gốc;
+                                                    td.center-text 
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td.center-text  
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td 
+
+                                                tr
+                                                    td 10
+                                                    td Xem Lược Đồ, giúp bạn biết văn bản đang xem có quan hệ như thế nào với toàn bộ hệ thống pháp luật Việt Nam, bao gồm Văn Bản Gốc;
+                                                    td.center-text 
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td.center-text  
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td 
+
+                                                tr
+                                                    td 11
+                                                    td 	Tra cứu nhanh, theo Thời gian, Ngành, Tình trạng hiệu lực, Thời điểm áp dụng, theo Mục lục,...;
+                                                    td.center-text 
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td.center-text  
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td 
+
+                                                tr
+                                                    td 12
+                                                    td Xem trực tiếp nội dung Điều Khoản được hướng dẫn tại nội dung Điều Khoản hướng dẫn;
+                                                    td.center-text 
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td.center-text  
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td  
+
+                                                tr
+                                                    td 13
+                                                    td Xem nội dung Điều Khoản sửa đổi, bổ sung tại nội dung Điều Khoản bị Sửa đổi, bổ sung,...;
+                                                    td.center-text 
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td.center-text  
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td 
+
+                                                tr
+                                                    td 14
+                                                    td So sánh trực tiếp sự khác nhau của từng Điều Khoản giữa Văn bản thay thế và Văn bản bị thay thế;
+                                                    td.center-text 
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td.center-text  
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td 
+
+                                                tr
+                                                    td 15
+                                                    td Rà chuột vào sẽ Hiển thị trực tiếp nội dung của Điều, Khoản, Điểm được Dẫn Chiếu trong Văn bản đang xem, không cần mở văn bản được dẫn chiếu;
+                                                    td.center-text 
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td.center-text  
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td 
+
+                                                tr
+                                                    td 16
+                                                    td 	Khi áp dụng Văn bản, bạn sẽ được biết:
+                                                        ol.type
+                                                            li Thời điểm áp dụng;
+                                                            li Tình trạng hiệu lực
+                                                            li Ngày đã hết hiệu lực
+                                                            li Liên quan hiệu lực với Văn bản khác
+                                                            li Thay thế hoặc bị thay thế bởi Văn bản nào
+                                                            li Bổ sung, sửa đổi, hướng dẫn, đính chính, hợp nhất,... với Văn bản nào
+                                                            li Cùng nội dung với các Văn bản nào
+                                                            li Văn bản nào Sắp Có hiệu lực, nó thay thế văn bản nào
+                                                            li Văn bản nào Sắp Hết hiệu lực, nó bị văn bản nào thay thế
+                                                            li Văn bản đã đăng Công Báo chưa, ngày đăng, số Công báo;
+                                                    td.center-text 
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td.center-text  
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td 
+                                                tr
+                                                    td 17
+                                                    td 	Được Thông báo qua Email khi có Văn bản mới trong Ngành mình quan tâm;
+                                                    td.center-text 
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td.center-text  
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td 
+                                                tr
+                                                    td 18
+                                                    td Được hỗ trợ sơ bộ về pháp lý qua ĐT, Email và Skype;
+                                                    td.center-text 
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td.center-text  
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td 
+
+                                                tr
+                                                    td 19
+                                                    td Những Văn bản Pháp luật quan trọng, văn bản thuộc ngành Quý Khách quan tâm đã được dịch ra Tiếng Anh (hiện đã dịch hơn 12.000 văn bản), và đang tiếp tục dịch mới khi có văn bản mới ban hành;
+                                                    td.center-text 
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td  
+                                                    td 
+
+                                                tr
+                                                    td 20
+                                                    td Có thể sử dụng tiện ích Song Ngữ Anh Việt trong quá trình vận dụng Văn bản Luật;
+                                                    td.center-text 
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td  
+                                                    td   
+
+                                                tr
+                                                    td 21
+                                                    td 	Được đề nghị 
+                                                        strong LEGAL DOCUMENT CORPUS
+                                                        | ưu tiên dịch nhanh một số Văn Bản pháp luật mình cần ra Tiếng Anh (Theo quy định của TVPL về số lượng và tiêu chí dịch);
+                                                    td.center-text 
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td  
+                                                    td  
+
+                                                tr
+                                                    td 22
+                                                    td Được khai thác sử dụng toàn bộ Tiêu Chuẩn Việt Nam trên 
+                                                        strong LEGAL DOCUMENT CORPUS 
+                                                        |(Gồm Tiêu chuẩn quốc gia và Quy chuẩn quốc gia);
+                                                    td.center-text 
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td  
+                                                    td  
+
+                                                tr
+                                                    td 23
+                                                    td 	Tra cứu Tiêu chuẩn theo Khung Tiêu chuẩn Quốc tế (ICS _ International Classification for Standards). Người dùng có thể xem danh mục TCVN được sắp xếp theo 1370 chuyên ngành, phân ngành khác nhau. Từ đó tìm kiếm được các TCVN đúng với nhu cầu sử dụng. Đồng thời đây là các phân loại quốc tế cho nên sẽ tìm được những TCVN tương đương hoặc cùng nội dung với các Tiêu chuẩn quốc tế khác;
+                                                    td.center-text 
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td  
+                                                    td 
+
+                                                tr
+                                                    td 24
+                                                    td 	Được tra cứu Án Lệ, Bản án đã được dịch ra tiếng Anh;
+                                                    td.center-text 
+                                                        label.container1
+                                                            input(type='checkbox' checked='checked' onclick='return false;')
+                                                            span.checkmark
+                                                    td  
+                                                    td 
+
+                                    #nav-payment-methods.tab-pane.fade(role='tabpanel' aria-labelledby='nav-payment-methods')
+                                        form
+                                            .form-group.row(style='margin-bottom: 0.5rem;')
+                                                p.title
+                                                    | Thông tin và phương thức thanh toán
+
+                                            .form-group.row(style='margin-bottom: 0')
+                                                ol
+                                                    li(start='Cách 1') Chuyển khoản qua ngân hàng:
+                                                        ol.unorderlist
+                                                            | Tên Tài khoản: Legal Document Corpus Group
+                                                            li Số tài khoản: 12345677891011 tại Ngân hàng TMCP Á Châu (ACB) - PGD Kỳ Đồng - TP.HCM
+                                                            li Số tài khoản: 12345677891011 tại Ngân hàng TMCP Đầu tư và Phát triển Việt Nam (BIDV) _chi nhánh Đông Sài Gòn
+                                                            li Số tài khoản: 12345677891011 tại Ngân hàng TMCP Kỹ Thương Việt Nam( Techcombank) - CN Thắng Lợi
+                                                    li(start='Cách 2') Thanh toán online :
+                                                        ol.unorderlist
+                                                            li Internet banking: Thẻ ATM nội địa
+                                                            li Thẻ thanh toán quốc tế: Visa, Master, JCB
+                                                            li Ví điện tử: Zalo Pay
+                                                            li Biểu thuế WTO, ASEAN;
+                                            .form-group.row(style='margin-bottom: 0')
+                                                strong(style='margin-right: 5px') GHI CHÚ: 
+                                                | Quý khách vui lòng ghi rõ tên 
+                                                strong.hight-light 
+                                                    | khách hàng 
+                                                |và 
+                                                strong.hight-light  user 
+                                                | để chúng tôi có thể cấn trừ công nợ: Ví dụ: 
+                                                strong.hight-light Phan Minh Toàn 
+                                                | thanh toán cho 
+                                                strong.hight-light user: toanpig123.
+                                            .form-group.row(style='margin-bottom: 0')    
+                                                strong  Sau khi chuyển tiền Quý khách vui lòng liên hệ số (028) 332795582 để chúng tôi cấn trừ công nợ cho Quý Khách.
+                                            .form-group.row(style='margin-bottom: 0')    
+                                                strong Xin chân thành cảm ơn!
+                                            .form-group.row(style='margin-bottom: 0')    
+                                                strong(style='text-decoration:underline;') Mọi thông tin xin liên hệ:
+                                                br
+                                                | Nguyễn Ngọc Dung
+                                                br
+                                                | Tel: 0332.795.582 Email: nguyendung104044@gmail.com
                             
 
 
