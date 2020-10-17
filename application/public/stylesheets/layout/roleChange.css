@@ -337,3 +337,12 @@
       border-radius: 50%;
       background: #4c9fbf;
     }
+    a.details{
+        color:4c9fbf;
+        cursor: pointer !important;
+        font-weight: 400;
+    }
+    a.details:hover{
+        text-decoration: underline #4c9fbf;
+        font-weight: 500;
+    }

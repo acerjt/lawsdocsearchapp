@@ -28,6 +28,8 @@ router.get('/roleChange', function(req, res, next) {
 });
 
 router.get('/typeUser', function(req, res, next) {
-    res.render('typeUser', { title: 'Loại thành viên' });
+    res.render('typeUser', { title: 'Gói dịch vụ' });
 });
+
+
 module.exports = router;

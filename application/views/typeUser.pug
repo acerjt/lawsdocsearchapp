@@ -1,6 +1,6 @@
 extends layout
 block stylesheet
-    link(rel="stylesheet" bs-hidden="1" bs-system-element="1" href="/stylesheets/layout/profileUser.css")
+    link(rel="stylesheet" bs-hidden="1" bs-system-element="1" href="/stylesheets/layout/typeUser.css")
 
 block content
     .about-us
@@ -13,73 +13,143 @@ block content
                                 a(href='/' title='go to homepage')
                                     | Trang chủ
                                     span /
-                            li  Trang cá nhân
+                            li  Gói dịch vụ
             .about-page
                 .row
-                    .col-md-9.col-sm-7
-                        .about-page-content
-                            h3 Phan Minh Toàn
-                            p(style='color:4c9fbf')
-                              |Tham gia ngày: 03/12/2020
+                    .col-md-12.col-sm-7  
                         div
                             nav
                                 #nav-tab.nav.nav-tabs(role='tablist')
-                                    a#nav-home-tab.nav-item.nav-link.active(data-toggle='tab' href='#nav-home' role='tab' aria-controls='nav-home' aria-selected='true') About
-                                    a#nav-profile-tab.nav-item.nav-link(data-toggle='tab' href='#nav-profile' role='tab' aria-controls='nav-profile' aria-selected='false') Văn bản của tôi
+                                    a#nav-home-tab.nav-item.nav-link.active(data-toggle='tab' href='#nav-home' role='tab' aria-controls='nav-home' aria-selected='true') Thông tin gói dịch vụ
+                                    a#nav-profile-tab.nav-item.nav-link(data-toggle='tab' href='#nav-profile' role='tab' aria-controls='nav-profile' aria-selected='false') So sánh gói dịch vụ
+                                    a#nav-profile-tab.nav-item.nav-link(data-toggle='tab' href='#nav-profile' role='tab' aria-controls='nav-profile' aria-selected='false') Phương thức thanh toán
 
                                 #nav-tabContent.tab-content
                                     #nav-home.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='nav-home-tab')
-                                        form(style='margin-top: 20px; margin-left:50px')
+                                        form
                                             .form-group.row(style='margin-bottom: 0.5rem;')
-                                                label.col-sm-3.col-form-label(for='inputDocId') Mã số
-                                                .col-sm-8(style='width:100%')
-                                                    input#inputDocId.form-control(style='width:60%' type='text' value='01234' readonly)
+                                                p.title
+                                                    |Thành viên Free được các quyền lợi sau:
+                                            .form-group.row(style='margin-bottom: 0')
+                                                ol
+                                                    li Xem toàn bộ 346.000 Văn bản luật, hơn 124.000 Bản án Online;
+                                                    li Có thể tra cứu:
+                                                        ol.unorderlist
+                                                            li Bảng giá đất của tỉnh/thành;
+                                                            li Mẫu Hợp đồng;
+                                                            li Thuật ngữ pháp lý;
+                                                            li Biểu thuế WTO, ASEAN;
+                                                    li Tra cứu mở rộng, tra cứu theo Văn bản mới
+                                                    li Có thể xem thuộc tính của Văn bản;
+                                                    li Xem ngày ban hành của Văn bản;
+                                                    li Được hỗ trợ khi tra cứu trực tuyến;
+                                                    li Quản lý Văn bản trong "Văn Bản Của Tôi";
+                                                    li Nhận Bản tin Văn bản mới qua Email;
+                                                    
 
+                                            .form-group.row(style='margin-bottom: 0.5rem; border-bottom: 1px solid #e0e0e0')
+                                                
                                             .form-group.row(style='margin-bottom: 0.5rem;')
-                                                label.col-sm-3.col-form-label(for='inputDocName') Họ và Tên
-                                                .col-sm-8(style='width:100%')
-                                                    input#inputDocName.form-control(style='width:60%' type='text' value='Phan Minh Toàn' readonly)
-
-                                            .form-group.row(style='margin-bottom: 0.5rem;')
-                                                label.col-sm-3.col-form-label(for='inputDocType') Giới tính
-                                                .col-sm-8
-                                                    select#inputState.form-control(style='width:60%')
-                                                        option(selected='') Nam
-                                                        option Nữ
-                                                        option Khác
-
-                                            .form-group.row(style='margin-bottom: 0.5rem;')
-                                                label.col-sm-3.col-form-label(for='inputDocDate') Ngày Sinh
-                                                .col-sm-8(style='width:100%')
-                                                    input#inputDocDate.form-control(style='width:60%' type='date' placeholder='02/10/1998')
-
-                                            .form-group.row(style='margin-bottom: 0.5rem;')
-                                                label.col-sm-3.col-form-label(for='inputDocStarted') Ngày tham gia
-                                                .col-sm-8(style='width:100%')
-                                                    input#inputDocStarted.form-control(style='width:60%' type='date' placeholder='03/12/2020' readonly)
-
-                                            .form-group.row(style='margin-bottom: 0.5rem;')
-                                                label.col-sm-3.col-form-label(for='inputDocName') Địa chỉ
-                                                .col-sm-8(style='width:100%')
-                                                    input#inputDocName.form-control(style='width:60%' type='text' value='Bắc Bình, Bình Thuận')
+                                                .col-sm-6(style='border-right: 1px solid #e0e0e0;padding-left: 0px;')
+                                                    p.title
+                                                        |Thành viên 
+                                                        strong Basic 
+                                                        |có các 
+                                                        strong Quyền 
+                                                        |của Thành viên 
+                                                        strong Free, và thêm:
+                                                    
+                                                    .form-group.row(style='margin-bottom: 0')
+                                                        ol(start="19")
+                                                            li Những Văn bản Pháp luật quan trọng, văn bản thuộc ngành Quý Khách quan tâm đã được dịch ra Tiếng Anh (hiện đã dịch hơn 12.000 văn bản), và đang tiếp tục dịch mới khi có văn bản mới ban hành;
+                                                            li Có thể sử dụng tiện ích Song Ngữ Anh Việt trong quá trình vận dụng Văn bản Luật;
+                                                            li Được đề nghị 
+                                                            strong LEGAL DOCUMENT CORPUS 
+                                                            | ưu tiên dịch nhanh một số Văn Bản pháp luật mình cần ra Tiếng Anh (Theo quy định của TVPL về số lượng và tiêu chí dịch)
+                                                            li Được khai thác sử dụng toàn bộ 
+                                                            strong Tiêu Chuẩn Việt Nam 
+                                                            | trên 
+                                                            strong LEGAL DOCUMENT CORPUS 
+                                                            |(Gồm Tiêu chuẩn quốc gia và Quy chuẩn quốc gia);
+                                                            li Tra cứu Tiêu chuẩn theo Khung Tiêu chuẩn Quốc tế (ICS _ International Classification for Standards). 
+                                                            | Người dùng có thể xem danh mục TCVN được sắp xếp theo 1370 chuyên ngành, phân ngành khác nhau. 
+                                                            | Từ đó tìm kiếm được các TCVN đúng với nhu cầu sử dụng. 
+                                                            | Đồng thời đây là các phân loại quốc tế cho nên sẽ tìm được những TCVN tương đương hoặc cùng nội dung với các Tiêu chuẩn quốc tế khác;
+                                                            li Được tra cứu Án Lệ, Bản án đã được dịch ra tiếng Anh;
+                                                            
+                                                    .form-group.row(style='margin-left: 15px')
+                                                        label 
+                                                            strong Phí sử dụng
+                                                    .form-group.row(style='margin-bottom: 0')
+                                                        ol.type
+                                                            li
+                                                                strong.hightlight Basic 15: 
+                                                                | (tối đa 15 người sử dụng cùng lúc) 577.000đ/tháng.
+                                                            li
+                                                                strong.hightlight Basic 5: 
+                                                                | (tối đa 05 người sử dụng cùng lúc) 252.000đ/tháng.
+                                                            li
+                                                                strong.hightlight Basic 1: 
+                                                                | (tối đa 01 người sử dụng cùng lúc) 97.000đ/tháng.
+                    
+                                                    .form-group.row
+                                                        button.btn_create(role='button' onclick="location.href='/roleChange'")
+                                                            | Đăng kí
+                                                                                                   
+                                                .col-sm-6
+                                                    p.title
+                                                        |Thành viên 
+                                                        strong LDC Pro 
+                                                        |có các 
+                                                        strong Quyền 
+                                                        | của Thành viên 
+                                                        strong Basic
+                                                        |, và:
+                                                    
+                                                    .form-group.row(style='margin-bottom: 0')
+                                                        ol(start="9")
+                                                            li Tra cứu hơn 185.000 Văn bản gốc;
+                                                            li Xem Lược Đồ, giúp bạn biết văn bản đang xem có quan hệ như thế nào với toàn bộ hệ thống pháp luật Việt Nam, bao gồm Văn Bản Gốc;
+                                                                
+                                                            li Tra cứu nhanh, theo Thời gian, Ngành, Tình trạng hiệu lực, Thời điểm áp dụng, theo Mục lục,...;
+                                                            li Xem trực tiếp nội dung Điều Khoản được hướng dẫn tại nội dung Điều Khoản hướng dẫn;
+                                                            li Xem nội dung Điều Khoản sửa đổi, bổ sung tại nội dung Điều Khoản bị Sửa đổi, bổ sung,...;
+                                                            li So sánh trực tiếp sự khác nhau của từng Điều Khoản giữa Văn bản thay thế và Văn bản bị thay thế;
+                                                            li Rà chuột vào sẽ Hiển thị trực tiếp nội dung của Điều, Khoản, Điểm được Dẫn Chiếu trong Văn bản đang xem, không cần mở văn bản được dẫn chiếu;
+                                                            li Khi áp dụng Văn bản, bạn sẽ được biết:
+                                                                ol.unorderlist
+                                                                    li Thời điểm áp dụng;
+                                                                    li Tình trạng hiệu lực;
+                                                                    li Ngày đã hết hiệu lực;                                                                  
+                                                                    li Liên quan hiệu lực với Văn bản khác;
+                                                                    li Thay thế hoặc bị thay thế bởi Văn bản nào;
+                                                                    li Bổ sung, sửa đổi, hướng dẫn, đính chính, hợp nhất,... với Văn bản nào;                                                                  
+                                                                    li Cùng nội dung với các Văn bản nào;
+                                                                    li Văn bản nào Sắp Có hiệu lực, nó thay thế văn bản nào;
+                                                                    li  Văn bản nào Sắp Hết hiệu lực, nó bị văn bản nào thay thế;                                                                  
+                                                                    li Văn bản đã đăng Công Báo chưa, ngày đăng, số Công báo
+                                                                    
+                                                            li Được Thông báo qua Email khi có Văn bản mới trong Ngành mình quan tâm;
+                                                            li Được hỗ trợ sơ bộ về pháp lý qua ĐT, Email và Skype;
+                                                    .form-group.row(style='margin-left: 15px')
+                                                        label 
+                                                            strong Phí sử dụng
+                                                    .form-group.row(style='margin-bottom: 0')
+                                                        ol.type
+                                                            
+                                                            li 
+                                                                strong.hightlight LDC Pro V: 
+                                                                | (tối đa 15 người sử dụng cùng lúc) 577.000đ/tháng.
+                                                            li 
+                                                                strong.hightlight LDC Pro II: 
+                                                                | (02 người sử dụng cùng lúc) 134.000đ/người/tháng.
+                                                            li 
+                                                                strong.hightlight LDC Pro I: 
+                                                                | (01 người sử dụng cùng lúc) 169.000đ/người/tháng.
+                                                    .form-group.row(style='margin-bottom: 0')
+                                                        button.btn_create(role='button' onclick="location.href='/roleChange'")
+                                                            | Đăng kí
                                             
-                                            .form-group.row(style='margin-bottom: 0.5rem;')
-                                                label.col-sm-3.col-form-label(for='inputDocName') Email
-                                                .col-sm-8(style='width:100%')
-                                                    input#inputDocName.form-control(style='width:60%' type='text' value='16521261@gm.uit.edu.vn')
-                                            
-                                            .form-group.row(style='margin-bottom: 0.5rem;')
-                                                label.col-sm-3.col-form-label(for='inputDocType') Loại tiện ích
-                                                .col-sm-5
-                                                    select#inputState.form-control(style='width:100%' readonly)
-                                                        option(selected='') FREE
-                                                        option Basic 1
-                                                        option Basic 5
-                                                        option Basic 15
-                                                a.col-sm-4.col-form-label(href='/roleChange') Chuyển loại thành viên
-                                            .form-group.row
-                                                button.btn_create(role='button' onclick="location.href=''")
-                                                    | Cập nhật 
                                                                      
 
                                     #nav-profile.tab-pane.fade(role='tabpanel' aria-labelledby='nav-profile-tab') ...
@@ -87,12 +157,5 @@ block content
                             
 
 
-                    .col-md-3.col-sm-5
-                        .about-img
-                            img.img-responsive(src='/images/img/im_dev1.jpg' alt='')
-                        .form-group.row(style='margin-top: 0.5rem;')
-                            button.btn_create(role='button' onclick="location.href='/roleChange'")
-                                i.fa.fa-camera
-                                | Upload photo
-       
+                    
             
