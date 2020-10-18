@@ -631,3 +631,13 @@ hr {
 .register-photo form .btn-primary:active {
   background-color: #3f89a8 !important;
 }
+.hide {
+  display: none;
+  margin-left: 10px;
+}
+input#example-date-input.form-control:hover + .hide {
+  display: block;
+  color: #4c9fbf;
+  
+  
+}

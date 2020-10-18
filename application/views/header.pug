@@ -43,9 +43,19 @@ div
                 form(method='post' style='border-bottom-left-radius:5px; border-top-left-radius:5px')
                     h2.text-left Đăng kí tài khoản.
                     .form-group
-                        input.form-control(type='text' name='username' placeholder='Tên đăng nhập')
+                        input.form-control(type='text' name='name' placeholder='Họ và tên')
+                    .form-group
+                        input#example-date-input.form-control(type='date' value='' placeholder='Ngày sinh')
+                        .hide Ngày sinh
+                            //- i.fas.fa-calendar-alt
+
+
+                                
                     .form-group
                         input.form-control(type='email' name='email' placeholder='Email')
+                    .form-group
+                        input.form-control(type='text' name='username' placeholder='Tên đăng nhập')
+                    
                     .form-group
                         input.form-control(type='password' name='password' placeholder='Mật khẩu')
                     .form-group
@@ -61,7 +71,7 @@ div
                     .form-group(style='margin-bottom:0px')
                         a(style='text-align:center; font-size: 15px; margin-bottom:0px' href='', data-toggle='modal' data-target='#logInModal') Bạn đã có tài khoản? Đăng nhập ngay!
                     .form-group
-                        button.btn.btn-primary.btn-block(type='submit' style='margin:0 auto;margin-top:15px; width:60%; margin-bottom:0px  ') Sign Up
+                        button.btn.btn-primary.btn-block(type='submit' style='margin:0 auto;margin-top:15px; width:60%; margin-bottom:0px  ') Đăng kí
                 form.image-holder(method='post' style='border-bottom-right-radius:5px; border-top-right-radius:5px')
                     div
                         h2.text-center Đăng nhập với tài khoản
@@ -80,13 +90,13 @@ div
                 .illustration
                     i.fas.fa-users
                 .form-group
-                    input.form-control(type='email' name='email' placeholder='Email')
+                    input.form-control(type='email' name='email' placeholder='Tên đăng nhập')
                 .form-group
-                    input.form-control(type='password' name='password' placeholder='Password')
-                a.forgot(href='#') Forgot your email or password?
+                    input.form-control(type='password' name='password' placeholder='Mật khẩu')
+                a.forgot(href='#') Bạn quên tài khoản?
                 .form-group
-                    button.btn.btn-primary.btn-block(type='submit') Log In
-                a.signup(href='#') Or SignUp Using
+                    button.btn.btn-primary.btn-block(type='submit') Đăng nhập
+                a.signup(href='#') Hoặc đăng nhập với
                 .flex-c-m
                     a.login100-social-item.bg1(href='#')
                         i.fa.fa-facebook
