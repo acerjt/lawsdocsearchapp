@@ -18,7 +18,7 @@ div
                                 i(class="fas fa-home")
                                 |                                     Trang chủ
                         div(class="navbar-text mr-4")
-                            a(class="signup", href="")
+                            a(class="signup", href="/admin")
                                 i(class="fas fa-book")
                                 |                                     Văn bản pháp luật
                         div(class="navbar-text mr-4")
@@ -41,7 +41,8 @@ div
                                         i.far.fa-edit
                                     a.dropdown-item(href='#') Văn bản của tôi
                                         i.far.fa-file
-                                    a.dropdown-item(href='#') Đổi mật khẩu
+                                         
+                                    a.dropdown-item(href='#' data-toggle='modal' data-target='#changePassModal') Đổi mật khẩu
                                         i.fas.fa-lock
                                         
                                     a.dropdown-item(href='#') Đăng xuất
@@ -53,7 +54,7 @@ div
         .register-photo
             .form-container(style='display: table;max-width: 900px;width: 100%;box-shadow: 1px 1px 5px rgba(0,0,0,0.1);')
         
-                form(method='post' style='border-bottom-left-radius:5px; border-top-left-radius:5px')
+                form(method='post' style='border-bottom-left-radius:5px; border-top-left-radius:5px; background:none')
                     h2.text-left Đăng kí tài khoản.
                     .form-group
                         input.form-control(type='text' name='name' placeholder='Họ và tên')
@@ -118,3 +119,19 @@ div
                     a.login100-social-item.bg3(href='#')
                         i.fa.fa-google
 
+#changePassModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
+    .modal-dialog(role='document')
+        .login-dark
+            form(method='post')
+                h2.sr-only Change Password Form
+                .illustration
+                    h2.text-center Đổi mật khẩu
+                .form-group
+                    input.form-control(type='email' name='email' placeholder='Mật khẩu cũ')
+                .form-group
+                    input.form-control(type='password' name='password' placeholder='Mật khẩu mới')
+                .form-group
+                    input.form-control(type='password' name='password' placeholder='Nhập lại mật khẩu mới')
+                
+                .form-group
+                    button.btn.btn-primary.btn-block(type='submit') Đổi mật khẩu
