@@ -1,0 +1,171 @@
+// Left side column. contains the logo and sidebar
+aside.main-sidebar
+    // sidebar: style can be found in sidebar.less
+    section.sidebar(style='height: auto;')
+        // Sidebar user panel
+        .user-panel
+            .pull-left.image
+                img.img-circle(src='../images/img/im_dev2.jpg' alt='User Image')
+            .pull-left.info
+                p Dung N Nguyen
+                a(href='#')
+                    i.fa.fa-circle.text-success
+                    |  Online
+        // search form
+        form.sidebar-form(action='#' method='get')
+            .input-group
+                input.form-control(type='text' name='q' placeholder='Search...')
+                span.input-group-btn
+                    button#search-btn.btn.btn-flat(type='submit' name='search')
+                        i.fa.fa-search
+        // /.search form
+        // sidebar menu: : style can be found in sidebar.less
+        ul.sidebar-menu.tree(data-widget='tree')
+            li.header MAIN NAVIGATION
+            li.active.treeview.menu-open
+                a(href='#')
+                    i.fa.fa-dashboard
+                    span Dashboard
+                    span.pull-right-container
+                        i.fa.fa-angle-left.pull-right
+                ul.treeview-menu
+                    li
+                        a(href='index.html')
+                            i.fa.fa-circle-o
+                            |  Overview
+                    li.active
+                        a(href='index2.html')
+                            i.fa.fa-circle-o
+                            |  Search History
+            li.treeview
+                a(href='#')
+                    i.fa.fa-files-o
+                    span Layout Options
+                    span.pull-right-container
+                        span.label.label-primary.pull-right 4
+                ul.treeview-menu
+                    li
+                        a(href='pages/layout/top-nav.html')
+                            i.fa.fa-circle-o
+                            |  Top Navigation
+                    li
+                        a(href='pages/layout/boxed.html')
+                            i.fa.fa-circle-o
+                            |  Boxed
+                    li
+                        a(href='pages/layout/fixed.html')
+                            i.fa.fa-circle-o
+                            |  Fixed
+                    li
+                        a(href='pages/layout/collapsed-sidebar.html')
+                            i.fa.fa-circle-o
+                            |  Collapsed Sidebar
+            li
+                a(href='pages/widgets.html')
+                    i.fa.fa-th
+                    span Widgets
+                    span.pull-right-container
+                        small.label.pull-right.bg-green new
+            li.treeview
+                a(href='#')
+                    i.fa.fa-pie-chart
+                    span Charts
+                    span.pull-right-container
+                        i.fa.fa-angle-left.pull-right
+                ul.treeview-menu
+                    li
+                        a(href='pages/charts/chartjs.html')
+                            i.fa.fa-circle-o
+                            |  ChartJS
+                    li
+                        a(href='pages/charts/morris.html')
+                            i.fa.fa-circle-o
+                            |  Morris
+                    li
+                        a(href='pages/charts/flot.html')
+                            i.fa.fa-circle-o
+                            |  Flot
+                    li
+                        a(href='pages/charts/inline.html')
+                            i.fa.fa-circle-o
+                            |  Inline charts
+            li.treeview
+                a(href='#')
+                    i.fa.fa-laptop
+                    span UI Elements
+                    span.pull-right-container
+                        i.fa.fa-angle-left.pull-right
+                ul.treeview-menu
+                    li
+                        a(href='pages/UI/general.html')
+                            i.fa.fa-circle-o
+                            |  General
+                    li
+                        a(href='pages/UI/icons.html')
+                            i.fa.fa-circle-o
+                            |  Icons
+                    li
+                        a(href='pages/UI/buttons.html')
+                            i.fa.fa-circle-o
+                            |  Buttons
+                    li
+                        a(href='pages/UI/sliders.html')
+                            i.fa.fa-circle-o
+                            |  Sliders
+                    li
+                        a(href='pages/UI/timeline.html')
+                            i.fa.fa-circle-o
+                            |  Timeline
+                    li
+                        a(href='pages/UI/modals.html')
+                            i.fa.fa-circle-o
+                            |  Modals
+            li.treeview
+                a(href='#')
+                    i.fa.fa-edit
+                    span Forms
+                    span.pull-right-container
+                        i.fa.fa-angle-left.pull-right
+                ul.treeview-menu
+                    li
+                        a(href='pages/forms/general.html')
+                            i.fa.fa-circle-o
+                            |  General Elements
+                    li
+                        a(href='pages/forms/advanced.html')
+                            i.fa.fa-circle-o
+                            |  Advanced Elements
+                    li
+                        a(href='pages/forms/editors.html')
+                            i.fa.fa-circle-o
+                            |  Editors
+            li.treeview
+                a(href='#')
+                    i.fa.fa-table
+                    span Users
+                    span.pull-right-container
+                        i.fa.fa-angle-left.pull-right
+                ul.treeview-menu
+                    li
+                        a(href='pages/tables/simple.html')
+                            i.fa.fa-circle-o
+                            |  All Users
+                    li
+                        a(href='pages/tables/data.html')
+                            i.fa.fa-circle-o
+                            |  Manage User
+            li
+                a(href='pages/calendar.html')
+                    i.fa.fa-calendar
+                    span Calendar
+                    span.pull-right-container
+                        small.label.pull-right.bg-red 3
+                        small.label.pull-right.bg-blue 17
+            li
+                a(href='pages/mailbox/mailbox.html')
+                    i.fa.fa-envelope
+                    span Mailbox
+                    span.pull-right-container
+                        small.label.pull-right.bg-yellow 12
+                        small.label.pull-right.bg-green 16
+                        small.label.pull-right.bg-red 5

@@ -1,0 +1,10 @@
+extends layout
+block stylesheet
+    link(rel="stylesheet" bs-hidden="1" bs-system-element="1" href="/stylesheets/layout/admin/homeAdmin.css")
+    
+    link(rel="stylesheet" bs-hidden="1" bs-system-element="1" href="/stylesheets/layout/style.css")
+block content
+    body.skin-blue.sidebar-mini(style='height: auto; min-height: 100%; background: #4c9fbf;')
+        .wrapper(style='height: auto; min-height: 100%;')
+            include sideBar
+            block contentAdmin

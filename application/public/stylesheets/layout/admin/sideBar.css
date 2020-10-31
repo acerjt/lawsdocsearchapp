@@ -1,0 +1,34 @@
+.skin-blue .wrapper, .skin-blue .main-sidebar, .skin-blue .left-side {
+    background-color: #4c9fbf;
+}
+.skin-blue .sidebar-menu > li.header {
+    color: #fff;
+    background: #2a6b85;
+}
+.skin-blue .sidebar-menu > li > .treeview-menu {
+    margin: 0 1px;
+    background: #57accf;
+}
+.skin-blue .sidebar-menu > li > a:hover, .skin-blue .sidebar-menu > li.active > a {
+    color: #ffffff;
+    background: #4c9fbf;
+    border-left-color: #3c8dbc;
+}
+.skin-blue .sidebar-form {
+    border-radius: 3px;
+    border: 1px solid #4c9fbf;
+    margin: 10px 10px;
+}
+.skin-blue .sidebar-form input[type="text"], .skin-blue .sidebar-form .btn {
+    box-shadow: none;
+    background-color: #e5f3fb;
+}
+.skin-blue .sidebar-form .btn {
+    color: #4c9fbf;
+}
+.skin-blue .sidebar-form input[type="text"] {
+    color: #4c9fbf;
+}
+.skin-blue .sidebar a {
+    color: #fff;
+}

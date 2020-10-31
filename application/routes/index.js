@@ -31,5 +31,10 @@ router.get('/typeUser', function(req, res, next) {
     res.render('typeUser', { title: 'Gói dịch vụ' });
 });
 
+router.get('/admin/', function(req, res, next) {
+    res.render('admin/overView', { title: 'Trang chủ' });
+});
+
+
 
 module.exports = router;
