@@ -1,7 +1,9 @@
-const elastic = require("../../connection/elastic-connect");
-const client = elastic.client;
 const cheerio = require("cheerio");
 const axios = require("axios").default;
+
+const elastic = require("../../connection/elastic-connect");
+const client = elastic.client;
+
 const baseURL = "https://vanbanphapluat.co";
 
 const fetchHtml = async (url) => {
