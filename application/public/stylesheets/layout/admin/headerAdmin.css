@@ -316,7 +316,7 @@
 }
 
 .header-logo {
-  height: 60px;
+  height: 50px;
   width: auto;
 }
 
@@ -814,4 +814,10 @@ img {
 }
 .bg-yellow, .callout.callout-warning, .alert-warning, .label-warning, .modal-warning .modal-body {
   background-color: #f39c12 !important;
+}
+.header-blue{
+  background-color: #4c9fbf;
+}
+a {
+  color: #fff;
 }

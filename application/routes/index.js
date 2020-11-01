@@ -35,6 +35,8 @@ router.get('/admin/', function(req, res, next) {
     res.render('admin/overView', { title: 'Trang chủ' });
 });
 
-
+router.get('/admin/allUsers', function(req, res, next) {
+    res.render('admin/allUsers', { title: 'Users' });
+});
 
 module.exports = router;

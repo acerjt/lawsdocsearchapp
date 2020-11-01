@@ -1,0 +1,115 @@
+extends homeAdmin
+block stylesheet
+    link(rel="stylesheet" bs-hidden="1" bs-system-element="1" href="/stylesheets/layout/admin/allUsers.css")
+    //- link(rel="stylesheet" bs-hidden="1" bs-system-element="1" href="/stylesheets/layout/style.css")
+block contentAdmin
+    .content-wrapper(style='min-height: 925.667px;')
+        section.content-header
+            h1
+                | Quản lý thành viên
+                
+            ol.breadcrumb
+                li
+                    a(href='#')
+                        i.fa.fa-dashboard
+                        |  Home
+                li
+                    a(href='#') Thành viên
+                li.active Quản lý thành viên
+        section.content
+            .row
+                .col-xs-12
+                    .box
+                        .box-header
+                            h3.box-title Thông tin thành viên
+                            .box-tools
+                                .input-group.input-group-sm.hidden-xs(style='width: 150px;')
+                                    input.form-control.pull-right(type='text' name='table_search' placeholder='Search')
+                                    .input-group-btn
+                                        button.btn.btn-default(type='submit')
+                                            i.fa.fa-search
+                        .box-body.table-responsive.no-padding
+                            table.table.table-hover
+                                tbody
+                                    tr
+                                        th ID
+                                        th Họ và Tên
+                                        th Ngày Sinh
+                                        th Loại thành viên
+                                        th Status
+                                        th Email
+                                        th
+                                        th
+                                    tr
+                                        td 183
+                                        td Nguyễn Ngọc Dung
+                                        td 11-7-2014
+                                        td
+                                            span.label.label-success Approved
+                                        td 
+                                            span.label.label-success Active
+                                        td 16521576@gm.uit.edu.vn
+                                        td
+                                        td
+                                    tr
+                                        td 219
+                                        td Phan Minh Toàn
+                                        td 11-7-2014
+                                        td
+                                            span.label.label-warning Pending
+                                        td Active
+                                        td 16521576@gm.uit.edu.vn
+                                        td
+                                        td
+                                    tr
+                                        td 657
+                                        td Ngô Thị Huyền
+                                        td 11-7-2014
+                                        td
+                                            span.label.label-primary Approved
+                                        td Active
+                                        td 16521576@gm.uit.edu.vn
+                                        td
+                                        td
+                                    tr
+                                        td 175
+                                        td Trương Hoàng Khang
+                                        td 11-7-2014
+                                        td
+                                            span.label.label-danger Denied
+                                        td 
+                                            span.label.label-danger Deactive
+                                        td 16521576@gm.uit.edu.vn
+                                        td
+                                            a(class="button" href="" data-toggle='modal' data-target='#signUpModal')
+                                                i.far.fa-edit
+                                        td
+                                            a(class="button" href="" data-toggle='modal' data-target='#signUpModal')
+                                                i.far.fa-trash-alt
+                                    
+                        .box-footer.clearfix
+                            ul.pagination.pagination-sm.no-margin.pull-right
+                                li
+                                    a(href='#') «
+                                li
+                                    a(href='#') 1
+                                li
+                                    a(href='#') 2
+                                li
+                                    a(href='#') 3
+                                li
+                                    a(href='#') »
+    #signUpModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
+        .modal-dialog(role='document')
+            .register-photo
+                .form-container(style='display: table;max-width: 900px;width: 100%;box-shadow: 1px 1px 5px rgba(0,0,0,0.1);')
+
+                    form(method='post' style='border-bottom-left-radius:5px; border-top-left-radius:5px')
+                        h2.text-left Đăng kí tài khoản.
+                        .form-group
+                            input.form-control(type='text' name='name' placeholder='Họ và tên')
+                        .form-group
+                            input#example-date-input.form-control(type='date' value='' placeholder='Ngày sinh')
+                            .hide Ngày sinh
+                                //- i.fas.fa-calendar-alt
+    
