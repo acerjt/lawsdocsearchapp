@@ -48,21 +48,31 @@
 i.far.fa-edit {
      padding: 0; 
 }
-.name{
-    width: 18%;
+.docs-name{
+
+    width: 14%;
+
 }
-.date-of-birth, .date-joined{
+.signer{
+
+    width: 17%;
+
+}
+.date-of-release{
     width: 12%;
 
 }
-.date-joined{
+.date-effect{
     width: 14%;
 
 }
 
-.type-user, .status{
-    width: 9%;
+.status-effect{
+    width: 5%;
 
+}
+.docs-field{
+    width: 13%;
 }
 .register-photo {
     background: #f1f7fc;
@@ -121,17 +131,47 @@ i.far.fa-edit {
 .label-pro2 {
     background-color: #4a707a !important;
 }
-.label-pro3 {
-    background-color: #416169 !important;
+.label-effect-inconsonant{
+    color: #ffb284 !important;
+   
 }
-.label-basic1 {
-    background-color: #ddddda !important;
+span.label{
+    font-size:16px;
+    font-weight: 400;
+    padding: 0;
 }
-.label-basic5 {
-    background-color: #c2c8c5 !important;
+.label-effect-unknow{
+    color: #9b9b9b !important;
+    
 }
-.label-basic15{
-    background-color: #94b0b7 !important;
+.label-effect-no{
+    color: #de5b6d !important;
+   
+}
+.label-effect-yes{
+    color: #68b2a0 !important;
+   
+}
+label.col-sm-1.col-form-label{
+    padding-left:0px; 
+    padding-right:0px;
+}
+label.col-sm-2.col-form-label{
+    padding-right:0px;
+}
+select#inputState.form-control {
+    background-color: #e5f3fb;
+    border: none;
+    border-bottom: 1px solid #4c9fbf;
+    border-radius: 0;
+    box-shadow: none;
+    outline: none;
+    color: #000;
+}
+.box-header.search-title{
+    border: 0.05rem solid #4c9fbf;
+    margin: 10px 15px;
+    background-color: #e5f3fb;
 }
 .table>tbody>tr:hover{
     background-color: #e5f3fb;

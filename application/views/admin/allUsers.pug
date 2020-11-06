@@ -32,59 +32,110 @@ block contentAdmin
                             table.table.table-hover
                                 tbody
                                     tr
-                                        th ID
-                                        th Họ và Tên
-                                        th Ngày Sinh
-                                        th Loại thành viên
-                                        th Status
-                                        th Email
-                                        th
-                                        th
+                                        th.id ID
+                                        th.name Họ và Tên
+                                        th.date-of-birth Ngày Sinh
+                                        th.type-user Loại TV
+                                        th.status Status
+                                        th.date-joined Ngày tham gia
+                                        th.email Email
+                                        th.edit
+                                        th.delete
                                     tr
                                         td 183
                                         td Nguyễn Ngọc Dung
-                                        td 11-7-2014
+                                        td 26-12-1997
                                         td
-                                            span.label.label-success Approved
+                                            span.label.label-basic1 Basic 1
                                         td 
                                             span.label.label-success Active
+                                        td 20-07-2020
                                         td 16521576@gm.uit.edu.vn
                                         td
+                                            a(class="button" href="" data-toggle='modal' data-target='#editUser')
+                                                i.far.fa-edit
                                         td
+                                            a(class="button" href="" data-toggle='modal' data-target='#deleteUser')
+                                                i.far.fa-trash-alt
                                     tr
                                         td 219
                                         td Phan Minh Toàn
-                                        td 11-7-2014
+                                        td 10-02-1998
                                         td
-                                            span.label.label-warning Pending
-                                        td Active
+                                            span.label.label-basic5 Basic 5
+                                        td 
+                                            span.label.label-success Active
+                                        td 20-07-2020
                                         td 16521576@gm.uit.edu.vn
                                         td
+                                            a(class="button" href="" data-toggle='modal' data-target='#editUser')
+                                                i.far.fa-edit
                                         td
+                                            a(class="button" href="" data-toggle='modal' data-target='#deleteUser')
+                                                i.far.fa-trash-alt
                                     tr
                                         td 657
                                         td Ngô Thị Huyền
-                                        td 11-7-2014
+                                        td 23-04-1998
                                         td
-                                            span.label.label-primary Approved
-                                        td Active
+                                            span.label.label-basic15 Basic 15
+                                        td 
+                                            span.label.label-success Active
+                                        td 20-07-2020
                                         td 16521576@gm.uit.edu.vn
                                         td
+                                            a(class="button" href="" data-toggle='modal' data-target='#editUser')
+                                                i.far.fa-edit
                                         td
+                                            a(class="button" href="" data-toggle='modal' data-target='#deleteUser')
+                                                i.far.fa-trash-alt
                                     tr
                                         td 175
                                         td Trương Hoàng Khang
                                         td 11-7-2014
                                         td
-                                            span.label.label-danger Denied
+                                            span.label.label-pro1 LDC Pro I
                                         td 
                                             span.label.label-danger Deactive
+                                        td 20-07-2020
                                         td 16521576@gm.uit.edu.vn
                                         td
                                             a(class="button" href="" data-toggle='modal' data-target='#signUpModal')
                                                 i.far.fa-edit
                                         td
                                             a(class="button" href="" data-toggle='modal' data-target='#signUpModal')
+                                                i.far.fa-trash-alt
+                                    tr
+                                        td 175
+                                        td Nguyễn Trần Hoàng Thanh
+                                        td 11-7-2014
+                                        td
+                                            span.label.label-pro2 LDC Pro II
+                                        td 
+                                            span.label.label-danger Deactive
+                                        td 11-7-2014
+                                        td 16521576@gm.uit.edu.vn
+                                        td
+                                            a(class="button" href="" data-toggle='modal' data-target='#editUser')
+                                                i.far.fa-edit
+                                        td
+                                            a(class="button" href="" data-toggle='modal' data-target='#deleteUser')
+                                                i.far.fa-trash-alt
+                                    tr
+                                        td 175
+                                        td Nguyễn Bá Tùng
+                                        td 23-04-1998
+                                        td
+                                            span.label.label-pro3 LDC Pro II
+                                        td 
+                                            span.label.label-danger Deactive
+                                        td 11-7-2014
+                                        td 16521576@gm.uit.edu.vn
+                                        td
+                                            a(class="button" href="" data-toggle='modal' data-target='#editUser')
+                                                i.far.fa-edit
+                                        td
+                                            a(class="button" href="" data-toggle='modal' data-target='#deleteUser')
                                                 i.far.fa-trash-alt
                                     
                         .box-footer.clearfix
@@ -99,17 +150,85 @@ block contentAdmin
                                     a(href='#') 3
                                 li
                                     a(href='#') »
-    #signUpModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
+    #editUser.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
         .modal-dialog(role='document')
             .register-photo
-                .form-container(style='display: table;max-width: 900px;width: 100%;box-shadow: 1px 1px 5px rgba(0,0,0,0.1);')
+                .form-container(style='display: table;max-width: 900px;width: 100%;box-shadow: 1px 1px 5px rgba(0,0,0,0.1);border-radius: 5px;')
+                    form(style='margin-top: 20px; margin-left:50px; border-radius: 5px;')
+                        h2.title Chỉnh sửa thông tin tài khoản thành viên
+                        .form-group.row(style='margin-bottom: 0.5rem;')
+                            .user-panel.edit-user
+                                .pull-left.image(style='width: 50%;text-align: right;')
+                                    img.img-circle(src='../images/img/im_dev1.jpg' alt='User Image')
+                                .pull-left.info.name
+                                    p Phan Minh Toan
+                                    a.online(style='color: #000;' href='#')
+                                        i.fa.fa-circle.text-success
+                                        |  Online
+                        div.form-group-inside
+                            .form-group.row(style='margin-bottom: 0.5rem;')
+                                label.col-sm-4.col-form-label(for='inputDocId') ID
+                                .col-sm-8(style='width:100%')
+                                    input#inputDocId.form-control( type='text' value='01234' readonly)
 
-                    form(method='post' style='border-bottom-left-radius:5px; border-top-left-radius:5px')
-                        h2.text-left Đăng kí tài khoản.
-                        .form-group
-                            input.form-control(type='text' name='name' placeholder='Họ và tên')
-                        .form-group
-                            input#example-date-input.form-control(type='date' value='' placeholder='Ngày sinh')
-                            .hide Ngày sinh
-                                //- i.fas.fa-calendar-alt
-    
+                            .form-group.row(style='margin-bottom: 0.5rem;')
+                                label.col-sm-4.col-form-label(for='inputDocName') Họ và Tên
+                                .col-sm-8(style='width:100%')
+                                    input#inputDocName.form-control( type='text' value='Phan Minh Toàn' readonly)
+
+                            .form-group.row(style='margin-bottom: 0.5rem;')
+                                label.col-sm-4.col-form-label(for='inputDocType') Giới tính
+                                .col-sm-8
+                                    select#inputState.form-control
+                                        option(selected='') Nam
+                                        option Nữ
+                                        option Khác
+
+                            .form-group.row(style='margin-bottom: 0.5rem;')
+                                label.col-sm-4.col-form-label(for='inputDocDate') Ngày Sinh
+                                .col-sm-8(style='width:100%')
+                                    input#inputDocDate.form-control( type='date' value='2020/03/27')
+
+                            .form-group.row(style='margin-bottom: 0.5rem;')
+                                label.col-sm-4.col-form-label(for='inputDocStarted') Ngày tham gia
+                                .col-sm-8(style='width:100%')
+                                    input#inputDocStarted.form-control(type='date' readonly)
+
+                            .form-group.row(style='margin-bottom: 0.5rem;')
+                                label.col-sm-4.col-form-label(for='inputDocName') Địa chỉ
+                                .col-sm-8(style='width:100%')
+                                    input#inputDocName.form-control( type='text' value='Bắc Bình, Bình Thuận')
+
+                            .form-group.row(style='margin-bottom: 0.5rem;')
+                                label.col-sm-4.col-form-label(for='inputDocName') Email
+                                .col-sm-8(style='width:100%')
+                                    input#inputDocName.form-control( type='text' value='16521261@gm.uit.edu.vn')
+
+                            .form-group.row(style='margin-bottom: 0.5rem;')
+                                label.col-sm-4.col-form-label(for='inputDocType') Loại thành viên
+                                .col-sm-8
+                                    select#inputState.form-control(style='width:100%' readonly)
+                                        option(selected='') FREE
+                                        option Basic 1
+                                        option Basic 5
+                                        option Basic 15
+                                        option LDC Pro I
+                                        option LDC Pro II
+                                        option LDC Pro V
+                            .form-group.row
+                                button.btn_create(role='button' onclick="location.href=''")
+                                    | Cập nhật 
+
+    #deleteUser.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
+        .modal-dialog(role='document')
+            .register-photo
+                .form-container(style='border-radius: 5px;display: table;max-width: 900px;width: 100%;box-shadow: 1px 1px 5px rgba(0,0,0,0.1);')
+                    form(style='margin-top: 20px; margin-left:50px; text-align:center; border-radius: 5px;')
+                        h2.title Xóa thành viên
+                        .form-group.row(style='margin-bottom: 0px;')
+                            label.col-sm-12.col-form-label(for='inputDocId') Bạn có đồng ý xóa User: Phan Minh Toàn
+                        .form-group.row(style='margin-bottom: 0px;')
+                            button.btn_create(role='button' onclick="location.href=''" style='background-color: #c76d50; border-color:#c76d50')
+                                | Đồng ý xóa
+                            button.btn_create(role='button' onclick="location.href=''" style='background-color:#bab7b6; border-color:#bab7b6')
+                                | Không đồng ý

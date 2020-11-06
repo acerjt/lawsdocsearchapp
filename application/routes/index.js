@@ -36,7 +36,10 @@ router.get('/admin/', function(req, res, next) {
 });
 
 router.get('/admin/allUsers', function(req, res, next) {
-    res.render('admin/allUsers', { title: 'Users' });
+    res.render('admin/allUsers', { title: 'Thành viên' });
 });
 
+router.get('/admin/allDocs', function(req, res, next) {
+    res.render('admin/allDocs', { title: 'Văn bản pháp lý' });
+});
 module.exports = router;
