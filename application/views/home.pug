@@ -16,9 +16,9 @@ block content
                 .order-guide
                     div
                         label(for='click-change-icon') Tìm kiếm nâng cao   
-                        input#click-change-icon.style4(data-toggle='collapse' type='checkbox' data-target='#collapseExample' onclick='changeIconCircleDown()' role='button' aria-expanded='false' aria-controls='collapseExample')
-                        div
-                            #collapseExample.collapse(style='background-color:#e5f3fb; padding: 15px 15px 15px 15px')
+                        input#click-change-icon.style4(data-toggle='collapse' type='checkbox' data-target='#collapseExample' aria-expanded='false' aria-controls='collapseExample')
+                        #collapseExample.collapse
+                            div(style='background-color:#e5f3fb;padding: 15px')
                                 form(style='margin-bottom: 0px;')
                                     .form-group.row(style='margin-bottom: 0.5rem;')
                                         label.col-sm-2.col-form-label(for='inputDocName') Tên Văn Bản
@@ -155,59 +155,66 @@ block content
                                                         .w-100
                                                         .col Cập nhật:
                                                         .col.timeupdate 7 phút trước
-              
-                        #pills-home.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='pills-home-tab')
-                                    .container(style='margin: 0px 0px 0px 0px;')
-                                        .row
-                                            .col-md-8
-                                                .title
-                                                    | Thông báo 333/TB-VPCP1
-                                                .inside
-                                                    | Thông báo 333/TB-VPCP năm 2020 về kết luận của Phó Thủ tướng Vũ Đức Đam tại cuộc
-                                                    | họp Thường trực Ban Chỉ đạo Trung ương Chương trình mục tiêu quốc gia giảm nghèo
-                                                    | bền vững giai đoạn 2016-2020 mở rộng do Văn phòng Chính phủ ban hành
-                                            .col-md-4(style='margin-top:30px')
-                                                .container(style='margin-left:10px')
-                                                    .row
-                                                        .col Ban hành:
-                                                        .col.datecome 16/09/2020
-                                                        .w-100
-                                                        .col Ngày hiệu lực:
-                                                        .col.datestart 16/09/2020
-                                                        .w-100
-                                                        .col Hiệu lực:
-                                                        .col.iseffect Chưa có HL
-                                                        .w-100
-                                                        .col Cập nhật:
-                                                        .col.timeupdate 7 phút trước
-                    
-                        .navbar-content-md8
-                            nav.navbar.navbar-light.navbar-expand-md.navigation-clean-search(style='height:40px')
-                                        .container-fluid(style='height:40px')
-                                            #navcol-1.collapse.navbar-collapse(style='font-size: 12px; height:40px')
-                                                .navbar-group(style='height:40px')
-                                                    .navbar-text.mr-4(style='height:40px ')
-                                                        a.travel(href='?page=addTrip_Step0' style='font-size:14px')
-                                                        i.fas.fa-file-word
-                                                        |                                                         Nội dung
-                                                    .navbar-text.mr-4
-                                                        a.signup(href='#' style='font-size:14px')
-                                                        i.fas.fa-project-diagram
-                                                        |                                                         Lược đồ
-                                                    .navbar-text.mr-4
-                                                        a.login(href='' style='font-size:14px')
-                                                        i.fas.fa-file-pdf
-                                                        |                                                         Bản PDF
-                                                    .navbar-text.mr-4
-                                                        a.login(href='' style='font-size:14px')
-                                                        i.fas.fa-history
-                                                        |                                                          Lịch sử
-                                                    .navbar-text.mr-4
-                                                        a.login(href='' style='font-size:14px')
-                                                        i.fas.fa-external-link-alt
-                                                        |                                                         Văn bản liên quan
+                        if(lawsDoc)
+                            each law in lawsDoc
+                                #pills-home.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='pills-home-tab')
+                                            .container(style='margin: 0px 0px 0px 0px;')
+                                                .row
+                                                    .col-md-8
+                                                        .title
+                                                            | #{law['_source'].name}
+                                                        .inside
+                                                            | #{law['_source'].desc}
+                                                    .col-md-4(style='margin-top:30px')
+                                                        .container(style='margin-left:0px')
+                                                            .row
+                                                                .col Ban hành:
+                                                                .col.datecome #{law['_source'].issuedDate}
+                                                                .w-100
+                                                                .col Ngày hiệu lực:
+                                                                .col.datestart #{law['_source'].effectiveDate}
+                                                                .w-100
+                                                                .col Hiệu lực:
+                                                                .col.iseffect #{law['_source'].effectiveStatus}
+                                                                .w-100
+                                                                .col Cập nhật:
+                                                                .col.timeupdate 7 phút trước
 
-                    
+                                .navbar-content-md8
+                                    nav.navbar.navbar-light.navbar-expand-md.navigation-clean-search(style='height:40px')
+                                                .container-fluid(style='height:40px')
+                                                    #navcol-1.collapse.navbar-collapse(style='font-size: 12px; height:40px')
+                                                        .navbar-group(style='height:40px')
+                                                            .navbar-text.mr-4(style='height:40px ')
+                                                                a.travel(href='?page=addTrip_Step0' style='font-size:14px')
+                                                                i.fas.fa-file-word
+                                                                |                                                         Nội dung
+                                                            .navbar-text.mr-4
+                                                                a.signup(href='#' style='font-size:14px')
+                                                                i.fas.fa-project-diagram
+                                                                |                                                         Lược đồ
+                                                            .navbar-text.mr-4
+                                                                a.login(href='' style='font-size:14px')
+                                                                i.fas.fa-file-pdf
+                                                                |                                                         Bản PDF
+                                                            .navbar-text.mr-4
+                                                                a.login(href='' style='font-size:14px')
+                                                                i.fas.fa-history
+                                                                |                                                          Lịch sử
+                                                            .navbar-text.mr-4
+                                                                a.login(href='' style='font-size:14px')
+                                                                i.fas.fa-external-link-alt
+                                                                |                                                         Văn bản liên quan
+                        - if(paginateDisplayConfiguration)
+                            .pagination
+                                .paging-container.d-flex
+                                    a.paging-item(href=`/?page=${currentPage - 1 < 1 ?  1 : currentPage - 1}` style='color: #6a6a6a') <
+                                    - for (let page = paginateDisplayConfiguration[0].startingPage; page < paginateDisplayConfiguration[0].endingPage; page += paginateDisplayConfiguration[0].pageIncrementJumping)
+                                        if(page === currentPage)
+                                            a.paging-item(href=`/?page=${page}` style='color: red') #{page}
+                                        else 
+                                            a.paging-item(href=`/?page=${page}` style='color: #6a6a6a') #{page}
+                                    a.paging-item(href=`/?page=${currentPage + 1}` style='color: #6a6a6a') >
                 .col-md-4(style='width:400')
                     .panel-top(style='margin-bottom: 15px')
                         a CSDL VĂN BẢN
@@ -293,4 +300,3 @@ block content
                                         | WTO - Cam kết Việt Nam
                                 li
                                     a(href='#') Văn bản khác
-    script(src='/script/home.js')

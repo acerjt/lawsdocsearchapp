@@ -1120,3 +1120,16 @@ h3 {
     margin-left:10px;
 }
 
+.pagination {
+    border-top: 1px solid #4c9fbf;
+    margin: auto;
+    justify-content: center;
+}
+a.paging-item {
+    border: 1px solid #bfd7e0;
+    text-align: center;
+    font-size: 13px;
+    padding: 13px;
+    margin: 10px 0px;
+    color: #6a6a6a;
+}

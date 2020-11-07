@@ -1,9 +1,24 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const lawsController = require('../controllers/laws/laws.controller')
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    res.render('home', { title: 'Trang chủ' });
+    return lawsController.getLaws(req,res).then(rs => {
+        if(rs.s === 200) {
+            let lawsData = rs.lawsData
+            res.render('home', {
+                    title: 'Trang chủ', 
+                    lawsDoc: lawsData.lawsDoc && lawsData.lawsDoc.length === 0 ? [] : lawsData.lawsDoc, 
+                    currentPage: lawsData.page,
+                    paginateDisplayConfiguration : lawsData.paginateDisplayConfiguration
+                }
+            );
+        }
+        else res.render('home', { title: 'Trang chủ', lawsDoc : []});
+
+    })
 });
 
 
