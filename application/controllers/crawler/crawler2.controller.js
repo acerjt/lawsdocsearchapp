@@ -1,17 +1,12 @@
 const cheerio = require("cheerio");
 const axios = require("axios").default;
+const crypto = require('crypto')
 const fs = require('fs');
-const path = require('path')
 
-// const elastic = require("../../connection/elastic-connect");
-// const client = elastic.client;
-
-const { Client } = require('@elastic/elasticsearch');
-const { error } = require("console");
-
-const client = new Client({ node: 'http://localhost:9200' })
+const {filePathStoreLawsData} = require('../../common')
 
 const baseURL = "https://vanbanphapluat.co";
+
 
 const fetchHtml = async (url) => {
   try {
@@ -32,21 +27,13 @@ const crawLawsPerPage = async (lawURL) => {
   const searchResults = selector("body").find(
     ".row .items-push > .col-md-12 > .row"
   );
-  // return searchResults.map(async (idx, el) => {
-  //   const elementSelector = selector(el);
-  //   return extractDeal(elementSelector);
-  // });
-  return Promise.all(
-    searchResults
-      .map(async (idx, el) => {
-        const elementSelector = selector(el);
-        return extractDeal(elementSelector);
-      })
-      .get()
-  );
+  return searchResults.map(async (idx, el) => {
+    const elementSelector = selector(el);
+    return extractLawsData(elementSelector);
+  });
 };
 
-const extractDeal = async (selector) => {
+const extractLawsData = async (selector) => {
   const href = selector
     .find(".col-md-9")
     .find(".doc-summary")
@@ -128,87 +115,64 @@ const extractDeal = async (selector) => {
   const contentText = await lawContent.text();
   const contentHtml = await lawContent.html();
 
-  // const law = {
-  //   href: href,
-  //   name: name,
-  //   desc: desc,
-  //   docType: docType,
-  //   docNum: docNum,
-  //   agencyIssued: agencyIssued,
-  //   signedBy: signedBy,
-  //   issuedDate: issuedDate,
-  //   effectiveDate: effectiveDate,
-  //   dateOfAnnouncement: dateOfAnnouncement,
-  //   numOfAnnouncement: numOfAnnouncement,
-  //   field: field,
-  //   effectiveStatus: effectiveStatus,
-  //   contentText: contentText,
-  //   contentHtml: contentHtml,
-  // };
-  // fs.appendFile(path.resolve(__dirname, '../../data/lawsv6.json'), JSON.stringify(law)+ '\n', function (err) {
-  //   if (err) throw err;
-  // });
-  const result = await client.index({
-    index: "laws",
-    body: {
-      href,
-      name,
-      desc,
-      docType,
-      docNum,
-      agencyIssued,
-      signedBy,
-      issuedDate,
-      effectiveDate,
-      dateOfAnnouncement,
-      numOfAnnouncement,
-      field,
-      effectiveStatus,
-      contentText,
-      contentHtml,
-    },
-  });
+  const law = {
+    tie_breaker_id : await hexIdGeneration(),
+    href: href,
+    name: name,
+    desc: desc,
+    docType: docType,
+    docNum: docNum,
+    agencyIssued: agencyIssued,
+    signedBy: signedBy,
+    issuedDate: issuedDate,
+    effectiveDate: effectiveDate,
+    dateOfAnnouncement: dateOfAnnouncement,
+    numOfAnnouncement: numOfAnnouncement,
+    field: field,
+    effectiveStatus: effectiveStatus,
+    contentText: contentText,
+    contentHtml: contentHtml,
+  };
 
-  return Promise.resolve(result);
-  // return Promise.resolve({
-  //   href,
-  //   name,
-  //   desc,
-  //   docType,
-  //   docNum,
-  //   agencyIssued,
-  //   signedBy,
-  //   issuedDate,
-  //   effectiveDate,
-  //   dateOfAnnouncement,
-  //   numOfAnnouncement,
-  //   field,
-  //   effectiveStatus,
-  //   contentText,
-  //   contentHtml
-  // });
+  await writeLawsDataFile(filePathStoreLawsData, JSON.stringify(law)+ '\n').catch(err => {
+    console.log(err)
+    Promise.reject(err)
+  })
+
+  return Promise.resolve()
 };
 
-module.exports.crawler = async (req, res) => {
+const writeLawsDataFile = async(filePath, data) => {
+  fs.appendFile(filePath, data, function (err) {
+    if (err) throw err;
+  });
+}
+
+const hexIdGeneration = () => {
+  return new Promise((resolve, reject) => {
+    crypto.randomBytes(16, (err, buffer) => {
+      if(err) {
+        console.log(err)
+        return rejeq({s: 400, msg : err})
+      }
+      const currentTimeHexString = Date.now().toString(16)
+
+      const id =  buffer.toString('hex') + currentTimeHexString
+      return resolve(id)
+    })
+  })
+}
+
+
+module.exports.crawler = async () => {
   try {
-    const numberPagesVBPL = 1; // 11319
-    for (let page = 1; page <= numberPagesVBPL; page++) {
+    const totalPagesVBPL = 5000; // 11338
+    for (let page = 1; page <= totalPagesVBPL; page++) {
       const lawURL = `${baseURL}/csdl/van-ban-phap-luat?p=${page}`;
       await crawLawsPerPage(lawURL).then(rs => {
-        console.log(rs)
         console.log(`page ${page} has crawled`);
       }).catch(error => console.log('Index error: ' + error))
-      // .then( async (documents) => {
-      //   laws.push(documents);
-      //   await documents.forEach(document => {
-      //     client.index({
-      //       index : 'laws',
-      //       body: document
-      //     })
-      //   })
-      // });
     }
-    // res.send(`<h1>${numberPagesVBPL} pages has crawled</h1>`)
   } catch (error) {
     console.log(error);
   }
