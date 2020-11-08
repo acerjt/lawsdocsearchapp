@@ -35,3 +35,45 @@
 .user-panel {
     padding: 20px 10px 0px 10px;
 }
+.treeview.menu-open>ul.treeview-menu {
+    overflow: visible;
+    height: auto;
+}
+.caret {
+    cursor: pointer;
+    user-select: none; /* Prevent text selection */
+  }
+  
+  .caret-down::before {
+    transform: rotate(90deg);
+  }
+  
+  
+
+
+a[aria-expanded=true] span .fa-angle-left {
+    display: none;
+ }
+a[aria-expanded=false] span .fa-angle-down {
+    display: none;
+ }
+.inside-collapse{
+  padding: 5px 5px 5px 15px;
+  display: block;
+  font-size: 14px;
+ }
+ .ul-inside{
+   background-color: #5999b3;
+ }
+ i.fas.fa-book{
+  width: 20px;
+ }
+ i.fas.fa-users{
+  width: 20px;
+ }
+ a.inside-collapse.active{
+   color:#fff;
+ }
+ a.inside-collapse.not-active{
+  color: #8aa4af
+}
