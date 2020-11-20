@@ -96,7 +96,7 @@ const checkPagingChanged = async (currentDocumentID, onPage) => {
         }
       })  
       currentDocumentID = result.body.hits.hits[result.body.hits.hits.length -1]._source.tie_breaker_id
-      console.log('Checking page: ', onPage)
+      // console.log('Checking page: ', onPage)
       return checkPagingChanged(currentDocumentID, onPage + 1)
     }
     return false
