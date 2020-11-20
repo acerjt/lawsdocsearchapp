@@ -2,3 +2,4 @@ application/node_modules
 application/elasticsearch.callapi.es
 application/test
 application/sampledata.json
+application/document
