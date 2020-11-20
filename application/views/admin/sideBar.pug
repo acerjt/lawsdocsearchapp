@@ -1,0 +1,82 @@
+// Left side column. contains the logo and sidebar
+aside.main-sidebar
+    // sidebar: style can be found in sidebar.less
+    section.sidebar(style='height: auto;')
+        // Sidebar user panel
+        .user-panel
+            .pull-left.image
+                img.img-circle(src='../images/img/im_dev2.jpg' alt='User Image')
+            .pull-left.info
+                p Dung N Nguyen
+                a(href='#')
+                    i.fa.fa-circle.text-success
+                    |  Online
+        // search form
+        form.sidebar-form(action='#' method='get')
+            .input-group
+                input.form-control(type='text' name='q' placeholder='Search...')
+                span.input-group-btn
+                    button#search-btn.btn.btn-flat(type='submit' name='search')
+                        i.fa.fa-search
+        // /.search form
+        // sidebar menu: : style can be found in sidebar.less
+        ul.sidebar-menu.tree(data-widget='tree')
+            li.header MAIN NAVIGATION
+            li.treeview.menu-open.caret
+                a(data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation")
+                    i.fa.fa-dashboard
+                    span Bảng điều khiển
+                    span.pull-right-container
+                        i.fa.fa-angle-left.pull-right
+                        i.fa.fa-angle-down.pull-right
+                ul.collapse.ul-inside#navbarToggleExternalContent
+                    li
+                        a.inside-collapse.not-active
+                            i.fa.fa-circle-o
+                            |  Tổng quát
+                    li
+                        a.inside-collapse.active
+                            i.fa.fa-circle-o
+                            |  Lịch sử tìm kiếm
+
+            li.treeview.menu-open.caret
+                a(data-toggle="collapse" data-target="#navbarToggleExternalContent1" aria-controls="navbarToggleExternalContent1" aria-expanded="false" aria-label="Toggle navigation")
+                    i.fas.fa-book
+                    span Quản lý văn bản
+                    span.pull-right-container
+                        i.fa.fa-angle-left.pull-right
+                        i.fa.fa-angle-down.pull-right
+                ul.collapse.ul-inside#navbarToggleExternalContent1
+                    li
+                        a.inside-collapse.not-active
+                            i.fa.fa-circle-o
+                            |  Thêm văn bản
+                    li
+                        a.inside-collapse.active(href='/admin/allDocs')
+                            i.fa.fa-circle-o
+                            |  Chỉnh sửa văn bản
+                       
+             
+            li.treeview
+                a(href='/admin/allUsers')
+                    i.fas.fa-users
+                    span Quản lý thành viên
+                    
+                
+            li
+                a(href='pages/calendar.html')
+                    i.fa.fa-calendar
+                    span Calendar
+                    span.pull-right-container
+                        small.label.pull-right.bg-red 3
+                        small.label.pull-right.bg-blue 17
+            li
+                a(href='pages/mailbox/mailbox.html')
+                    i.fa.fa-envelope
+                    span Mailbox
+                    span.pull-right-container
+                        small.label.pull-right.bg-yellow 12
+                        small.label.pull-right.bg-green 16
+                        small.label.pull-right.bg-red 5
+
+    script(src='/script/sideBar.js')

@@ -1,0 +1,172 @@
+extends homeAdmin
+block stylesheet
+    link(rel="stylesheet" bs-hidden="1" bs-system-element="1" href="/stylesheets/layout/admin/allDocs.css")
+    //- link(rel="stylesheet" bs-hidden="1" bs-system-element="1" href="/stylesheets/layout/style.css")
+block contentAdmin
+    .content-wrapper(style='min-height: 925.667px;')
+        section.content-header
+            h1
+                | Quản lý văn bản
+                
+            ol.breadcrumb
+                li
+                    a(href='#')
+                        i.fa.fa-dashboard
+                        |  Home
+                li
+                    a(href='#') Văn bản pháp lý
+                li.active Quản lý văn bản
+        section.content
+            .row
+                .col-xs-12
+                    .box
+                        .box-header
+                            h3.box-title Văn bản pháp lý Việt Nam
+                            .box-tools
+                                .input-group.input-group-sm.hidden-xs(style='width: 150px;')
+                                    input.form-control.pull-right(type='text' name='table_search' placeholder='Search')
+                                    .input-group-btn
+                                        button.btn.btn-default(type='submit')
+                                            i.fa.fa-search
+                        .box-header.search-title
+                            .form-group.row(style='margin-left:0px;')
+                                label.col-form-label(for='inputDocType') CSDL Văn bản
+                                .col-sm-3
+                                    select#inputState.form-control(style='width:100%')
+                                        option(selected='') Tất cả
+                                        option Văn bản pháp luật
+                                        option Công văn
+                                        option Tiêu chuẩn Việt Nam
+                                        option Dự thảo văn bản
+                            div
+                                .form-group.row(style='margin: 0px auto; width: 100%;')
+                                    label.col-form-label(for='inputDocType') Lĩnh vực
+                                    .col-sm-3
+                                        select#inputState.form-control(style='width:100%')
+                                            option(selected='') Tất cả
+                                            option Vi phạm hành chính
+                                            option Quyền dân sự
+                                            option Trách nhiệm hình sự
+                                            option Giao thông vận tải
+
+                                    label.col-form-label(for='inputDocType') Loại văn bản
+                                    .col-sm-3
+                                        select#inputState.form-control(style='width:100%')
+                                            option(selected='') Tất cả
+                                            option Quyết định
+                                            option Chỉ thị
+                                            option Nghị định
+                                            option Hướng dẫn
+                                            option Công điện
+                                            option Pháp lệnh
+                                    label.col-form-label(for='inputDocType') Hiệu lực
+                                    .col-sm-3
+                                        select#inputState.form-control(style='width:100%')
+                                            option(selected='') Tất cả
+                                            option Còn hiệu lực
+                                            option Hết hiệu lực
+                                            option Không xác định
+                                            option Không còn phù hợp
+                                            option Chưa có hiệu lực
+
+                        .box-body.table-responsive.no-padding
+                            table.table.table-hover
+                                tbody
+                                    tr
+                                        th.id ID
+                                        th.docs-name Tên văn bản
+                                        th.date-of-release Ngày ban hành
+                                        th.docs-field Lĩnh vực
+                                        th.date-effect Ngày hiệu lực
+                                        th.status-effect Hiệu lực
+                                        th.signer Người kí
+                                        th.edit
+                                        th.delete
+                                    tr
+                                        td 183
+                                        td Quyết định 2837/QĐ-BCTg
+                                        td 05-11-2020
+                                        td Vi phạm hành chính
+                                        td 20-07-2020
+                                        td 
+                                            span.label.label-effect-yes Còn hiệu lực
+                                        td Nguyễn Ngọc Dung
+                                        td
+                                            a(class="button" href="" data-toggle='modal' data-target='#editUser')
+                                                i.far.fa-edit
+                                        td
+                                            a(class="button" href="" data-toggle='modal' data-target='#deleteUser')
+                                                i.far.fa-trash-alt
+                                    tr
+                                        td 183
+                                        td Thông tư 26/2020/TT-BCT
+                                        td 05-11-2020
+                                        td Vi phạm hành chính
+                                        td 20-07-2020
+                                        td 
+                                            span.label.label-effect-no Hết hiệu lực
+                                        td Nguyễn Ngọc Dung
+                                        td
+                                            a(class="button" href="" data-toggle='modal' data-target='#editUser')
+                                                i.far.fa-edit
+                                        td
+                                            a(class="button" href="" data-toggle='modal' data-target='#deleteUser')
+                                                i.far.fa-trash-alt
+                                    tr
+                                        td 183
+                                        td Văn bản khác 206/KH-UBND
+                                        td 05-11-2020
+                                        td Giao thông vận tải
+                                        td 20-07-2020
+                                        td 
+                                            span.label.label-effect-unknow Không xác định
+                                        td Nguyễn Ngọc Dung
+                                        td
+                                            a(class="button" href="" data-toggle='modal' data-target='#editUser')
+                                                i.far.fa-edit
+                                        td
+                                            a(class="button" href="" data-toggle='modal' data-target='#deleteUser')
+                                                i.far.fa-trash-alt
+                                    
+                                    tr
+                                        td 183
+                                        td Nghị quyết 04/2020/NQ-HĐND
+                                        td 05-11-2020
+                                        td Trách nhiệm hình sự
+                                        td 20-07-2020
+                                        td 
+                                            span.label.label-effect-unknow Không còn PH
+                                        td Nguyễn Ngọc Dung
+                                        td
+                                            a(class="button" href="" data-toggle='modal' data-target='#editUser')
+                                                i.far.fa-edit
+                                        td
+                                            a(class="button" href="" data-toggle='modal' data-target='#deleteUser')
+                                                i.far.fa-trash-alt
+                                    tr
+                                        td 183
+                                        td Thông báo 1391/TB-BGDĐT
+                                        td 05-11-2020
+                                        td Quyền dân sự
+                                        td 20-07-2020
+                                        td 
+                                            span.label.label-effect-inconsonant Chưa có hiệu lực
+                                        td Nguyễn Ngọc Dung
+                                        td
+                                            a(class="button" href="" data-toggle='modal' data-target='#editUser')
+                                                i.far.fa-edit
+                                        td
+                                            a(class="button" href="" data-toggle='modal' data-target='#deleteUser')
+                                                i.far.fa-trash-alt
+                        .box-footer.clearfix
+                            ul.pagination.pagination-sm.no-margin.pull-right
+                                li
+                                    a(href='#') «
+                                li
+                                    a(href='#') 1
+                                li
+                                    a(href='#') 2
+                                li
+                                    a(href='#') 3
+                                li
+                                    a(href='#') »

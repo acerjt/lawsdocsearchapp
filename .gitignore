@@ -3,4 +3,5 @@ application/elasticsearch.callapi.es
 application/test
 application/data
 application/package-lock.json
+application/sampledata.json
 application/document
