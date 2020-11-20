@@ -4,21 +4,9 @@ const split = require('split2')
 
 const crawler = require('./controllers/crawler/crawler2.controller')
 const {client} = require('./connection/elastic-connect')
-const { filePathStoreLawsData, lawsIndex} = require('./common')
+const { filePathStoreLawsData, lawsIndex, checkIndicesExists, deleteIndex} = require('./common')
 
-const checkIndicesExists = async (index) => {
-  let {body} = await client.indices.exists({
-    index: index
-  })
-  return body
-}
 
-const deleteIndex = async (index) => {
-  let {body} = await client.indices.delete({
-    index : index
-  })
-  return body
-}
 
 const createLawsIndex = async () => {
   client.indices.create({
