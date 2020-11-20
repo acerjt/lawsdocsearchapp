@@ -1,53 +1,89 @@
 
-const client = require('../../connection/elastic-connect').client
+const {client} = require('../../connection/elastic-connect')
+const {titles, pugFiles, lawsIndex, lawsSearchSize, maxResultWindow, lawsPagingIndex, getTotalLawsDoc} = require('../../common')
 
 
-const getLawsInParticularPage = (page) => {
-    return new Promise((resolve, reject) => {
+const getLawsInParticularPage = async (page) => {
+    try {
         page = page && page > 1 ? Number(page) : 1
-        const {from, size, isOverTenThoudsandDocs, paginateDisplayConfiguration } = pagination(page)
+        const {from, size, isOverTenThoudsandDocs, paginateDisplayConfiguration } =  await pagination(page)
         if(!isOverTenThoudsandDocs) {
-            client.search({
-                index : 'laws',
+            let {body} = await client.search({
+                index : lawsIndex,
+                from: from,
+                size: size,
                 body: {
-                    "query": {
-                        "match_all": {}
-                    },
-                    from, from,
-                    size: size,
                     sort: {
                         "issuedDate": {
                             "order": "desc"
-                      }
+                        },
+                        "tie_breaker_id": {
+                            "order" : "desc"
+                        }
                     }
                 }
-            }).then(({body}) => {
-                return resolve({ lawsDoc: body.hits.hits, page : page, paginateDisplayConfiguration : paginateDisplayConfiguration})
-            }).catch(error => {
-                console.log(error) 
-                reject(error)
             })
+            return Promise.resolve({ lawsDoc: body.hits.hits, page : page, paginateDisplayConfiguration : paginateDisplayConfiguration})
         }
         else {
-            return reject('More than 1000 documents')
+            let {body} = await client.search({
+                index: lawsPagingIndex,
+                body: {
+                    query : {
+                        match : {
+                            "page" : page
+                        }
+                    }
+                }
+            })
+            if(body.hits.hits[0]) {
+                let {lastLawsDocument, sortIssueDate} = body.hits.hits[0]._source
+                let result = await client.search({
+                    index : lawsIndex,
+                    size: lawsSearchSize,
+                    body: {
+                        "query": {
+                            "match_all": {}
+                        },
+                        "search_after": [sortIssueDate, lastLawsDocument],
+                        "sort": [
+                            {
+                                "issuedDate": {
+                                    "order": "desc"
+                                },
+                                "tie_breaker_id": {
+                                    "order" : "desc"
+                                }
+                            }
+                        ]
+                    }
+                })
+                return Promise.resolve({ lawsDoc: result.body.hits.hits, page : page, paginateDisplayConfiguration : paginateDisplayConfiguration})
+            }
+            return Promise.resolve({ lawsDoc: [], page : page, paginateDisplayConfiguration : paginateDisplayConfiguration})
         }
-        })
+    } catch (error) {
+        return Promise.reject(new Error(`Get laws document on page ${page}: ` + error.message))
+    }
 }
 
-const pagination = (page) => {
-    const size = 10
-    const max_result_window = 10000 // index.max_result_window 
+const pagination = async (page) => {
+    const size = lawsSearchSize
+    const maxDocumentsResultReturn = maxResultWindow  // index.max_result_window 
     const from = page * size - size
     let isOverTenThoudsandDocs = false
     let startingPage = page - page % 10 + 1
     let endingPage = startingPage + 10
     let pageIncrementJumping = 1
-    
+    const totalLawsDoc = await getTotalLawsDoc()
+    const lastPage = Math.ceil(totalLawsDoc / lawsSearchSize + 1)
     if(page % 10 === 0) {
         startingPage -= 1
-        console.log(startingPage)
     }
-    
+
+    if(endingPage > lastPage)
+        endingPage = lastPage 
+
     let paginateDisplayConfiguration = [
         {
             startingPage,
@@ -57,22 +93,24 @@ const pagination = (page) => {
     ]
 
 
-    if (from + size > max_result_window)
+    if (from + size > maxDocumentsResultReturn)
         isOverTenThoudsandDocs = true
 
     return { from : from, size : size, isOverTenThoudsandDocs : isOverTenThoudsandDocs, paginateDisplayConfiguration : paginateDisplayConfiguration}
 }
 
-
 module.exports.getLaws = async (req, res) => {
     try {
         let currentPage = req.query.page
-        return getLawsInParticularPage(currentPage).then(rs => {
-            return {s: 200, lawsData: rs}
-        }).catch(error => {
-            return {s: 400, msg: error}
+        let lawsData = await getLawsInParticularPage(currentPage)
+        res.render(pugFiles.home, {
+            title: titles.home, 
+            lawsDoc: lawsData.lawsDoc && lawsData.lawsDoc.length === 0 ? [] : lawsData.lawsDoc, 
+            currentPage: lawsData.page,
+            paginateDisplayConfiguration : lawsData.paginateDisplayConfiguration
         })
     } catch (error) {
-        return {s: 400, msg: error}
+        console.log(error)
+        res.render(pugFiles.home, { title: titles.home, lawsDoc : []});
     }
 }
