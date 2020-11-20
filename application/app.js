@@ -7,7 +7,9 @@ const logger = require('morgan');
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const crawler = require('./routes/crawler/crawler.route')
+const lawsRouter = require('./routes/laws/laws.route')
 
+const pagingCron = require('./cron/paginator')
 
 const app = express();
 
@@ -26,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/crawler', crawler)
+app.use('/laws', lawsRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -43,4 +46,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+pagingCron.calculatePaging()
 module.exports = app;
