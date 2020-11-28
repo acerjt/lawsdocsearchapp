@@ -34,6 +34,59 @@ div
                                 i(class="fas fa-phone")
                                 |                                     Liên hệ
 .invisible-div
+.container(style='padding: 0 0 0 0; margin: 0 auto;')
+    div
+        .create-order-container
+            .input-link
+                .parse_button
+                    div
+                        input.parse(type='text' placeholder='Gõ từ khóa cần tìm kiếm...')
+                    div
+                        button.btn_create(role='button' onclick="location.href=''")
+                            | Tìm Kiếm
+            .order-guide
+                div
+                    label(for='click-change-icon') Tìm kiếm nâng cao   
+                    input#click-change-icon.style4(data-toggle='collapse' type='checkbox' data-target='#collapseExample' aria-expanded='false' aria-controls='collapseExample')
+                    #collapseExample.collapse
+                        div(style='background-color:#e5f3fb;padding: 15px')
+                            form(style='margin-bottom: 0px;')
+                                .form-group.row(style='margin-bottom: 0.5rem;')
+                                    label.col-sm-2.col-form-label(for='inputDocName') Tên Văn Bản
+                                    .col-sm-10(style='width:50%')
+                                        input#inputDocName.form-control(style='width:50%' type='text' placeholder='Gõ tên văn bản cần tìm kiếm...')
+                                .form-group.row(style='margin-bottom: 0.5rem;')
+                                    label.col-sm-2.col-form-label(for='inputDocType') Loại Văn Bản
+                                    .col-sm-10
+                                        select#inputState.form-control(style='width:50%')
+                                            option(selected='') Tất cả
+                                            option Hiến pháp
+                                            option Bộ luật của Quốc hội
+                                            option Luật của Quốc hội
+                                            option Nghị quyết của Quốc hội 
+                                            option Pháp lệnh của Ủy ban thường vụ Quốc hội
+                                            option Nghị quyết của Ủy ban thường vụ Quốc hội
+                                .form-group.row(style='margin-bottom: 0.5rem;')
+                                    label.col-sm-2.col-form-label(for='inputDocId') Số Hiệu
+                                    .col-sm-10(style='width:50%')
+                                        input#inputDocId.form-control(style='width:50%' type='text' placeholder='Nhập số hiệu văn bản...')
+                                .form-group.row(style='margin-bottom: 0.5rem;')
+                                    label.col-sm-2.col-form-label(for='inputDocDate') Ngày Ban Hành
+                                    .col-sm-10(style='width:50%')
+                                        input#inputDocDate.form-control(style='width:50%' type='date')
+                                .form-group.row(style='margin-bottom: 0.5rem;')
+                                    label.col-sm-2.col-form-label(for='inputDocStarted') Ngày Hiệu Lực
+                                    .col-sm-10(style='width:50%')
+                                        input#inputDocStarted.form-control(style='width:50%' type='date')
+                                .form-group.row(style='margin-bottom: 0rem;')
+                                    label.col-sm-2.col-form-label(for='inputDocType') Loại Văn Bản
+                                    .col-sm-10
+                                        select#inputState.form-control(style='width:50%')
+                                            option(selected='') Tất cả
+                                            option Chưa có hiệu lực
+                                            option Còn hiệu lực
+                                            option Hết hiệu lực
+                                            option Không xác địn
 
 #signUpModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
     .modal-dialog(role='document')
