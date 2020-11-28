@@ -27,6 +27,8 @@ const pugFiles = {
     profileUser: 'profileUser',
     roleChange: 'roleChange',
     typeUser: 'typeUser',
+    detailLaw: 'detailLaw',
+    error404: 'error404'
 }
 
 const countTotalIndexDocument = async (index) => {
