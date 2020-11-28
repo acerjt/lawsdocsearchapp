@@ -1,0 +1,22 @@
+body {
+  margin: 0;
+}
+
+#page_404 {
+  width: 100%;
+  display: inline-block;
+  background:  #ffffff center/cover no-repeat;
+  height: 100vh;
+  margin: 0;
+  color: #4c9fbf;
+}
+
+#page_404 h1 {
+  font: 15rem Roboto;
+}
+
+#page_404 p {
+  display: inline-block;
+  margin: 0.2em 3rem;
+  font: 2em Roboto;
+}
