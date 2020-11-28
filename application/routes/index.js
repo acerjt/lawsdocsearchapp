@@ -6,6 +6,8 @@ const {titles, pugFiles} = require('../common')
 /* GET home page. */
 router.get('/', lawsController.getLaws)
 
+router.get('/:id', lawsController.getLawById)
+
 router.get('/contactUs', (req, res, next) => {
     res.render(pugFiles.contactUs, { title: titles.contact });
 });
@@ -41,4 +43,5 @@ router.get('/admin/allUsers', function(req, res, next) {
 router.get('/admin/allDocs', function(req, res, next) {
     res.render('admin/allDocs', { title: 'Văn bản pháp lý' });
 });
+
 module.exports = router;

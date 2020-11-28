@@ -1,0 +1,59 @@
+extends layout
+block stylesheet
+    link(rel="stylesheet" href="/stylesheets/layout/detailLaw.css")
+block content
+    #bg-img
+        #bg-color
+            .container
+                #summary-container.text-center.text-white
+                    #law-name #{lawDocument._source.name}
+                    #law-descripton #{lawDocument._source.desc}
+    #breadcrumb-container
+        .container
+            ul.breadcrumb
+                li
+                    a(href="#") Trang chủ
+                li
+                    a(href="#") Thể thao y tế
+                li
+                    a(href="#") Quyết định
+                li Quyết định 838/QĐ-BYT
+    #nav-tabs-container
+        .container
+            nav
+                #nav-tab.nav.nav-tabs(role="tablist")
+                    a#nav-content-tab.nav-item.nav-link.active(href="#nav-content" data-toggle="tab" role="tab" aria-controls="nav-content" aria-selected="true") 
+                        i.fas.fa-book-open    Nội dung
+                    a#nav-file-tab.nav-item.nav-link(href="#nav-file" data-toggle="tab" role="tab" aria-controls="nav-file" aria-selected="false") 
+                        i.fas.fa-file-pdf Văn bản gốc
+                #nav-tabContent.tab-content
+                        #nav-content.tab-pane.fade.show.active(role="tabpanel" aria-labelledby="nav-content-tab")
+                            .block-content
+                                .row
+                                    .col-md-8 !{lawDocument._source.contentHtml}
+                                    .col-md-4
+                                        #info-hold
+                                            .view.pull-left
+                                                p Đã xem: 
+                                                    strong.text-success 21
+                                            .pull-right
+                                                .pull-left Đánh giá: 
+                                                .pull-left
+                                                    #rating
+                                                        input(type="radio" name="rating" id="star5" value="5" onclick="onRating()")
+                                                        label.ratingIcon(for="star5" title="Rất tốt")
+
+                                                        input(type="radio" name="rating" id="star4" value="4" onclick="onRating()")
+                                                        label.ratingIcon(for="star4" title="Tốt")
+
+                                                        input(type="radio" name="rating" id="star3" value="3" onclick="onRating()")
+                                                        label.ratingIcon(for="star3" title="Trung Bình")
+
+                                                        input(type="radio" name="rating" id="star2" value="2" onclick="onRating()")
+                                                        label.ratingIcon(for="star2" title="Tệ")
+
+                                                        input(type="radio" name="rating" id="star1" value="1" onclick="onRating()")
+                                                        label.ratingIcon(for="star1" title="Rất tệ")
+                        #nav-file.tab-pane.fade(role="tabpanel" aria-labelledby="nav-file-tab") World
+    script(src="script/common.js")
+    script(src="script/detailLaw.js")
