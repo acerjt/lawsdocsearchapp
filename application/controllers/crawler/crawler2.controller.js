@@ -2,6 +2,9 @@ const cheerio = require("cheerio");
 const axios = require("axios").default;
 const crypto = require('crypto')
 const fs = require('fs');
+const moment = require("moment")
+// moment().tz("Asia/Ho_Chi_Minh").format();
+moment.locale('vi')
 
 const {filePathStoreLawsData} = require('../../common')
 
@@ -34,7 +37,7 @@ const crawLawsPerPage = async (lawURL) => {
 };
 
 const extractLawsData = async (selector) => {
-  const href = selector
+  const href = await selector
     .find(".col-md-9")
     .find(".doc-summary")
     .find(".col-md-12, .col-md-9")
@@ -43,7 +46,7 @@ const extractLawsData = async (selector) => {
 
   currentDocLawURL = `${baseURL + href}`;
   const html = await fetchHtml(currentDocLawURL);
-  const selector1 = cheerio.load(html);
+  const selector1 = await cheerio.load(html);
 
   const name = await selector1("body")
     .find(".bg-primary-dark-op > .content > .push-10-t > h1")
@@ -114,6 +117,17 @@ const extractLawsData = async (selector) => {
 
   const contentText = await lawContent.text();
   const contentHtml = await lawContent.html();
+  const updatedAtText = await dataDocLaw
+    .find("tr:nth-child(11) > td:nth-child(2)")
+    .text()
+    .trim();
+  const updatedAt = calculateUpdatedAt(updatedAtText)
+  
+  const fileLinks = await selector1("body").find(".block-table.table-bordered.text-center")
+  let pdfLawsLink = await fileLinks.find('.bg-warning').find("a")
+  let docLawsLink = await fileLinks.find('.bg-danger').find("a")
+  pdfLawsLink = pdfLawsLink[0] ? baseURL + pdfLawsLink[0].attribs.href : ''
+  docLawsLink = docLawsLink[0] ? baseURL + docLawsLink[0].attribs.href : ''
 
   const law = {
     tie_breaker_id : await hexIdGeneration(),
@@ -130,10 +144,12 @@ const extractLawsData = async (selector) => {
     numOfAnnouncement: numOfAnnouncement,
     field: field,
     effectiveStatus: effectiveStatus,
+    updatedAt: updatedAt,
+    pdfLawsLink: pdfLawsLink,
+    docLawsLink: docLawsLink,
     contentText: contentText,
     contentHtml: contentHtml,
   };
-
   await writeLawsDataFile(filePathStoreLawsData, JSON.stringify(law)+ '\n').catch(err => {
     console.log(err)
     Promise.reject(err)
@@ -141,6 +157,38 @@ const extractLawsData = async (selector) => {
 
   return Promise.resolve()
 };
+
+const calculateUpdatedAt = (updatedAt) => {
+  let splitUpdatedAt = updatedAt.split(' ')
+  let date
+  if (splitUpdatedAt[1] === 'giây') {
+      date = moment().subtract(splitUpdatedAt[0], "seconds")
+  } else if (splitUpdatedAt[1] === 'phút') {
+      date = moment().subtract(splitUpdatedAt[0], "minutes")
+  } else if (splitUpdatedAt[1] === 'giờ') {
+      date = moment().subtract(splitUpdatedAt[0], "hours")
+  } else if (splitUpdatedAt[1] === 'ngày') {
+      date = moment().subtract(splitUpdatedAt[0], "days")
+  } /**  else if (splitUpdatedAt[1] === 'tuần') {
+      date = moment().subtract(splitUpdatedAt[0], "weeks")
+  } else if (splitUpdatedAt[1] === 'tháng') {
+      date = moment().subtract(splitUpdatedAt[0], "months")
+  } **/ else if (splitUpdatedAt[1] === 'năm') {
+      date = moment().subtract(splitUpdatedAt[0], "years")
+  } else if(updatedAt.indexOf('Hôm qua') > -1)
+      date = moment().subtract(1, "days")
+  else if(updatedAt.indexOf('Năm ngoái') > -1)
+      date = moment().subtract(1, "years")
+  else {
+      date = moment(formattedDate(updatedAt),"YYYYMMDD")
+  }
+  return date.toDate()
+}
+
+const formattedDate = (date) => {
+  let splitDate = date.slice(date.length - 11, date.length - 1).split('/')
+  return `${splitDate[2]}${splitDate[1]}${Number(splitDate[0]) + 1}`
+}
 
 const writeLawsDataFile = async(filePath, data) => {
   fs.appendFile(filePath, data, function (err) {
@@ -166,7 +214,7 @@ const hexIdGeneration = () => {
 
 module.exports.crawler = async () => {
   try {
-    const totalPagesVBPL = 5000; // 11338
+    const totalPagesVBPL = 1; // 11338
     for (let page = 1; page <= totalPagesVBPL; page++) {
       const lawURL = `${baseURL}/csdl/van-ban-phap-luat?p=${page}`;
       await crawLawsPerPage(lawURL).then(rs => {
