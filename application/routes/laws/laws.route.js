@@ -3,7 +3,7 @@ const router = express.Router();
 
 const controller = require('../../controllers/laws/laws.controller')
 
-// router.get('/:id', controller.getLawById);
+router.post('/rating', controller.caculateRating);
 
 module.exports = router;
     

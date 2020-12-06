@@ -5,3 +5,4 @@ application/data
 application/package-lock.json
 application/sampledata.json
 application/document
+application/logs
