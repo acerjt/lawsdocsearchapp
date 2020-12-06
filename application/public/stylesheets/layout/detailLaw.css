@@ -48,7 +48,7 @@ ul.breadcrumb li a:hover {
 
 #rating{border:none;float:left;}
 #rating>input{display:none;}/*ẩn input radio - vì chúng ta đã có label là GUI*/
-#rating>label:before{margin-left: 3px;font-family:FontAwesome;display:inline-block;content:"\f005";}/*1 ngôi sao*/
+#rating>label:before{margin-left: 3px;font-family:FontAwesome;display:inline-block;content:"\f005"}/*1 ngôi sao*/
 #rating>label{color:#ddd;float:right;}/*float:right để lật ngược các ngôi sao lại đúng theo thứ tự trong thực tế*/
 /*thêm màu cho sao đã chọn và các ngôi sao phía trước*/
 .noHover{
@@ -65,3 +65,112 @@ ul.breadcrumb li a:hover {
 #rating>input:checked~label:hover,
 #rating>label:hover~input:checked~label,
 #rating>input:checked~label:hover~label{color:#FFED85;} */
+
+#info-hold {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+/* Three column layout */
+.side {
+    float: left;
+    width: 15%;
+}
+
+.middle {
+    margin-top: 5px;
+    width: 70%;
+}
+
+  /* Place text to the right */
+.right {
+    text-align: right;
+}
+
+  /* Clear floats after the columns */
+.row-rating:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+  /* The bar container */
+.bar-container {
+    width: 100%;
+    background-color: #f1f1f1;
+    text-align: center;
+    color: white;
+}
+
+  /* Individual bars */
+#bar-5 {height: 18px; }
+#bar-4 {height: 18px; }
+#bar-3 {height: 18px; }
+#bar-2 {height: 18px; }
+#bar-1 {height: 18px; } 
+
+.five-star-color {
+    background-color: #4CAF50;
+}
+
+.four-star-color {
+    background-color: #2196F3;
+}
+
+.three-star-color {
+    background-color: #00bcd4;
+}
+
+.two-star-color {
+    background-color: #ff9800;
+}
+
+.one-star-color {
+    background-color: #f44336;
+}
+
+.row-rating {
+    width: 100%;
+}
+
+.rating-infor-container {
+    display: flex;
+}
+
+.row-rating-item {
+    display: flex;
+    justify-content: space-between;
+}
+
+#averate-rating {
+    font-size: 1.75rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+.left-rating-infor-container {
+    margin-right: 20px;
+}
+
+.averate-rating-star {
+    font-size: 12px;
+    /* text-align: center; */
+}
+
+.averate-rating-container {
+    position: relative;
+}
+.averate-rating-container {
+    width: 55px;
+    white-space: nowrap;
+}
+#averate-rating-star-base-layer {
+    color: #ddd;
+}
+#averate-rating-star-ratio-layer {
+    overflow: hidden;
+    color: #FFD700;
+    position: absolute;
+    top: 0;
+}

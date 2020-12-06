@@ -1,6 +1,6 @@
 
 const {client} = require('../../connection/elastic-connect')
-const {titles, pugFiles, lawsIndex, lawsSearchSize, maxResultWindow, lawsPagingIndex, getTotalLawsDoc} = require('../../common')
+const {titles, pugFiles, laws, variables, lawsPaging, scripts} = require('../../common')
 
 
 const getLawsInParticularPage = async (page) => {
@@ -12,7 +12,7 @@ const getLawsInParticularPage = async (page) => {
         if(!isOverTenThoudsandDocs) {
             console.time('search time')
             let {body} = await client.search({
-                index : lawsIndex,
+                index : laws.lawsIndex,
                 from: from,
                 size: size,
                 // filterPath: 'took,hits.hits',
@@ -41,7 +41,7 @@ const getLawsInParticularPage = async (page) => {
             console.time('search time')
             console.time('search page id time')
             let {body} = await client.search({
-                index: lawsPagingIndex,
+                index: lawsPaging.lawsPagingIndex,
                 body: {
                     query : {
                         match : {
@@ -55,8 +55,8 @@ const getLawsInParticularPage = async (page) => {
                 console.time('search page time')
                 let {lastLawsDocument, sortIssueDate} = body.hits.hits[0]._source
                 let result = await client.search({
-                    index : lawsIndex,
-                    size: lawsSearchSize,
+                    index : laws.lawsIndex,
+                    size: laws.lawsSearchSize,
                     // _source: [
                     //     "name",
                     //     "desc",
@@ -96,15 +96,15 @@ const getLawsInParticularPage = async (page) => {
 }
 
 const pagination = async (page) => {
-    const size = lawsSearchSize
-    const maxDocumentsResultReturn = maxResultWindow  // index.max_result_window 
+    const size = laws.lawsSearchSize
+    const maxDocumentsResultReturn = variables.maxResultWindow  // index.max_result_window 
     const from = page * size - size
     let isOverTenThoudsandDocs = false
     let startingPage = page - page % 10 + 1
     let endingPage = startingPage + 10
     let pageIncrementJumping = 1
-    const totalLawsDoc = await getTotalLawsDoc()
-    const lastPage = Math.ceil(totalLawsDoc / lawsSearchSize + 1)
+    const totalLawsDoc = await laws.getTotalLawsDoc()
+    const lastPage = Math.ceil(totalLawsDoc / laws.lawsSearchSize + 1)
     if(page % 10 === 0) {
         startingPage -= 1
     }
@@ -129,7 +129,7 @@ const pagination = async (page) => {
 const getLawById = async (lawDocId) => {
     lawDocId = '/' + lawDocId
     let {body} = await client.search({
-        index: lawsIndex,
+        index: laws.lawsIndex,
         body: {
             "query" : {
                 "match" : {
@@ -138,9 +138,34 @@ const getLawById = async (lawDocId) => {
             }
         }
     })
-    console.log(body)
     return body.hits.hits[0]
 }
+
+const ratingDocument = async (id,ratingValue) => {
+    try {
+        await client.update({
+            id: id,
+            index: laws.lawsIndex,
+            body: {    
+                "script" : {
+                    "id": scripts.laws.ratingDoc,
+                    "params": {
+                        "rating": ratingValue
+                    }
+                }
+            }
+        })
+        let { body } = await client.get({
+            index: laws.lawsIndex,
+            id: id
+        })
+        return body._source
+    }
+    catch (error) {
+        return new Error(`Rating document error: ${error}`)
+    }
+}
+
 module.exports.getLaws = async (req, res) => {
     try {
         console.time('total time')
@@ -166,6 +191,17 @@ module.exports.getLawById = async (req,res) => {
         let lawsDocId = req.params.id
         let lawDocument  = await getLawById(lawsDocId)
         res.render(pugFiles.detailLaw, {lawDocument : lawDocument})
+    } catch (error) {
+        console.log(error)
+        res.render(pugFiles.error404)
+    }
+}
+
+module.exports.caculateRating = async (req, res) => {
+    try {
+        let {id, ratingValue} = req.body
+        let result = await ratingDocument(id, ratingValue)
+        res.send({s: 200, data: result})
     } catch (error) {
         console.log(error)
         res.render(pugFiles.error404)

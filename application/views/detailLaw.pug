@@ -2,6 +2,8 @@ extends layout
 block stylesheet
     link(rel="stylesheet" href="/stylesheets/layout/detailLaw.css")
 block content
+    - let totalRating = lawDocument._source.ratings['5'] + lawDocument._source.ratings['4'] + lawDocument._source.ratings['3'] + lawDocument._source.ratings['2'] + lawDocument._source.ratings['1'] 
+    - totalRating = totalRating === 0 ? 1 : parseInt(totalRating)
     #bg-img
         #bg-color
             .container
@@ -33,27 +35,94 @@ block content
                                     .col-md-8 !{lawDocument._source.contentHtml}
                                     .col-md-4
                                         #info-hold
-                                            .view.pull-left
+                                            .view-container
                                                 p Đã xem: 
                                                     strong.text-success 21
-                                            .pull-right
+                                            .ratings-container
                                                 .pull-left Đánh giá: 
                                                 .pull-left
                                                     #rating
-                                                        input(type="radio" name="rating" id="star5" value="5" onclick="onRating()")
+                                                        input(type="radio" name="rating" id="star5" value="5" onclick=`onRating('${lawDocument._id}')`)
                                                         label.ratingIcon(for="star5" title="Rất tốt")
 
-                                                        input(type="radio" name="rating" id="star4" value="4" onclick="onRating()")
+                                                        input(type="radio" name="rating" id="star4" value="4" onclick=`onRating('${lawDocument._id}')`)
                                                         label.ratingIcon(for="star4" title="Tốt")
 
-                                                        input(type="radio" name="rating" id="star3" value="3" onclick="onRating()")
+                                                        input(type="radio" name="rating" id="star3" value="3" onclick=`onRating('${lawDocument._id}')`)
                                                         label.ratingIcon(for="star3" title="Trung Bình")
 
-                                                        input(type="radio" name="rating" id="star2" value="2" onclick="onRating()")
+                                                        input(type="radio" name="rating" id="star2" value="2" onclick=`onRating('${lawDocument._id}')`)
                                                         label.ratingIcon(for="star2" title="Tệ")
 
-                                                        input(type="radio" name="rating" id="star1" value="1" onclick="onRating()")
+                                                        input(type="radio" name="rating" id="star1" value="1" onclick=`onRating('${lawDocument._id}')`)
                                                         label.ratingIcon(for="star1" title="Rất tệ")
+                                        .rating-infor-container
+                                            .left-rating-infor-container
+                                                #averate-rating #{Math.round((lawDocument._source.stars + Number.EPSILON) * 100) / 100}
+                                                .averate-rating-container
+                                                    #averate-rating-star-base-layer.averate-rating-star
+                                                        span
+                                                            i.fa.fa-star
+                                                        span
+                                                            i.fa.fa-star
+                                                        span
+                                                            i.fa.fa-star
+                                                        span
+                                                            i.fa.fa-star
+                                                        span
+                                                            i.fa.fa-star
+                                                    #averate-rating-star-ratio-layer.averate-rating-star(style=`width: ${lawDocument._source.stars / 5 * 100}%`)
+                                                        span
+                                                            i.fa.fa-star
+                                                        span
+                                                            i.fa.fa-star
+                                                        span
+                                                            i.fa.fa-star
+                                                        span
+                                                            i.fa.fa-star
+                                                        span
+                                                            i.fa.fa-star
+                                            .row-rating
+                                                .row-rating-item
+                                                    .side
+                                                        div 5 
+                                                            i.fas.fa-star
+                                                    .middle
+                                                        .bar-container
+                                                            #bar-5.five-star-color(style=`width: ${parseInt(lawDocument._source.ratings['5']) / totalRating * 100}%`)
+                                                    #totalRating5.side.right #{lawDocument._source.ratings['5']}
+                                                .row-rating-item    
+                                                    .side
+                                                        div 4 
+                                                            i.fas.fa-star
+                                                    .middle
+                                                        .bar-container
+                                                            #bar-4.four-star-color(style=`width: ${parseInt(lawDocument._source.ratings['4']) / totalRating * 100}%`)
+                                                    #totalRating4.side.right #{lawDocument._source.ratings['4']}
+                                                .row-rating-item    
+                                                    .side
+                                                        div 3 
+                                                            i.fas.fa-star
+                                                    .middle
+                                                        .bar-container
+                                                            #bar-3.three-star-color(style=`width: ${parseInt(lawDocument._source.ratings['3']) / totalRating * 100}%`)
+                                                    #totalRating3.side.right #{lawDocument._source.ratings['3']}
+                                                .row-rating-item    
+                                                    .side
+                                                        div 2 
+                                                            i.fas.fa-star
+                                                    .middle
+                                                        .bar-container
+                                                            #bar-2.two-star-color(style=`width: ${parseInt(lawDocument._source.ratings['2']) / totalRating * 100}%`)
+                                                    #totalRating2.side.right #{lawDocument._source.ratings['2']}
+                                                .row-rating-item    
+                                                    .side
+                                                        div 1 
+                                                            i.fas.fa-star
+                                                    .middle
+                                                        .bar-container
+                                                            #bar-1.one-star-color(style=`width: ${parseInt(lawDocument._source.ratings['1']) / totalRating * 100}%`)
+                                                    #totalRating1.side.right #{lawDocument._source.ratings['1']}
                         #nav-file.tab-pane.fade(role="tabpanel" aria-labelledby="nav-file-tab") World
     script(src="script/common.js")
     script(src="script/detailLaw.js")
