@@ -1,14 +1,12 @@
 const client = require('../connection/elastic-connect').client
 const common = require('../common')
-const {lawsIndex, maxResultWindow, lawsSearchSize, lawsPagingIndex, firstPageOverTenThousandDocument } = common
-const { getTotalLawsDoc, countTotalIndexDocument, createIndex, deleteIndex, checkIndicesExists} = common
+const {laws, variables, lawsPaging, func} = common
 const {CronJob} = require('cron')
-
 
 const get10000ThLawsDocument = async () => {
   try {
     let {body} = await client.search({
-      index : lawsIndex,
+      index : laws.lawsIndex,
       from: 9999,
       size: 1,
       body: {
@@ -48,12 +46,12 @@ const index = async (index, source) => {
 }
 const checkPagingChanged = async (currentDocumentID, onPage) => {
   try {
-    if (!checkIndicesExists(lawsPagingIndex))
+    if (!func.checkIndicesExists(lawsPaging.lawsPagingIndex))
       return true
-    let countPagingIndexResult = await countTotalIndexDocument(lawsPagingIndex)
-    if(onPage < firstPageOverTenThousandDocument + countPagingIndexResult || onPage === firstPageOverTenThousandDocument) {
+    let countPagingIndexResult = await func.countTotalIndexDocument(lawsPaging.lawsPagingIndex)
+    if(onPage < laws.firstPageOverTenThousandDocument + countPagingIndexResult || onPage === laws.firstPageOverTenThousandDocument) {
       let {body} = await client.search({
-        index: lawsPagingIndex,
+        index: lawsPaging.lawsPagingIndex,
         body: {
           "query": {
             "match": {
@@ -73,8 +71,8 @@ const checkPagingChanged = async (currentDocumentID, onPage) => {
         return true
       }
       let result = await client.search({
-        index : lawsIndex,
-        size: lawsSearchSize,
+        index : laws.lawsIndex,
+        size: laws.lawsSearchSize,
         body: {
           "query": {
             "match_all": {}
@@ -106,18 +104,18 @@ const checkPagingChanged = async (currentDocumentID, onPage) => {
 }
 const indexPageForPagination = async () => {
   try {
-    let totalLawsDocument = await getTotalLawsDoc()
-    let lastPageOverTenThousandDocument = Math.ceil(totalLawsDocument / lawsSearchSize + 1)
+    let totalLawsDocument = await laws.getTotalLawsDoc()
+    let lastPageOverTenThousandDocument = Math.ceil(totalLawsDocument / laws.lawsSearchSize + 1)
     let {lastLawsDocumentIdForSearchAfter, lastLawsDocumentTimeForSearchAfter} = await get10000ThLawsDocument()
-    let is10000thDocumentChanging = (await checkPagingChanged(lastLawsDocumentIdForSearchAfter, firstPageOverTenThousandDocument))
+    let is10000thDocumentChanging = (await checkPagingChanged(lastLawsDocumentIdForSearchAfter, laws.firstPageOverTenThousandDocument))
     if(is10000thDocumentChanging) {
       console.log('Paging changed')
       console.time('Index page')
-      let isExistLawsPagingIndex = await checkIndicesExists(lawsPagingIndex)
+      let isExistLawsPagingIndex = await func.checkIndicesExists(lawsPaging.lawsPagingIndex)
       if(isExistLawsPagingIndex) {
-        await deleteIndex(lawsPagingIndex).then(rs => console.log(`Delete ${lawsPagingIndex} successful: ${rs}`))
+        await func.deleteIndex(lawsPaging.lawsPagingIndex).then(rs => console.log(`Delete ${lawsPaging.lawsPagingIndex} successful: ${rs}`))
       }
-      await createIndex(lawsPagingIndex).then(rs => console.log(`Create ${lawsPagingIndex} successful: ${rs}`))
+      await func.createIndex(lawsPaging.lawsPagingIndex).then(rs => console.log(`Create ${lawsPaging.lawsPagingIndex} successful: ${rs}`))
       await indexPaging(lastPageOverTenThousandDocument,lastLawsDocumentTimeForSearchAfter, lastLawsDocumentIdForSearchAfter)
       console.timeEnd('Index page')
     } else {
@@ -129,14 +127,14 @@ const indexPageForPagination = async () => {
 }
 
 const indexPaging = async (lastPageOverTenThousandDocument,lastLawsDocumentTimeForSearchAfter, lastLawsDocumentIdForSearchAfter) => {
-  for(let page = firstPageOverTenThousandDocument; page < lastPageOverTenThousandDocument; page++) {
-    let countPagingIndexResult = await countTotalIndexDocument(lawsPagingIndex)
-    if(page > countPagingIndexResult + firstPageOverTenThousandDocument) {
+  for(let page = laws.firstPageOverTenThousandDocument; page < lastPageOverTenThousandDocument; page++) {
+    let countPagingIndexResult = await func.countTotalIndexDocument(lawsPaging.lawsPagingIndex)
+    if(page > countPagingIndexResult + laws.firstPageOverTenThousandDocument) {
       return indexPageForPagination()
     }
     let {body} = await client.search({
-      index : lawsIndex,
-      size: lawsSearchSize,
+      index : laws.lawsIndex,
+      size: laws.lawsSearchSize,
       body: {
         "query": {
           "match_all": {},
@@ -155,7 +153,7 @@ const indexPaging = async (lastPageOverTenThousandDocument,lastLawsDocumentTimeF
         ]
       }
     })
-    await index(lawsPagingIndex, {lastLawsDocument: lastLawsDocumentIdForSearchAfter, page:  page, sortIssueDate : lastLawsDocumentTimeForSearchAfter})
+    await index(lawsPaging.lawsPagingIndex, {lastLawsDocument: lastLawsDocumentIdForSearchAfter, page:  page, sortIssueDate : lastLawsDocumentTimeForSearchAfter})
     let lastDocumentOnCurrentPage = body.hits.hits[body.hits.hits.length - 1]
     lastLawsDocumentTimeForSearchAfter = lastDocumentOnCurrentPage.sort[0]
     lastLawsDocumentIdForSearchAfter = lastDocumentOnCurrentPage.sort[1]
@@ -165,7 +163,7 @@ const indexPaging = async (lastPageOverTenThousandDocument,lastLawsDocumentTimeF
 const get10000ThLawsDocument1 = async () => {
   try {
     let {body} = await client.search({
-      index : lawsIndex,
+      index : laws.lawsIndex,
       size: 20,
       scroll: "30s",
       body: {
@@ -198,9 +196,9 @@ const getTime = (time) => {
 const indexPageForPagination1 = async () => {
   try {
     console.time('Index page')
-    let totalLawsDocument = await getTotalLawsDoc()
-    let pageInclude10000thDocument = maxResultWindow / lawsSearchSize 
-    let lastPageOverTenThousandDocument = Math.ceil(totalLawsDocument / lawsSearchSize + 1)
+    let totalLawsDocument = await laws.getTotalLawsDoc()
+    let pageInclude10000thDocument = variables.maxResultWindow / laws.lawsSearchSize 
+    let lastPageOverTenThousandDocument = Math.ceil(totalLawsDocument / laws.lawsSearchSize + 1)
     let {scrollID} = await get10000ThLawsDocument1()
     for(let page = 2; page < lastPageOverTenThousandDocument; page++) {
       let {body} = await client.scroll({
@@ -211,7 +209,7 @@ const indexPageForPagination1 = async () => {
       lastLawsDocumentTimeForSearchAfter = getTime(lastDocumentOnCurrentPage._source.issuedDate)
       lastLawsDocumentIdForSearchAfter = lastDocumentOnCurrentPage._source.tie_breaker_id
       if(page > pageInclude10000thDocument)
-        await index(lawsPagingIndex, {lastLawsDocument: lastLawsDocumentIdForSearchAfter, page:  page, sortIssueDate : lastLawsDocumentTimeForSearchAfter})
+        await index(lawsPaging.lawsPagingIndex, {lastLawsDocument: lastLawsDocumentIdForSearchAfter, page:  page, sortIssueDate : lastLawsDocumentTimeForSearchAfter})
     }
     console.timeEnd('Index page')
   } catch (error) {

@@ -2,13 +2,9 @@ const path = require('path')
 
 const {client} = require('./connection/elastic-connect')
 
-const filePathStoreLawsData = path.resolve(__dirname, "./data/lawsv1.json")
-const lawsIndex = 'laws'
-const lawsPagingIndex = 'pages1'
-const lawsSearchSize = 20
-const maxResultWindow = 10000 // index.max_result_window
-const firstPageOverTenThousandDocument = maxResultWindow / lawsSearchSize + 1
-
+const variables = {
+    maxResultWindow: 10000, // index.max_result_window
+} 
 const titles = {
     home: "Trang chủ",
     policy: "Điều khoản",
@@ -30,81 +26,99 @@ const pugFiles = {
     detailLaw: 'detailLaw',
     error404: 'error404'
 }
-
-const countTotalIndexDocument = async (index) => {
-    try {
-      let {body} = await client.count({
-        index : index,
-        ignore_unavailable: true
-      })
-      return Promise.resolve(body.count)
-    } catch(err) {
-      return Promise.reject(`Get total ${index} error: ` + err)
-    } 
+const countTotalLawsDoc = () => {
+    func.countTotalIndexDocument(this.lawsIndex)
+    .then(totalLawsDocument => totalLawsDocument)
+    .catch(err => {
+        console.log(err)
+        return -1
+    }) 
 }
-let totalLawsDoc = countTotalIndexDocument(lawsIndex)
-                        .then(totalLawsDocument => totalLawsDocument)
-                        .catch(err => {
-                            console.log(err)
-                            return -1
-                        })
 
-const getTotalLawsDoc = () => {
-    return totalLawsDoc
-}
-const setTotalLawsDoc = (totalLawsDocument) => {
-    totalLawsDoc = totalLawsDocument
+const laws = {
+    filePathStoreLawsData : path.resolve(__dirname, "./data/lawsv1.json"),
+    lawsIndex : 'laws3',
+    lawsSearchSize : 20,
+    firstPageOverTenThousandDocument : variables.maxResultWindow / this.lawsSearchSize + 1,
+    getTotalLawsDoc: () => {
+        return this.totalLawsDoc
+    },
+    setTotalLawsDoc: (totalLawsDocument) => {
+        this.totalLawsDoc = totalLawsDocument
+    },
+    totalLawsDoc: countTotalLawsDoc
 }
 
 
-const createIndex = async (index) => {
-    try {
-        let {body} = await client.indices.create({
-            index : index
-        })
-        return body
+    
+const lawsPaging = {
+    lawsPagingIndex : 'pages1',
+}
+
+const func = {
+    createIndex: async (index) => {
+        try {
+            let {body} = await client.indices.create({
+                index : index
+            })
+            return body
+        }
+        catch(error) {
+            return `Create ${index} index error: ${error}`
+        }
+    },
+    checkIndicesExists: async (index) => {
+        try {
+            let {body} = await client.indices.exists({
+                index: index
+            })
+            return body
+        } catch(error) {
+            return `Check ${index} index exists error: ${error}`
+        }
+    },
+    deleteIndex: async (index) => {
+        try {
+            let {body} = await client.indices.delete({
+                index : index
+            })
+            return body
+        } catch (error) {
+            return `Delete ${index} index error: ${error}`
+        }
+    },
+    countTotalIndexDocument: async (index) => {
+        try {
+            let {body} = await client.count({
+                index : index,
+                ignore_unavailable: true
+            })
+            return Promise.resolve(body.count)
+        } catch(err) {
+            return Promise.reject(`Get total ${index} error: ` + err)
+        } 
     }
-    catch(error) {
-        return `Create ${index} index error: ${error}`
+}
+
+const pipeline = {
+    laws : {
+        initLawsData: 'laws_gen_views-stars-ratings'
+    }
+}
+const scripts = {
+    laws: {
+        ratingDoc: 'laws_rating_doc_and_update_wilson_score',
+        calculateView: 'laws_caluculate_view'
     }
 }
 
-const checkIndicesExists = async (index) => {
-    try {
-
-        let {body} = await client.indices.exists({
-            index: index
-        })
-        return body
-    } catch(error) {
-        return `Check ${index} index exists error: ${error}`
-    }
-}
-
-const deleteIndex = async (index) => {
-    try {
-
-        let {body} = await client.indices.delete({
-            index : index
-        })
-        return body
-    } catch (error) {
-        return `Delete ${index} index error: ${error}`
-    }
-}
 module.exports = {
     titles,
     pugFiles,
-    filePathStoreLawsData, 
-    lawsIndex, 
-    lawsSearchSize, 
-    maxResultWindow, 
-    lawsPagingIndex,
-    firstPageOverTenThousandDocument,
-    countTotalIndexDocument, 
-    getTotalLawsDoc, 
-    setTotalLawsDoc,
-    deleteIndex,
-    createIndex,
-    checkIndicesExists
+    variables,
+    laws,
+    lawsPaging,
+    func,
+    pipeline,
+    scripts
 }

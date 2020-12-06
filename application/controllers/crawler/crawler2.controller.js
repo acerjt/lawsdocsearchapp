@@ -2,11 +2,11 @@ const cheerio = require("cheerio");
 const axios = require("axios").default;
 const crypto = require('crypto')
 const fs = require('fs');
-const moment = require("moment")
+const moment = require("moment");
 // moment().tz("Asia/Ho_Chi_Minh").format();
 moment.locale('vi')
 
-const {filePathStoreLawsData} = require('../../common')
+const {laws} = require('../../common')
 
 const baseURL = "https://vanbanphapluat.co";
 
@@ -30,10 +30,10 @@ const crawLawsPerPage = async (lawURL) => {
   const searchResults = selector("body").find(
     ".row .items-push > .col-md-12 > .row"
   );
-  return searchResults.map(async (idx, el) => {
+  return Promise.all(searchResults.map(async (idx, el) => {
     const elementSelector = selector(el);
     return extractLawsData(elementSelector);
-  });
+  }).get())
 };
 
 const extractLawsData = async (selector) => {
@@ -150,12 +150,12 @@ const extractLawsData = async (selector) => {
     contentText: contentText,
     contentHtml: contentHtml,
   };
-  await writeLawsDataFile(filePathStoreLawsData, JSON.stringify(law)+ '\n').catch(err => {
+  let writeFile = await writeLawsDataFile(laws.filePathStoreLawsData, JSON.stringify(law)+ '\n').catch(err => {
     console.log(err)
     Promise.reject(err)
   })
 
-  return Promise.resolve()
+  return writeFile
 };
 
 const calculateUpdatedAt = (updatedAt) => {
@@ -214,7 +214,7 @@ const hexIdGeneration = () => {
 
 module.exports.crawler = async () => {
   try {
-    const totalPagesVBPL = 1; // 11338
+    const totalPagesVBPL = 2; // 11338
     for (let page = 1; page <= totalPagesVBPL; page++) {
       const lawURL = `${baseURL}/csdl/van-ban-phap-luat?p=${page}`;
       await crawLawsPerPage(lawURL).then(rs => {
