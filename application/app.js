@@ -5,16 +5,14 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const indexRouter = require('./routes/index');
-const usersRouter = require('./routes/users');
-const crawler = require('./routes/crawler/crawler.route')
-const lawsRouter = require('./routes/laws/laws.route')
 
 const pagingCron = require('./cron/paginator')
 
 const app = express();
-
+app.locals.moment = require('moment');
+app.locals.moment.locale('vi')
 app.use(function(req, res, next) {
-  res.set('Cache-Control', 'max-age=31536000');
+  // res.set('Cache-Control', 'max-age=31536000');
   res.header('Access-Control-Allow-Origin', req.get('Origin') || '*');
   res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Methods', 'GET,HEAD,PUT,PATCH,POST,DELETE');
@@ -42,9 +40,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/crawler', crawler)
-app.use('/laws', lawsRouter)
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

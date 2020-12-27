@@ -136,6 +136,7 @@ ul.breadcrumb li a:hover {
 
 .rating-infor-container {
     display: flex;
+    margin-bottom: 20px;
 }
 
 .row-rating-item {
@@ -173,4 +174,14 @@ ul.breadcrumb li a:hover {
     color: #FFD700;
     position: absolute;
     top: 0;
+}
+
+.table-header-bg>thead>tr>th,
+.table-header-bg>thead>tr>td {
+    background-color: #5c90d2;
+}
+
+.table-header-bg>thead>tr>th {
+    padding: 16px 10px 12px;
+    color: #ffffff;
 }

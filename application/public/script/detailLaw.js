@@ -32,7 +32,7 @@ function onRating(id) {
         id: id,
         ratingValue: ratingValue
     }
-    postAjax('laws/rating',JSON.stringify(ratingData)).then(rs => {
+    postAjax('vbpl/rating',JSON.stringify(ratingData)).then(rs => {
         console.log(rs)
         if(rs.s === 200) {
             let doc = rs.data

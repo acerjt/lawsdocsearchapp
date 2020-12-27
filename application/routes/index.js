@@ -1,12 +1,20 @@
 const express = require('express');
 const router = express.Router();
+
 const lawsController = require('../controllers/laws/laws.controller')
+const usersRouter = require('../routes/users');
+const crawler = require('../routes/crawler/crawler.route')
+const lawsRouter = require('../routes/laws/laws.route')
 const {titles, pugFiles} = require('../common')
 
-/* GET home page. */
-router.get('/', lawsController.getLaws)
 
-router.get('/:id', lawsController.getLawById)
+router.use('/users', usersRouter);
+
+router.use('/crawler', crawler)
+
+router.use('/vbpl', lawsRouter)
+
+// router.get('/', lawsController.getLaws)
 
 router.get('/contactUs', (req, res, next) => {
     res.render(pugFiles.contactUs, { title: titles.contact });
@@ -42,6 +50,12 @@ router.get('/admin/allUsers', function(req, res, next) {
 
 router.get('/admin/allDocs', function(req, res, next) {
     res.render('admin/allDocs', { title: 'Văn bản pháp lý' });
+});
+
+router.get('/:id', lawsController.getLawById)
+
+router.get('*',function (req, res) {
+    res.redirect('/vbpl');
 });
 
 module.exports = router;
