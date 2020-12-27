@@ -12,7 +12,8 @@ const titles = {
     aboutUs: "Về chúng tôi",
     myAccount: "Trang cá nhân",
     assignUserRole: "Chuyển đổi quyền khách hàng",
-    memberShips: "Gói dịch vụ"
+    memberShips: "Gói dịch vụ",
+    error404: "Không tìm thấy trang"
 }
 
 const pugFiles = {
