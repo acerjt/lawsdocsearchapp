@@ -639,7 +639,7 @@ input#example-date-input.form-control:hover + .hide {
   display: block;
   color: #4c9fbf; 
 }
-.container div .create-order-container .order-guide div  input#click-change-icon.style4{
+.container div .create-order-container .order-guide div  input#advanced-search.style4{
   margin-left:10px;
 }
 .style4 {
@@ -681,6 +681,13 @@ input.style4[type="checkbox"] {
 }
 .style4:checked {
   background-color: #4c9fbf;
+}
+#collapseExample {
+  display: none;
+}
+
+.style4:checked + #collapseExample {
+  display: block;
 }
 .style4:checked:before {
   background-color: white;
@@ -812,4 +819,32 @@ input.style4[type="checkbox"] {
 
 .container div .create-order-container .input-link .parse_button{
   display: inline-flex;
+}
+
+#autocomplete-suggestions {
+  border: 1px solid #ddd;
+  background: #fff;
+  overflow: auto;
+}
+
+.autocomplete-suggestion {
+  overflow: hidden;
+  border-bottom: 1px solid #ddd;
+}
+
+#autocomplete-suggestions .autocomplete-suggestion .search-item {
+  padding: 10px 10px;
+}
+
+#autocomplete-suggestions .autocomplete-suggestion .search-item:hover {
+  background-color: #666;
+}
+#autocomplete-suggestions .autocomplete-suggestion .search-item .info h2 a {
+  margin-right: 15px;
+}
+
+#autocomplete-suggestions .autocomplete-suggestion .search-item .info h2 i {
+  font-style: italic;
+  color: #aaa;
+  font-size: 24px;
 }

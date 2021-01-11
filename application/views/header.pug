@@ -40,15 +40,15 @@ div
             .input-link
                 .parse_button
                     div
-                        input.parse(type='text' placeholder='Gõ từ khóa cần tìm kiếm...')
+                        input.parse#search-input(type='text' placeholder='Gõ từ khóa cần tìm kiếm...' autocomplete="off" oninput="onInputAutocomplete(this.value)" onfocus="displayAutoSuggestionPanel()" onblur="hideAutoSuggestionPanel()")
                     div
-                        button.btn_create(role='button' onclick="location.href=''")
+                        button.btn_create(role='button' onclick="search()")
                             | Tìm Kiếm
             .order-guide
                 div
                     label(for='click-change-icon') Tìm kiếm nâng cao   
-                    input#click-change-icon.style4(data-toggle='collapse' type='checkbox' data-target='#collapseExample' aria-expanded='false' aria-controls='collapseExample')
-                    #collapseExample.collapse
+                    input#advanced-search.style4(type='checkbox')
+                    #collapseExample
                         div(style='background-color:#e5f3fb;padding: 15px')
                             form(style='margin-bottom: 0px;')
                                 .form-group.row(style='margin-bottom: 0.5rem;')
@@ -157,4 +157,7 @@ div
                         i.fa.fa-twitter
                     a.login100-social-item.bg3(href='#')
                         i.fa.fa-google
+#autocomplete-suggestions(style="position: absolute; max-height: 300px; z-index: 9999; display:none") 
+script(src="script/common.js")
+script(src="/script/header.js")
 

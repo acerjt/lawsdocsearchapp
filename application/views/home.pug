@@ -130,8 +130,8 @@ block content
                                                         //- - let url = `#{law['_source'].tie_breaker_id}`
                                                         a(href=`${law['_source'].href}` style="color:#4c9fbf")
                                                             | #{law['_source'].name}
-                                                    .inside
-                                                        | #{law['_source'].desc}
+                                                    .inside!= law.hasOwnProperty('highlight') && law['highlight'].hasOwnProperty('desc')  ?  law['highlight'].desc : law['_source'].desc
+                                                        //- | #{law['_source'].desc}
                                                 .col-md-4(style='margin-top:30px')
                                                     .container(style='margin-left:0px')
                                                         .row

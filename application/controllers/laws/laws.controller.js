@@ -3,7 +3,7 @@ const {client} = require('../../connection/elastic-connect')
 const {titles, pugFiles, laws, variables, lawsPaging, scripts} = require('../../common')
 
 
-const getLawsInParticularPage = async (page, filter) => {
+const getLawsInParticularPage = async (page, filter, keyword) => {
     try {
         page = page && page > 1 ? Number(page) : 1
         console.time('paging time')
@@ -100,7 +100,37 @@ const getLawsInParticularPage = async (page, filter) => {
                 "tie_breaker_id": {
                     "order" : "desc"
                 }
+            },
+            "highlight": {
+                "pre_tags" : ["<em style='color:#4c9fbf'>"],
+                "post_tags" : ["</em>"],
+                "fields": {
+                    "desc": {},
+                    // "agencyIssued": {},
+                    // "contentText": {},
+                    // "docNum": {},
+                    // "docType": {},
+                    // "field": {},
+                    // "name": {},
+                    // "signedBy": {}
+                }
             }
+        }
+        if(keyword) {
+            aggsBody.query.bool.must = {}
+            aggsBody.query.bool.must.multi_match = {}
+            aggsBody.query.bool.must.multi_match.query = keyword
+            aggsBody.query.bool.must.multi_match.fields = [ 
+                "agencyIssued",
+                "contentText",
+                "desc",
+                "docNum",
+                "docType",
+                "field",
+                "name",
+                "signedBy"
+            ]
+
         }
         for (let filterProp in filter) {
             let filterSearchTerm = {
@@ -118,7 +148,7 @@ const getLawsInParticularPage = async (page, filter) => {
                 }
             }
         }
-
+        // console.log(JSON.stringify(aggsBody))
         if(!isOverTenThoudsandDocs) {
             console.time('search time')
             let {body} = await client.search({
@@ -397,15 +427,15 @@ module.exports.getLaws = async (req, res) => {
     try {
         console.time('total time')
         let currentPage = req.query.p
-        const {lv: field, lvb: docType, nk: signedBy, tt: effectiveStatus, cqbh: agencyIssued} = req.query
+        const {keyword, lv: field, lvb: docType, nk: signedBy, tt: effectiveStatus, cqbh: agencyIssued} = req.query
         const filter = {field, docType, signedBy, effectiveStatus, agencyIssued}
         for (let prop in filter) {
             if(filter[prop] === undefined)
             delete filter[prop]
         }
-        let lawsData = await getLawsInParticularPage(currentPage, filter)
+        let lawsData = await getLawsInParticularPage(currentPage, filter, keyword)
         console.time('render time')
-        let aggs = await aggsAllInfor(filter)
+        // let aggs = await aggsAllInfor(filter)
         // if(aggs.hits.hits && lawsData.lawsDoc && lawsData.lawsDoc.length === 0)
         if(lawsData.lawsDoc && lawsData.lawsDoc.length === 0)
             res.render(pugFiles.error404, { title: titles.error404})
@@ -415,7 +445,7 @@ module.exports.getLaws = async (req, res) => {
                 lawsDoc:  lawsData.lawsDoc, 
                 currentPage: lawsData.page,
                 paginateDisplayConfiguration : lawsData.paginateDisplayConfiguration,
-                aggs: aggs.aggregations,
+                aggs: lawsData.aggs,
                 getViFieldName,
                 filter
             })
@@ -462,6 +492,47 @@ module.exports.getLawsByFiltering = async (req, res) => {
         }
         let aggs = await aggsAllInfor(filter)
         res.render(pugFiles.home, { title: titles.home, lawsDoc : aggs.hits.hits, aggs: aggs.aggregations, getViFieldName});
+    } catch(error) {
+        console.log(error)
+        res.render(pugFiles.error404, {title: titles.error404})
+    }
+}
+
+module.exports.getAutocompleteDesc = async (req, res) => {
+    try {
+        let {text} = req.body
+        let {body} = await client.search({
+            index: laws.lawsIndex,
+            size: 10,
+            body: {
+                "_source": [
+                    "href",
+                    "name",
+                    "desc",
+                    "effectiveStatus"
+                ],
+                "query": {
+                    "multi_match": {
+                        "query": `${text}`,
+                        "type": "bool_prefix",
+                        "fields": [
+                            "desc.autocomplete",
+                            "desc.autocomplete_vi"
+                        ]
+                    }
+                }
+            }
+        })
+        res.send({s:200, data: body.hits.hits})
+    } catch(error) {
+        console.log(error)
+        res.render(pugFiles.error404, {title: titles.error404})
+    }
+}
+
+module.exports.searchLawsDoc = async (req, res) => {
+    try {
+        console.log(req.query)
     } catch(error) {
         console.log(error)
         res.render(pugFiles.error404, {title: titles.error404})

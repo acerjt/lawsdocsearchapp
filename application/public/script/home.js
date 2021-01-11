@@ -24,15 +24,19 @@ function updateQueryStringParameter(key, value) {
     }
     else if (uri.match(re)) {
         let href = uri.replace(re, '$1' + key + "=" + value + '$2')
-        if(key !== 'p')
+        if(key !== 'p') {
             href = href.replace(/&p=\d+/, '')
+            href = href.replace(/\?p=\d+/, '?')
+        }
         console.log(href)
         window.location =  href
     }
     else {
         let href = uri + separator + key + "=" + value
-        if(key !== 'p')
+        if(key !== 'p') {
             href = href.replace(/&p=\d+/, '')
+            href = href.replace(/\?p=\d+/, '?')
+        }
         console.log(href)        
         window.location =  href
     }

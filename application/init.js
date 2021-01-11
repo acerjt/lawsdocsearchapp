@@ -23,12 +23,160 @@ const createLawsIndex = async () => {
                 "stop",
                 "token_limit"
               ]
+            },
+            "keyword_analyzer": {
+              "filter": [
+                "lowercase",
+                "asciifolding",
+                "trim"
+              ],
+              "char_filter": [],
+              "type": "custom",
+              "tokenizer": "keyword"
+            },
+            "edge_ngram_analyzer": {
+              "filter": [
+                "lowercase",
+                "ascii_folding"
+              ],
+              "tokenizer": "edge_ngram_tokenizer"
+            },
+            "edge_ngram_search_analyzer": {
+              "tokenizer": "lowercase",
+              "filter": "asciifolding"
+            },
+            "standard_asciifolding": {
+              "filter": [
+                "ascii_folding"
+              ],
+              "tokenizer": "standard"
+            },
+            "2gram_analyzer_vi": {
+              "filter": [
+                "lowercase",
+                "trim",
+                "2gram_filter_custom"
+              ],
+              "char_filter": [],
+              "type": "custom",
+              "tokenizer": "standard"
+            },
+            "2gram_analyzer": {
+              "filter": [
+                "lowercase",
+                "trim",
+                "asciifolding",
+                "2gram_filter_custom"
+              ],
+              "char_filter": [],
+              "type": "custom",
+              "tokenizer": "standard"
+            },
+            "3gram_analyzer_vi": {
+              "filter": [
+                "lowercase",
+                "trim",
+                "3gram_filter_custom"
+              ],
+              "char_filter": [],
+              "type": "custom",
+              "tokenizer": "standard"
+            },
+            "3gram_analyzer": {
+              "filter": [
+                "lowercase",
+                "trim",
+                "asciifolding",
+                "3gram_filter_custom"
+              ],
+              "char_filter": [],
+              "type": "custom",
+              "tokenizer": "standard"
+            },
+            "edge_ngram_analyzer": {
+              "filter": [
+                "lowercase",
+                "asciifolding",
+                "3gram_filter_custom",
+                "edge_ngram_filter"
+              ],
+              "char_filter": [],
+              "type": "custom",
+              "tokenizer": "standard"
+            },
+            "edge_ngram_analyzer_vi": {
+              "filter": [
+                "lowercase",
+                "3gram_filter_custom",
+                "edge_ngram_filter"
+              ],
+              "char_filter": [],
+              "type": "custom",
+              "tokenizer": "standard"
+            },
+            "autocomplete_analyzer" : {
+              "filter": [
+                "lowercase",
+                "asciifolding",
+                "autocomplete_filter",
+                "edge_ngram_filter"
+              ],
+              "char_filter": [],
+              "type": "custom",
+              "tokenizer": "standard"
+            },
+            "autocomplete_analyzer_vi" : {
+              "filter": [
+                "lowercase",
+                "autocomplete_filter",
+                "edge_ngram_filter"
+              ],
+              "char_filter": [],
+              "type": "custom",
+              "tokenizer": "standard"
             }
           },
           "filter": {
             "token_limit": {
               "type": "limit",
               "max_token_count": 100000
+            },
+            "ascii_folding": {
+              "type": "asciifolding",
+              "preserve_original": true
+            },
+            "2gram_filter_custom": {
+							"type": "shingle",
+							"min_shingle_size": 2,
+							"max_shingle_size": 2,
+							"output_unigrams": false		
+            },
+            "3gram_filter_custom": {
+              "type": "shingle",
+              "min_shingle_size": 3,
+              "max_shingle_size": 3,
+              "output_unigrams": false		
+            },
+            "autocomplete_filter": {
+              "type": "shingle",
+              "min_shingle_size": 2,
+              "max_shingle_size": 3,
+              "output_unigrams": true		
+            },
+            "edge_ngram_filter" : {
+              "type": "edge_ngram",
+              "min_gram": 2,
+              "max_gram": 20
+            }
+          },
+          "tokenizer": {
+            "edge_ngram_tokenizer" : {
+              "type": "edge_ngram",
+              "min_gram": 2,
+              "max_gram": 5,
+              "token_chars": [
+                "letter"
+              ]
             }
           }
         }
@@ -42,7 +190,42 @@ const createLawsIndex = async () => {
             "type": "keyword"
           },
           "desc": {
-            "type": "text"
+            "type": "text",
+            "fields": {
+              "2gram_vi": {
+                "type": "text",
+                "analyzer": "2gram_analyzer_vi"
+              },
+              "2gram": {
+                "type": "text",
+                "analyzer": "2gram_analyzer"
+              },
+              "3gram_vi": {
+                "type": "text",
+                "analyzer": "3gram_analyzer_vi"
+              },
+              "3gram": {
+                "type": "text",
+                "analyzer": "3gram_analyzer"
+              },
+              "index_prefix": {
+                "type": "text",
+                "analyzer": "edge_ngram_analyzer"
+              },
+              "index_prefix_vi": {
+                "type": "text",
+                "analyzer": "edge_ngram_analyzer_vi"
+              },
+              "autocomplete": {
+                "type": "text",
+                "analyzer": "autocomplete_analyzer"
+              },
+              "autocomplete_vi": {
+                "type": "text",
+                "analyzer": "autocomplete_analyzer_vi"
+              }
+            },
+            "analyzer": "standard"
           },
           "docType": {
             "type": "keyword"
