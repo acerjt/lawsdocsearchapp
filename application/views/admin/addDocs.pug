@@ -1,0 +1,139 @@
+extends homeAdmin
+block stylesheet
+    link(rel="stylesheet" bs-hidden="1" bs-system-element="1" href="/stylesheets/layout/admin/addDocs.css")
+block contentAdmin
+    .content-wrapper(style='min-height: 925.667px;')
+        section.content-header
+            h1
+                | Thêm văn bản
+                
+            ol.breadcrumb
+                li
+                    a(href='#')
+                        i.fa.fa-dashboard
+                        |  Home
+                li
+                    a(href='#') Văn bản pháp lý
+                li.active Thêm văn bản
+        section.content
+            .row
+                .col-xs-12(style='width: 100%;')
+                    .box
+                        .box-header
+                            h3.box-title Văn bản pháp lý Việt Nam
+                            .box-tools
+                                .input-group.input-group-sm.hidden-xs(style='width: 150px;')
+                                    input.form-control.pull-right(type='text' name='table_search' placeholder='Search')
+                                    .input-group-btn
+                                        button.btn.btn-default(type='submit')
+                                            i.fa.fa-search
+                        .box-header.search-title
+                            .form-group.row(style='margin-left:0px;')
+
+                                label.col-form-label(for='inputDocType') CSDL Văn bản
+                                .col-sm-3
+                                    select#inputState.form-control(style='width:100%')
+                                        option(selected='') Tất cả
+                                        option Văn bản pháp luật
+                                        option Công văn
+                                        option Tiêu chuẩn Việt Nam
+                                        option Dự thảo văn bản
+                            
+                            .form-group.row(style='margin-bottom: 0.5rem;')
+                                label.col-sm-3.col-form-label(for='inputDocId') Mã văn bản
+                                .col-sm-8(style='width:100%')
+                                    input#inputDocId.form-control(style='width:60%' type='text' value='01234')
+                            
+                            .form-group.row(style='margin-bottom: 0.5rem;')
+                                label.col-sm-3.col-form-label(for='inputDocName') Tên văn bản
+                                .col-sm-8(style='width:100%')
+                                    input#inputDocName.form-control(style='width:60%' type='text' value='QUYẾT ĐỊNH 4710/QĐ-BYT')
+
+                            .form-group.row(style='margin-bottom: 0.5rem;')
+                                label.col-sm-3.col-form-label(for='inputDocName') Đường dẫn
+                                .col-sm-8(style='width:100%')
+                                    input#inputDocName.form-control(style='width:60%' type='text' 
+                                    value='https://vanbanphapluat.co/quyet-dinh-4710-qd-byt-2020-ke-hoach-uong-bo-sung-vac-xin-bai-liet-cho-tre-duoi-5-tuoi-tai-vung-nguy-co-cao')
+                            .form-group.row(style='margin-bottom: 0.5rem;')
+                                label.col-sm-3.col-form-label(for='inputDocType') Loại văn bản
+                                .col-sm-8
+                                    select#inputState.form-control(style='width:60%')
+                                        option(selected='') Quyết định
+                                        option Quyết định
+                                        option Chỉ thị
+                                        option Hướng dẫn
+                                        option Công điện
+                                        option Pháp lệnh
+                                        option WTO_Văn bản
+                                        option Thỏa thuận 
+                                        option Nghị quyết 
+                                        option Hiến pháp 
+                                        option WTO_Cam kết VN  
+                                        option Nghị quyết
+                                        option Thông tư liên dịch        Thông tư Thông báo Văn bản hợp nhất Sắc lệnh Lệnh Quy chế Điều lệ Nghị định thư Công văn Sắc luật
+                                        option Điều ước quốc tế
+                                        option Luật
+                                        option Quy định
+                                        option Thông trị
+                                        option Công ước
+                                        option Điều ước
+                                        option Hiệp định
+                                        option Thông tư
+                                        option Thông báo
+                                        option Văn bản hợp nhất
+                                        option Sắc lệnh
+                                        option Lệnh
+                                        option Quy chế
+                                        option Điều lệ
+                                        option Nghị định thư
+                                        option Công văn 
+                                        option Sắc luật           
+                                        option Văn bản khác
+                            .form-group.row(style='margin-bottom: 0.5rem;')
+                                label.col-sm-3.col-form-label(for='inputDocName') Đường dẫn
+                                .col-sm-8(style='width:100%')
+                                    input#inputDocName.form-control(style='width:60%' type='text' 
+                                    value='bla')
+                            .form-group.row(style='margin-bottom: 0.5rem;')
+                                label.col-sm-3.col-form-label(for='inputDocDate') Ngày ban hành
+                                .col-sm-8(style='width:100%')
+                                    input#inputDocDate.form-control(style='width:60%' type='date' placeholder='02/10/1998')
+                            .form-group.row(style='margin-bottom: 0.5rem;')
+                                label.col-sm-3.col-form-label(for='inputDocStarted') Ngày hiệu lực
+                                    input#inputDocStarted.form-control(style='width:60%' type='date' placeholder='03/12/2020')
+                            .form-group.row(style='margin-bottom: 0.5rem;')
+                                label.col-sm-3.col-form-label(for='inputDocStarted') Ngày công báo
+                                    input#inputDocStarted.form-control(style='width:60%' type='date' placeholder='03/12/2020')
+                            .form-group.row(style='margin-bottom: 0.5rem;')
+                                label.col-sm-3.col-form-label(for='inputDocName') Cơ quan ban hành
+                                .col-sm-8(style='width:100%')
+                                    input#inputDocName.form-control(style='width:60%' type='text' value='Bắc Bình, Bình Thuận')
+                            
+                            .form-group.row(style='margin-bottom: 0.5rem;')
+                                label.col-sm-3.col-form-label(for='inputDocName') Người ký
+                                .col-sm-8(style='width:100%')
+                                    input#inputDocName.form-control(style='width:60%' type='text' value='16521261@gm.uit.edu.vn')
+                            
+                            .form-group.row(style='margin-bottom: 0.5rem;')
+                                label.col-sm-3.col-form-label(for='inputDocType') Loại tiện ích
+                                .col-sm-5
+                                    select#inputState.form-control(style='width:100%' readonly)
+                                        option(selected='') FREE
+                                        option Basic 1
+                                        option Basic 5
+                                        option Basic 15
+                                a.col-sm-4.col-form-label(href='/roleChange') Chuyển loại thành viên
+                            .form-group.row
+                                button.btn_create(role='button' onclick="location.href=''")
+                                    | Cập nhật 
+                                                                 
+                                    #nav-profile.tab-pane.fade(role='tabpanel' aria-labelledby='nav-profile-tab') ...
+                    .col-md-3.col-sm-5
+                        .about-img
+                            img.img-responsive(src='/images/img/im_dev1.jpg' alt='')
+                        .form-group.row(style='margin-top: 0.5rem;')
+                            button.btn_create(role='button' onclick="location.href='/roleChange'")
+                                i.fa.fa-camera
+                                | Upload photo
+       
+            
