@@ -42,4 +42,8 @@ router.get('/admin/allUsers', function(req, res, next) {
 router.get('/admin/allDocs', function(req, res, next) {
     res.render('admin/allDocs', { title: 'Văn bản pháp lý' });
 });
+
+router.get('/admin/addDocs', function(req, res, next) {
+    res.render('admin/addDocs', { title: 'Thêm văn bản' });
+});
 module.exports = router;
