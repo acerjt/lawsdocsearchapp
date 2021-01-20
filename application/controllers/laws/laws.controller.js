@@ -16,6 +16,11 @@ const getLawsInParticularPage = async (page, filter, keyword) => {
                     "filter": []
                 }
             },
+            "post_filter": {
+                "bool": {
+                    "filter": []
+                }
+            },
             "aggs": {
                 "docType": {
                     "aggs": {
@@ -102,10 +107,10 @@ const getLawsInParticularPage = async (page, filter, keyword) => {
                 }
             },
             "highlight": {
-                "pre_tags" : ["<em style='color:#4c9fbf'>"],
-                "post_tags" : ["</em>"],
+                "pre_tags" : ["<mark style='background-color:yellow'>"],
+                "post_tags" : ["</mark>"],
                 "fields": {
-                    "desc": {},
+                    "desc": {}
                     // "agencyIssued": {},
                     // "contentText": {},
                     // "docNum": {},
@@ -117,18 +122,27 @@ const getLawsInParticularPage = async (page, filter, keyword) => {
             }
         }
         if(keyword) {
+            delete(aggsBody.sort)
             aggsBody.query.bool.must = {}
             aggsBody.query.bool.must.multi_match = {}
             aggsBody.query.bool.must.multi_match.query = keyword
-            aggsBody.query.bool.must.multi_match.fields = [ 
-                "agencyIssued",
-                "contentText",
+            aggsBody.query.bool.must.multi_match.fields = [
                 "desc",
-                "docNum",
-                "docType",
-                "field",
-                "name",
-                "signedBy"
+                "desc.2gram_vi",
+                "desc.2gram",
+                "desc.3gram_vi",
+                "desc.3gram",
+                "contentText",
+                "contentText.2gram_vi",
+                "contentText.2gram",
+                "contentText.3gram_vi",
+                "contentText.3gram",
+                "agencyIssued", 
+				"docNum", 
+				"docType", 
+				"field", 
+				"name",
+				"signedBy"
             ]
 
         }
@@ -137,7 +151,7 @@ const getLawsInParticularPage = async (page, filter, keyword) => {
                 "term": {}   
             }
             filterSearchTerm.term[filterProp] = filter[filterProp]
-            aggsBody.query.bool.filter.push(filterSearchTerm)
+            aggsBody.post_filter.bool.filter.push(filterSearchTerm)
             for (let aggsBodyProp in aggsBody.aggs) {
                 if(filterProp !== aggsBodyProp) {
                     let filterTerm = {

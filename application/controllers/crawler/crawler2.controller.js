@@ -3,9 +3,11 @@ const axios = require("axios").default;
 const crypto = require('crypto')
 const fs = require('fs');
 const moment = require("moment");
+const path = require('path')
 // moment().tz("Asia/Ho_Chi_Minh").format();
 
 const { laws } = require('../../common');
+const { CrawlerLogger } = require("../../util/logger");
 
 const baseURL = "https://vanbanphapluat.co";
 
@@ -24,7 +26,7 @@ const crawLawsPerPage = async (lawURL) => {
   try {
     const html = await fetchHtml(lawURL);
     
-    const selector = cheerio.load(html);
+    const selector = await cheerio.load(html);
     
     const searchResults = selector("body").find(
       ".row .items-push > .col-md-12 > .row"
@@ -44,6 +46,7 @@ const crawLawsPerPage = async (lawURL) => {
       
 const extractLawsData = async (selector) => {
   try {
+    let startCrawlerOneDoc = process.hrtime()
     const href = await selector
       .find(".col-md-9")
       .find(".doc-summary")
@@ -118,7 +121,8 @@ const extractLawsData = async (selector) => {
     const effectiveStatus = await dataDocLaw
       .find("tr:nth-child(10) > td:nth-child(2)")
       .text()
-      .trim();
+      .trim()
+      .replace(/\d{2}\/\d{2}\/\d{4}/g, '');
 
     const lawContent = await selector1("body").find(".row > .col-md-8");
 
@@ -133,11 +137,30 @@ const extractLawsData = async (selector) => {
     const fileLinks = await selector1("body").find(
       ".block-table.table-bordered.text-center"
     );
-    let pdfLawsLink = await fileLinks.find(".bg-warning").find("a");
-    let docLawsLink = await fileLinks.find(".bg-danger").find("a");
-    pdfLawsLink = pdfLawsLink[0] ? baseURL + pdfLawsLink[0].attribs.href : "";
-    docLawsLink = docLawsLink[0] ? baseURL + docLawsLink[0].attribs.href : "";
-
+    let pdfLawsLinkRequestForDownload = await fileLinks.find(".bg-warning").find("a");
+    let docLawsLinkRequestForDownload = await fileLinks.find(".bg-danger").find("a");
+    let pdfLawsLink = ''
+    let docLawsLink = ''
+    if(pdfLawsLinkRequestForDownload[0]) {
+      pdfLawsLink = pdfLawsLinkRequestForDownload[0].attribs.href
+      fs.mkdir(path.resolve(__dirname, '../../public/' + pdfLawsLink.slice(0,pdfLawsLink.lastIndexOf('/'))), { recursive: true }, (err) => {
+        if (err) throw err;
+        downloadFile(baseURL + pdfLawsLink, path.resolve(__dirname, '../../public' + pdfLawsLink))
+        .catch(err => {
+          CrawlerLogger.error(`Download file error: ${pdfLawsLink} ${err}`)
+        })
+      });
+    } 
+    if(docLawsLinkRequestForDownload[0]) {
+      docLawsLink = docLawsLinkRequestForDownload[0].attribs.href
+      fs.mkdir(path.resolve(__dirname, '../../public/' + docLawsLink.slice(0,docLawsLink.lastIndexOf('/'))), { recursive: true }, (err) => {
+        if (err) throw err;
+        downloadFile(baseURL + docLawsLink, path.resolve(__dirname, '../../public/' + docLawsLink))
+        .catch(err => {
+          CrawlerLogger.error(`Download file error: ${docLawsLink} ${err}`)
+        })
+      });
+    } 
     const law = {
       tie_breaker_id: await hexIdGeneration(),
       href: href,
@@ -159,19 +182,45 @@ const extractLawsData = async (selector) => {
       contentText: contentText,
       contentHtml: contentHtml,
     };
-    let writeFile = await writeLawsDataFile(
+    writeLawsDataFile(
       laws.filePathStoreLawsData,
       JSON.stringify(law) + "\n"
-    ).catch((err) => {
+    ).then(rs => {
+        let endCrawlerOneDoc = process.hrtime(startCrawlerOneDoc)
+        CrawlerLogger.info('crawler one document time:' + endCrawlerOneDoc[1] / 1000000 + 'ms')
+        return Promise.resolve(rs)
+    }).catch((err) => {
       console.log(err);
       Promise.reject(err);
     });
-    return writeFile
   } catch(err) {
     console.log(err)
   }
 };
+const downloadFile = async (fileUrl, outputLocationPath) => {
+  const writer = fs.createWriteStream(outputLocationPath);
 
+  return axios({
+    method: 'get',
+    url: fileUrl,
+    responseType: 'stream',
+  }).then(response => {
+    return new Promise((resolve, reject) => {
+      response.data.pipe(writer);
+      let error = null;
+      writer.on('error', err => {
+        error = err;
+        writer.close();
+        reject(err);
+      });
+      writer.on('close', () => {
+        if (!error) {
+          resolve(true);
+        }
+      });
+    });
+  });
+}
 const calculateUpdatedAt = (updatedAt) => {
   let splitUpdatedAt = updatedAt.split(" ");
   let date;
@@ -198,12 +247,10 @@ const calculateUpdatedAt = (updatedAt) => {
   else {
     date = moment(formattedDate(updatedAt), "YYYYMMDD");
   }
-  console.log(date.toDate())
   return date.toDate();
 };
 
 const formattedDate = (date) => {
-  console.log(date)
   let splitDate = date.slice(date.length - 11, date.length - 1).split("/");
   return `${splitDate[2]}${splitDate[1]}${Number(splitDate[0])}`;
 };
@@ -231,15 +278,19 @@ const hexIdGeneration = () => {
 
 module.exports.crawler = async () => {
   try {
-    const totalPagesVBPL = 15; // 11338
+    const totalPagesVBPL = 15; // 11372
     for (let page = 1; page <= totalPagesVBPL; page++) {
       const lawURL = `${baseURL}/csdl/van-ban-phap-luat?p=${page}`;
+      let startCrawlerOnePage = process.hrtime()
       await crawLawsPerPage(lawURL)
         .then((rs) => {
-          console.log(rs)
+          
           console.log(`page ${page} has crawled`);
         })
         .catch((error) => console.log("Index error: " + error));
+        let endCrawlerOnePage = process.hrtime(startCrawlerOnePage)
+        CrawlerLogger.info('crawler one page time: ' + endCrawlerOnePage[1] / 1000000 + 'ms')
+
     }
   } catch (error) {
     console.log(error);
