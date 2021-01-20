@@ -56,7 +56,27 @@ winston.loggers.add('client', {
 //         })
 //     ]
 // });
+winston.loggers.add('crawler', {
+    transports: [
+        new winston.transports.File({
+            maxsize: 10000000, /*10MB*/
+            filename: path.resolve(__dirname + '/../logs/crawler.log'),
+            format: format.combine(
+                format.timestamp(),
+                myFormat
+            ),
+            maxFiles: 5
+        }),
+        new winston.transports.Console({
+            format: format.combine(
+                format.timestamp(),
+                myFormat
+            )
+        })
+    ]
+});
 module.exports = {
     Logger: winston.loggers.get('default'),
-    ClientLogger: winston.loggers.get('client')
+    ClientLogger: winston.loggers.get('client'),
+    CrawlerLogger: winston.loggers.get('crawler')
 };

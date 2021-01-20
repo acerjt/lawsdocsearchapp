@@ -1,7 +1,7 @@
 'use strict'
 const { createReadStream } = require('fs')
 const split = require('split2')
-
+const {CrawlerLogger} = require('./util/logger')
 const crawler = require('./controllers/crawler/crawler2.controller')
 const {client} = require('./connection/elastic-connect')
 const { laws, func, pipeline, scripts} = require('./common')
@@ -264,7 +264,25 @@ const createLawsIndex = async () => {
             "type": "keyword"
           },
           "contentText": {
-            "type": "text"
+            "type": "text",
+            "fields": {
+              "2gram_vi": {
+                "type": "text",
+                "analyzer": "2gram_analyzer_vi"
+              },
+              "2gram": {
+                "type": "text",
+                "analyzer": "2gram_analyzer"
+              },
+              "3gram_vi": {
+                "type": "text",
+                "analyzer": "3gram_analyzer_vi"
+              },
+              "3gram": {
+                "type": "text",
+                "analyzer": "3gram_analyzer"
+              }
+            }
           },
           "contentHtml": {
             "type": "keyword",
@@ -414,8 +432,18 @@ const run = async () => {
   await lawsRatingScript()
   await lawsCalculateViewScript()
   await createLawsIndex()
+  let startMeasureAllStuff = process.hrtime();
+  let startCrawlerAllDoc = process.hrtime();
   await crawler.crawler()
+  let endCrawlerAllDoc = process.hrtime(startCrawlerAllDoc);
+  CrawlerLogger.info('total crawler time: '  + endCrawlerAllDoc[1] / 1000000 + 'ms')
+  let startBulkAllDoc = process.hrtime();
   await bulkIndex(laws.lawsIndex, laws.filePathStoreLawsData, pipeline.laws.initLawsData) 
+  let endBulkAllDoc = process.hrtime(startBulkAllDoc);
+  CrawlerLogger.info('total bulk index time: ' + endBulkAllDoc[1] / 1000000 + 'ms')
+  let endMeasureAllStuff = process.hrtime(startMeasureAllStuff);
+  CrawlerLogger.info('All stuff time: ' + endMeasureAllStuff[1] / 1000000 + 'ms')
+
 }
 
 run().catch(err => {
