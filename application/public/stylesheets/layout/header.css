@@ -833,11 +833,11 @@ input.style4[type="checkbox"] {
 }
 
 #autocomplete-suggestions .autocomplete-suggestion .search-item {
-  padding: 10px 10px;
+  padding-left: 10px;
 }
 
 #autocomplete-suggestions .autocomplete-suggestion .search-item:hover {
-  background-color: #666;
+  background-color: #e5f3fb;
 }
 #autocomplete-suggestions .autocomplete-suggestion .search-item .info h2 a {
   margin-right: 15px;

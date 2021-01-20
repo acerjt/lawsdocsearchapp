@@ -8,12 +8,12 @@ function onInputAutocomplete(text) {
                             <div class="search-item">
                                 <div class="info">
                                 <h2>
-                                    <a href="${element._source.href}" target="_blank" >${element._source.name}</a>
-                                    <i>${element._source.effectiveStatus}</i>
+                                    <a style="font-size: 18px" href="${element._source.href}" target="_blank" >${element._source.name}</a>
+                                    <i style="font-size: 18px">${element._source.effectiveStatus}</i>
                                 </h2>
-                                <h3>
+                                <div style="font-size: 17px">
                                     ${element._source.desc}
-                                </h3>
+                                </div>
                                 </div>
                             </div>
                         </div> `
