@@ -109,14 +109,21 @@
 }
 
 .header-blue .navbar .navbar-collapse div .travel {
-  color: #000;
+  color: #4c9fbf;
   text-decoration: none;
 }
 
 .header-blue .navbar .navbar-collapse div .travel:hover {
-  color: #4c9fbf;
+  color: #33829c;
 }
+.header-blue .navbar .navbar-collapse .navbar-group .navbar-text a{
+  color: #4c9fbf;
 
+} 
+.header-blue .navbar .navbar-collapse .navbar-group .navbar-text a:hover{
+  color: #33829c !important;
+
+} 
 .header-blue .navbar .navbar-toggler {
   border-color: rgba(255, 255, 255, 0.3);
 }

@@ -20,7 +20,7 @@ block content
                         - for(let i = 0; i < lawDocument._source.field.length; i++)
                             if( i !== lawDocument._source.field.length - 1)
                                 a(href=`vbpl?lv=${lawDocument._source.field[i]}`) #{lawDocument._source.field[i]}
-                                | ,
+                                | , 
                             else 
                                 a(href=`vbpl?lv=${lawDocument._source.field[i]}`) #{lawDocument._source.field[i]}
                     - else 
@@ -30,7 +30,7 @@ block content
                         - for(let i = 0; i < lawDocument._source.docType.length; i++)
                             if( i !== lawDocument._source.docType.length - 1)
                                 a(href=`vbpl?lvb=${lawDocument._source.docType[i]}`) #{lawDocument._source.docType[i]}
-                                | ,
+                                | , 
                             else 
                                 a(href=`vbpl?lvb=${lawDocument._source.docType[i]}`) #{lawDocument._source.docType[i]}
                     - else 
@@ -44,11 +44,11 @@ block content
                         i.fas.fa-book-open    Nội dung
                     a#nav-file-tab.nav-item.nav-link(href="#nav-file" data-toggle="tab" role="tab" aria-controls="nav-file" aria-selected="false") 
                         i.fas.fa-file-pdf Văn bản gốc
-                #nav-tabContent.tab-content
+                #nav-tabContent.tab-content(style='margin-bottom: 25px;')
                         #nav-content.tab-pane.fade.show.active(role="tabpanel" aria-labelledby="nav-content-tab")
                             .block-content
                                 .row
-                                    .col-md-8(style="border: 1px solid rgba(0, 0, 0 , 0.1)") !{lawDocument._source.contentHtml}
+                                    .col-md-8(style="border-right: 1px solid #e0e0e0") !{lawDocument._source.contentHtml}
                                     .col-md-4
                                         #info-hold
                                             .view-container
@@ -151,12 +151,12 @@ block content
                                                         - if(typeof lawDocument._source.docType !== 'string')
                                                             - for(let i = 0; i < lawDocument._source.docType.length; i++)
                                                                 if(i !== lawDocument._source.docType.length - 1)
-                                                                    a.text-primary(href=`vbpl?lvb=${lawDocument._source.docType[i]}`) #{lawDocument._source.docType[i]}
+                                                                    a(href=`vbpl?lvb=${lawDocument._source.docType[i]}`) #{lawDocument._source.docType[i]}
                                                                     | ,
                                                                 else
-                                                                    a.text-primary(href=`vbpl?lvb=${lawDocument._source.docType[i]}`) #{lawDocument._source.docType[i]}
+                                                                    a(href=`vbpl?lvb=${lawDocument._source.docType[i]}`) #{lawDocument._source.docType[i]}
                                                         - else 
-                                                            a.text-primary(href=`vbpl?lvb=${lawDocument._source.docType}`) #{lawDocument._source.docType}
+                                                            a(href=`vbpl?lvb=${lawDocument._source.docType}`) #{lawDocument._source.docType}
 
                                                 tr
                                                     td Số hiệu
@@ -167,24 +167,24 @@ block content
                                                         - if(typeof lawDocument._source.agencyIssued !== 'string')
                                                             - for(let i = 0; i < lawDocument._source.agencyIssued.length; i++)
                                                                 if(i !== lawDocument._source.agencyIssued.length - 1)
-                                                                    a.text-primary(href=`vbpl?cqbh=${lawDocument._source.agencyIssued[i]}`) #{lawDocument._source.agencyIssued[i]}
+                                                                    a(href=`vbpl?cqbh=${lawDocument._source.agencyIssued[i]}`) #{lawDocument._source.agencyIssued[i]}
                                                                     | ,
                                                                 else
-                                                                    a.text-primary(href=`vbpl?cqbh=${lawDocument._source.agencyIssued[i]}`) #{lawDocument._source.agencyIssued[i]}
+                                                                    a(href=`vbpl?cqbh=${lawDocument._source.agencyIssued[i]}`) #{lawDocument._source.agencyIssued[i]}
                                                         - else 
-                                                            a.text-primary(href=`vbpl?cqbh=${lawDocument._source.agencyIssued}`) #{lawDocument._source.agencyIssued}
+                                                            a(href=`vbpl?cqbh=${lawDocument._source.agencyIssued}`) #{lawDocument._source.agencyIssued}
                                                 tr
                                                     td Người Ký
                                                     td
                                                         - if(typeof lawDocument._source.signedBy !== 'string')
                                                             - for(let i = 0; i < lawDocument._source.signedBy.length; i++)
                                                                 if(i !== lawDocument._source.signedBy.length - 1)
-                                                                    a.text-primary(href=`vbpl?nk=${lawDocument._source.signedBy[i]}`) #{lawDocument._source.signedBy[i]}
+                                                                    a(href=`vbpl?nk=${lawDocument._source.signedBy[i]}`) #{lawDocument._source.signedBy[i]}
                                                                     | ,
                                                                 else
-                                                                    a.text-primary(href=`vbpl?nk=${lawDocument._source.signedBy[i]}`) #{lawDocument._source.signedBy[i]}
+                                                                    a(href=`vbpl?nk=${lawDocument._source.signedBy[i]}`) #{lawDocument._source.signedBy[i]}
                                                         - else 
-                                                            a.text-primary(href=`vbpl?nk=${lawDocument._source.signedBy}`) #{lawDocument._source.signedBy}
+                                                            a(href=`vbpl?nk=${lawDocument._source.signedBy}`) #{lawDocument._source.signedBy}
                                                 tr
                                                     td Ngày ban hành
                                                     td #{lawDocument._source.issuedDate}
@@ -203,16 +203,16 @@ block content
                                                         - if(typeof lawDocument._source.field !== 'string')
                                                             - for(let i = 0; i < lawDocument._source.field.length; i++)
                                                                 if(i !== lawDocument._source.field.length - 1)
-                                                                    a.text-primary(href=`vbpl?lv=${lawDocument._source.field[i]}`) #{lawDocument._source.field[i]}
+                                                                    a(href=`vbpl?lv=${lawDocument._source.field[i]}`) #{lawDocument._source.field[i]}
                                                                     | ,
                                                                 else
-                                                                    a.text-primary(href=`vbpl?lv=${lawDocument._source.field[i]}`) #{lawDocument._source.field[i]}
+                                                                    a(href=`vbpl?lv=${lawDocument._source.field[i]}`) #{lawDocument._source.field[i]}
                                                         - else 
-                                                            a.text-primary(href=`vbpl?lv=${lawDocument._source.field}`) #{lawDocument._source.field}
+                                                            a(href=`vbpl?lv=${lawDocument._source.field}`) #{lawDocument._source.field}
                                                 tr
                                                     td Tình trạng hiệu lực
                                                     td
-                                                        a.text-primary(href=`vbpl?tt=${lawDocument._source.effectiveStatus}`) #{lawDocument._source.effectiveStatus}
+                                                        a(href=`vbpl?tt=${lawDocument._source.effectiveStatus}`) #{lawDocument._source.effectiveStatus}
                                                 tr
                                                     td Cập nhật
                                                     td #{moment(lawDocument._source.updatedAt).fromNow()}
