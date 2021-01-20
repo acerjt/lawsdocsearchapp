@@ -1,4 +1,4 @@
 {
-    "ignore": ["data/*", "logs/*"],
+    "ignore": ["data/*", "logs/*", "public/data/*"],
     "ext": "js,pug,css"
 }
