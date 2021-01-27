@@ -169,16 +169,6 @@ block content
                                                             a.text-primary-dark(onclick=`updateQueryStringParameter('${fieldName}', '${item.key}')` data-toggle="tooltip" title=`${item.key}`) #{item.key.length > 20 ?item.key.slice(0,20) + '...' : item.key}
                                                         span.badge.badge-pill.badge-secondary.pull-right #{item.doc_count}
 
-                    //- ul#pills-tab.nav.nav-pills.mb-3(role='tablist')
-                    //-     li.nav-item
-                    //-         a#pills-home-tab.nav-link.active(data-toggle='pill' href='#pills-home' role='tab' aria-controls='pills-home' aria-selected='true')
-                    //-             i.fas.fa-book  
-                    //-             |  Văn bản tiếng Việt mới
-                    //-     li.nav-item
-                    //-         a#pills-profile-tab.nav-link.doceng(data-toggle='pill' href='#pills-profile' role='tab' aria-controls='pills-profile' aria-selected='false')
-                    //-             i.fas.fa-passport
-                    //-             |  Văn bản tiếng Anh mới
-                    
                     #pills-tabContent.tab-content
                         
                         #pills-home.tab-pane.fade.show.active(role='tabpanel' aria-labelledby='pills-home-tab')
@@ -231,47 +221,28 @@ block content
                                                             .col.datestart #{law['_source'].effectiveDate}
                                                             .w-100
                                                             .col(style='max-width:35%') Hiệu lực:
-                                                            .col.iseffect #{law['_source'].effectiveStatus}
+                                                            - if (law['_source'].effectiveStatus === "Còn hiệu lực")
+                                                                .col.iseffect(style='color:#038a40') #{law['_source'].effectiveStatus}
+                                                            - else if (law['_source'].effectiveStatus.indexOf("Hết hiệu lực") > -1)
+                                                                .col.iseffect(style='color:red') #{law['_source'].effectiveStatus}
+                                                            - else 
+                                                                .col.iseffect #{law['_source'].effectiveStatus}
                                                             .w-100
                                                             .col(style='max-width:35%') Cập nhật:
                                                             .col.timeupdate #{moment(law['_source'].updatedAt).fromNow()}
 
-                                        //- .navbar-content-md8
-                                        //-     nav.navbar.navbar-light.navbar-expand-md.navigation-clean-search(style='height:40px')
-                                        //-                 .container-fluid(style='height:40px')
-                                        //-                     #navcol-1.collapse.navbar-collapse(style='font-size: 12px; height:40px')
-                                        //-                         .navbar-group(style='height:40px')
-                                        //-                             .navbar-text.mr-4(style='height:40px ')
-                                        //-                                 a.travel(href='?page=addTrip_Step0' style='font-size:14px')
-                                        //-                                 i.fas.fa-file-word
-                                        //-                                 |                                                         Nội dung
-                                        //-                             .navbar-text.mr-4
-                                        //-                                 a.signup(href='#' style='font-size:14px')
-                                        //-                                 i.fas.fa-project-diagram
-                                        //-                                 |                                                         Lược đồ
-                                        //-                             .navbar-text.mr-4
-                                        //-                                 a.login(href='' style='font-size:14px')
-                                        //-                                 i.fas.fa-file-pdf
-                                        //-                                 |                                                         Bản PDF
-                                        //-                             .navbar-text.mr-4
-                                        //-                                 a.login(href='' style='font-size:14px')
-                                        //-                                 i.fas.fa-history
-                                        //-                                 |                                                          Lịch sử
-                                        //-                             .navbar-text.mr-4
-                                        //-                                 a.login(href='' style='font-size:14px')
-                                        //-                                 i.fas.fa-external-link-alt
-                                        //-                                 |                                                         Văn bản liên quan
+                                                                              
                         - if(paginateDisplayConfiguration)
                             .pagination
                                 .paging-container.d-flex
                                     - if (currentPage !== 1)
-                                        a.paging-item(onclick=`updateQueryStringParameter('page','${currentPage - 1 < 1 ?  1 : currentPage - 1}')` style='color: #4c9fbf') <<
+                                        a.paging-item(onclick=`updateQueryStringParameter('page','${currentPage - 1 < 1 ?  1 : currentPage - 1}')` style='color: #4c9fbf') <
                                     - for (let page = paginateDisplayConfiguration[0].startingPage; page < paginateDisplayConfiguration[0].endingPage ; page += paginateDisplayConfiguration[0].pageIncrementJumping)
                                         if(page === currentPage)
                                             a.paging-item(onclick=`updateQueryStringParameter('page',${page})` style='color: #4c9fbf') #{page}
                                         else 
                                             a.paging-item(onclick=`updateQueryStringParameter('page',${page})` style='color: #4c9fbf') #{page}
                                     - if (currentPage !== paginateDisplayConfiguration[0].endingPage - 1)
-                                        a.paging-item(onclick=`updateQueryStringParameter('page',${currentPage + 1})` style='color: #4c9fbf') >>
+                                        a.paging-item(onclick=`updateQueryStringParameter('page',${currentPage + 1})` style='color: #4c9fbf') >
                 
     script(src="/script/home.js")

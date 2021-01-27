@@ -60,6 +60,7 @@ div
                                     .col-sm-10
                                         select#inputState.form-control(style='width:50%')
                                             option(selected='') Tất cả
+                                            option Bộ luật của Quốc hội
                                             option Hiến pháp
                                             option Bộ luật của Quốc hội
                                             option Luật của Quốc hội
@@ -79,14 +80,15 @@ div
                                     .col-sm-10(style='width:50%')
                                         input#inputDocStarted.form-control(style='width:50%' type='date')
                                 .form-group.row(style='margin-bottom: 0rem;')
-                                    label.col-sm-2.col-form-label(for='inputDocType') Loại Văn Bản
+                                    label.col-sm-2.col-form-label(for='inputDocType') Tình Trạng
                                     .col-sm-10
                                         select#inputState.form-control(style='width:50%')
                                             option(selected='') Tất cả
-                                            option Chưa có hiệu lực
                                             option Còn hiệu lực
+                                            option Chưa có hiệu lực
                                             option Hết hiệu lực
-                                            option Không xác địn
+                                            option Không xác định
+                                            option Không còn phù hợp 
 
 #signUpModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
     .modal-dialog(role='document')
