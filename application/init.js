@@ -249,6 +249,11 @@ const createLawsIndex = async () => {
             "format": "dd/MM/yyyy||epoch_millis",
             "ignore_malformed": true
           },
+          "inavailableDate": {
+            "type": "date",
+            "format": "dd/MM/yyyy||epoch_millis",
+            "ignore_malformed": true
+          },
           "dateOfAnnouncement": {
             "type": "date",
             "format": "dd/MM/yyyy||epoch_millis",
@@ -340,7 +345,7 @@ const bulkIndex = async (index, source, pipeline) => {
       return result.abort()
     }
   })
-  return result
+    return result
 }
 
 const initLawsData = async () => {
@@ -427,7 +432,6 @@ const run = async () => {
   let isLawsIndexExists = await func.checkIndicesExists(laws.lawsIndex)
   if(isLawsIndexExists)
     await func.deleteIndex(laws.lawsIndex)
-  isLawsIndexExists = await func.checkIndicesExists(laws.lawsIndex)
   await initLawsData()
   await lawsRatingScript()
   await lawsCalculateViewScript()
