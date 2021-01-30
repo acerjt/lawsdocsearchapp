@@ -27,27 +27,12 @@ const pugFiles = {
     detailLaw: 'detailLaw',
     error404: 'error404'
 }
-const countTotalLawsDoc = () => {
-    func.countTotalIndexDocument(this.lawsIndex)
-    .then(totalLawsDocument => totalLawsDocument)
-    .catch(err => {
-        console.log(err)
-        return -1
-    }) 
-}
 
 const laws = {
     filePathStoreLawsData : path.resolve(__dirname, "./data/lawsv1.json"),
-    lawsIndex : 'laws3',
+    lawsIndex : 'laws5',
     lawsSearchSize : 20,
-    firstPageOverTenThousandDocument : variables.maxResultWindow / this.lawsSearchSize + 1,
-    getTotalLawsDoc: () => {
-        return this.totalLawsDoc
-    },
-    setTotalLawsDoc: (totalLawsDocument) => {
-        this.totalLawsDoc = totalLawsDocument
-    },
-    totalLawsDoc: countTotalLawsDoc
+    firstPageOverTenThousandDocument : variables.maxResultWindow / 20 + 1,
 }
 
 

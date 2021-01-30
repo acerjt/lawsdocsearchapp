@@ -1,7 +1,7 @@
 
 const {client} = require('../../connection/elastic-connect')
-const {titles, pugFiles, laws, variables, lawsPaging, scripts} = require('../../common')
-
+const {titles, pugFiles, laws, variables, lawsPaging, scripts, func} = require('../../common')
+let lastPage = 0 
 
 const getLawsInParticularPage = async (page, filter, keyword) => {
     try {
@@ -21,83 +21,83 @@ const getLawsInParticularPage = async (page, filter, keyword) => {
                     "filter": []
                 }
             },
-            "aggs": {
-                "docType": {
-                    "aggs": {
-                        "Loại văn bản": {
-                            "terms": {
-                                "field": "docType",
-                                "size": 10000
-                            }
-                        }
-                    },
-                    "filter": {
-                        "bool": {
-                            "must": []
-                        }
-                    }
-                },
-                "field": {
-                    "aggs": {
-                        "Lĩnh vực" : {
-                            "terms": {
-                                "field": "field",
-                                "size": 10000
-                            }
-                        }
-                    },
-                    "filter": {
-                        "bool": {
-                            "must": []
-                        }
-                    }
-                },
-                "signedBy": {
-                    "aggs": {
-                        "Người ký" : {
-                            "terms": {
-                                "field": "signedBy",
-                                "size": 10000
-                            }
-                        }
-                    },
-                    "filter": {
-                        "bool": {
-                            "must": []
-                        }
-                    }
-                },
-                "effectiveStatus": {
-                    "aggs": {
-                        "Tình trạng": {
-                            "terms": {
-                                "field": "effectiveStatus",
-                                "size": 10000
-                            }
-                        }
-                    },
-                    "filter": {
-                        "bool": {
-                            "must": []
-                        }
-                    }
-                },
-                "agencyIssued": {
-                    "aggs": {
-                        "Cơ quan ban hành": {
-                            "terms": {
-                                "field": "agencyIssued",
-                                "size": 10000
-                            }
-                        }
-                    },
-                    "filter": {
-                        "bool": {
-                            "must": []
-                        }
-                    }
-                }
-            },
+            // "aggs": {
+            //     "docType": {
+            //         "aggs": {
+            //             "Loại văn bản": {
+            //                 "terms": {
+            //                     "field": "docType",
+            //                     "size": 10000
+            //                 }
+            //             }
+            //         },
+            //         "filter": {
+            //             "bool": {
+            //                 "must": []
+            //             }
+            //         }
+            //     },
+            //     "field": {
+            //         "aggs": {
+            //             "Lĩnh vực" : {
+            //                 "terms": {
+            //                     "field": "field",
+            //                     "size": 10000
+            //                 }
+            //             }
+            //         },
+            //         "filter": {
+            //             "bool": {
+            //                 "must": []
+            //             }
+            //         }
+            //     },
+            //     "signedBy": {
+            //         "aggs": {
+            //             "Người ký" : {
+            //                 "terms": {
+            //                     "field": "signedBy",
+            //                     "size": 10000
+            //                 }
+            //             }
+            //         },
+            //         "filter": {
+            //             "bool": {
+            //                 "must": []
+            //             }
+            //         }
+            //     },
+            //     "effectiveStatus": {
+            //         "aggs": {
+            //             "Tình trạng": {
+            //                 "terms": {
+            //                     "field": "effectiveStatus",
+            //                     "size": 10000
+            //                 }
+            //             }
+            //         },
+            //         "filter": {
+            //             "bool": {
+            //                 "must": []
+            //             }
+            //         }
+            //     },
+            //     "agencyIssued": {
+            //         "aggs": {
+            //             "Cơ quan ban hành": {
+            //                 "terms": {
+            //                     "field": "agencyIssued",
+            //                     "size": 10000
+            //                 }
+            //             }
+            //         },
+            //         "filter": {
+            //             "bool": {
+            //                 "must": []
+            //             }
+            //         }
+            //     }
+            // },
             "sort": {
                 "issuedDate": {
                     "order": "desc"
@@ -151,18 +151,20 @@ const getLawsInParticularPage = async (page, filter, keyword) => {
                 "term": {}   
             }
             filterSearchTerm.term[filterProp] = filter[filterProp]
+            aggsBody.query.bool.filter.push(filterSearchTerm)
             aggsBody.post_filter.bool.filter.push(filterSearchTerm)
-            for (let aggsBodyProp in aggsBody.aggs) {
-                if(filterProp !== aggsBodyProp) {
-                    let filterTerm = {
-                        "term": {}   
-                    }
-                    filterTerm.term[filterProp] = filter[filterProp]
-                    aggsBody.aggs[aggsBodyProp].filter.bool.must.push(filterTerm)
-                }
-            }
+
+            // for (let aggsBodyProp in aggsBody.aggs) {
+            //     if(filterProp !== aggsBodyProp) {
+            //         let filterTerm = {
+            //             "term": {}   
+            //         }
+            //         filterTerm.term[filterProp] = filter[filterProp]
+            //         aggsBody.aggs[aggsBodyProp].filter.bool.must.push(filterTerm)
+            //     }
+            // }
         }
-        // console.log(JSON.stringify(aggsBody))
+        console.log(JSON.stringify(aggsBody))
         if(!isOverTenThoudsandDocs) {
             console.time('search time')
             let {body} = await client.search({
@@ -179,10 +181,16 @@ const getLawsInParticularPage = async (page, filter, keyword) => {
                 // ],
                 body: aggsBody
             })
-            let endingPage = Math.ceil(body.hits.total.value / laws.lawsSearchSize)
-            paginateDisplayConfiguration[0].endingPage = paginateDisplayConfiguration[0].endingPage > endingPage ? endingPage + 1 : paginateDisplayConfiguration[0].endingPage
+            console.log(body.hits.total.value)
+
+            if(body.hits.total.value < variables.maxResultWindow) {
+                let endingPage = Math.ceil(body.hits.total.value / laws.lawsSearchSize)
+                paginateDisplayConfiguration[0].endingPage = paginateDisplayConfiguration[0].endingPage > endingPage ? endingPage + 1 : paginateDisplayConfiguration[0].endingPage
+                console.log(endingPage)
+            }
+            let {aggs} = await aggsForFilter(filter)
             console.timeEnd('search time')
-            return Promise.resolve({ lawsDoc: body.hits.hits, page, paginateDisplayConfiguration, aggs: body.aggregations})
+            return Promise.resolve({ lawsDoc: body.hits.hits, page, paginateDisplayConfiguration, aggs})
         }
         else {
             console.time('search time')
@@ -250,8 +258,9 @@ const pagination = async (page) => {
     let startingPage = page - page % 10 + 1
     let endingPage = startingPage + 10
     let pageIncrementJumping = 1
-    const totalLawsDoc = await laws.getTotalLawsDoc()
+    const totalLawsDoc = await func.countTotalIndexDocument(laws.lawsIndex)
     const lastPage = Math.ceil(totalLawsDoc / laws.lawsSearchSize + 1)
+    console.log(lastPage)
     if(page % 10 === 0) {
         startingPage -= 1
     }
@@ -288,7 +297,7 @@ const getLawById = async (lawDocId) => {
     return body.hits.hits[0]
 }
 
-const ratingDocument = async (id,ratingValue) => {
+const ratingDocument = async (id, ratingValue) => {
     try {
         await client.update({
             id: id,
@@ -435,8 +444,157 @@ const getViFieldName = (field) => {
     else if(field === 'agencyIssued') 
         return 'Cơ quan ban hành'
 }
+const aggsForFilter = async (filter) => {
+    const ITEMS_PER_PAGE = 10000;
+    const uniqueDocType = [];
+    const uniqueSignedBy = [];
+    const uniqueField = [];
+    const uniqueEffectiveStatus = [];
+    const uniqueAgencyIssued = [];
+
+    const body =  {
+        "index": laws.lawsIndex,
+        "size": 0,
+        "body": {
+            "aggs" : {
+                "signedBy": {
+                    "composite" : {
+                        "size": ITEMS_PER_PAGE,
+                        "sources" : [
+                            { "signedBy": { "terms" : {"script": {}} } }
+                        ]
+                    }
+                },
+                "docType": {
+                    "composite" : {
+                        "size": ITEMS_PER_PAGE,
+                        "sources" : [
+                            { "docType": { "terms" : {"script": {}} } }
+                        ]
+                    }
+                },
+                "field": {
+                    "composite" : {
+                        "size": ITEMS_PER_PAGE,
+                        "sources" : [
+                            { "field": { "terms" : {"script": {}} } }
+                        ]
+                    }
+                },
+                "effectiveStatus": {
+                    "composite" : {
+                        "size": ITEMS_PER_PAGE,
+                        "sources" : [
+                            { "effectiveStatus": { "terms" : {"script": {}} } }
+                        ]
+                    }
+                },
+                "agencyIssued": {
+                    "composite" : {
+                        "size": ITEMS_PER_PAGE,
+                        "sources" : [
+                            { "agencyIssued": { "terms" : {"script": {}} } }
+                        ]
+                    }
+                }
+            }
+        }
+    };
+    let signedByScriptString = `doc['signedBy'].value`
+    let docTypeScriptString = `doc['docType'].value`
+    let fieldScriptString = `doc['field'].value`
+    let effectiveStatusScriptString = `doc['effectiveStatus'].value`
+    let agencyIssuedScriptString = `doc['agencyIssued'].value`
+
+    body.body.aggs.signedBy.composite.sources[0].signedBy.terms.script = signedByScriptString
+    body.body.aggs.docType.composite.sources[0].docType.terms.script = docTypeScriptString
+    body.body.aggs.field.composite.sources[0].field.terms.script = fieldScriptString
+    body.body.aggs.effectiveStatus.composite.sources[0].effectiveStatus.terms.script = effectiveStatusScriptString
+    body.body.aggs.agencyIssued.composite.sources[0].agencyIssued.terms.script = agencyIssuedScriptString
+
+    for (let aggsBodyProp in body.body.aggs) {
+        let str = `if(`
+        let strArr = []
+        for (let filterProp in filter) {
+            if(filterProp !== aggsBodyProp) {
+                strArr.push(` doc['${filterProp}'].value == '${filter[filterProp]}' `)
+            }
+        }
+        str += strArr.join('&&') + ')' + ` return doc['${aggsBodyProp}'].value;`
+        if(strArr.length)
+            body.body.aggs[aggsBodyProp].composite.sources[0][aggsBodyProp].terms.script = str
+    }
+    console.log(JSON.stringify(body))
+    while (true) {
+        const result = await client.search(body);
+        const currentUniqueDocType = result.body.aggregations.docType.buckets
+        const currentUniqueSignedBy = result.body.aggregations.signedBy.buckets
+        const currentUniqueField = result.body.aggregations.field.buckets
+        const currentUniqueEffectiveStatus = result.body.aggregations.effectiveStatus.buckets
+        const currentUniqueAgencyIssued = result.body.aggregations.agencyIssued.buckets
 
 
+        uniqueDocType.push(...currentUniqueDocType);
+        uniqueSignedBy.push(...currentUniqueSignedBy)
+        uniqueField.push(...currentUniqueField)
+        uniqueEffectiveStatus.push(...currentUniqueEffectiveStatus)
+        uniqueAgencyIssued.push(...currentUniqueAgencyIssued)
+
+
+        const afterDocType = result.body.aggregations.docType.after_key;
+        const afterSignedBy = result.body.aggregations.signedBy.after_key;
+        const afterField = result.body.aggregations.field.after_key;
+        const afterEffectiveStatus = result.body.aggregations.effectiveStatus.after_key;
+        const afterAgencyIssued = result.body.aggregations.agencyIssued.after_key;
+
+
+        if (afterDocType || afterSignedBy) {
+            body.body.aggs.signedBy.composite.after = afterSignedBy;
+            body.body.aggs.docType.composite.after = afterDocType;
+            body.body.aggs.field.composite.after = afterField;
+            body.body.aggs.effectiveStatus.composite.after = afterEffectiveStatus;
+            body.body.aggs.agencyIssued.composite.after = afterAgencyIssued;
+            
+        } else {
+            break;
+        }
+    }
+    let docType = uniqueDocType.sort(sortDocCount)
+    let signedBy = uniqueSignedBy.sort(sortDocCount)
+    let field = uniqueField.sort(sortDocCount)
+    let effectiveStatus = uniqueEffectiveStatus.sort(sortDocCount)
+    let agencyIssued = uniqueAgencyIssued.sort(sortDocCount)
+
+    if(docType.length > 150)
+        docType = docType.slice(0,150)
+    if(signedBy.length > 150)
+        signedBy = signedBy.slice(0,150)
+    if(field.length > 150)
+        field = field.slice(0,150)
+    if(effectiveStatus.length > 150)
+        effectiveStatus = effectiveStatus.slice(0,150)
+    if(agencyIssued.length > 150)
+        agencyIssued = agencyIssued.slice(0,150)
+    return {
+        aggs : {
+            docType,
+            signedBy,
+            field,
+            effectiveStatus,
+            agencyIssued
+        }
+    }
+}
+
+const sortDocCount = (a, b) =>  {
+    if(a.doc_count > b.doc_count)
+        return -1
+    else if(a.doc_count < b.doc_count)
+        return 1
+    else return 0
+}
+
+// module.exports.aggsForFilter = aggsForFilter
 module.exports.getLaws = async (req, res) => {
     try {
         console.time('total time')

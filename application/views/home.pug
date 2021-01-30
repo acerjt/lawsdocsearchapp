@@ -161,12 +161,12 @@ block content
                                             i.fas.fa-chevron-down(style="color: #fff; margin-left: 5px")
                                         .sub
                                             ul.row.list-unstyled
-                                                - for (let item of aggs[prop][fieldName].buckets)
+                                                - for (let item of aggs[prop])
                                                     li.col-md-4.push-5
-                                                        - if(filter[prop] === item.key)
-                                                            a.text-primary-dark(style="background-color: #8cb8d2;padding: 5px" onclick=`updateQueryStringParameter('${fieldName}', '${item.key}')` data-toggle="tooltip" title=`${item.key}`) #{item.key.length > 20 ?item.key.slice(0,20) + '...' : item.key}
+                                                        - if(filter[prop] === item.key[prop])
+                                                            a.text-primary-dark(style="background-color: #8cb8d2;padding: 5px" onclick=`updateQueryStringParameter('${fieldName}', '${item.key[prop]}')` data-toggle="tooltip" title=`${item.key[prop]}`) #{item.key[prop].length > 20 ?item.key[prop].slice(0,20) + '...' : item.key[prop]}
                                                         - else 
-                                                            a.text-primary-dark(onclick=`updateQueryStringParameter('${fieldName}', '${item.key}')` data-toggle="tooltip" title=`${item.key}`) #{item.key.length > 20 ?item.key.slice(0,20) + '...' : item.key}
+                                                            a.text-primary-dark(onclick=`updateQueryStringParameter('${fieldName}', '${item.key[prop]}')` data-toggle="tooltip" title=`${item.key[prop]}`) #{item.key[prop].length > 20 ?item.key[prop].slice(0,20) + '...' : item.key[prop]}
                                                         span.badge.badge-pill.badge-secondary.pull-right #{item.doc_count}
 
                     #pills-tabContent.tab-content
@@ -225,13 +225,16 @@ block content
                                                                 .col.iseffect(style='color:#038a40') #{law['_source'].effectiveStatus}
                                                             - else if (law['_source'].effectiveStatus.indexOf("Hết hiệu lực") > -1)
                                                                 .col.iseffect(style='color:red') #{law['_source'].effectiveStatus}
+
                                                             - else 
                                                                 .col.iseffect #{law['_source'].effectiveStatus}
                                                             .w-100
+                                                            - if (law['_source'].effectiveStatus.indexOf("Hết hiệu lực") > -1)
+                                                                .col(style='max-width:35%') Ngày hết hiệu lực:
+                                                                .col.iseffect(style='color:red') #{law['_source'].inavailableDate}
+                                                                .w-100
                                                             .col(style='max-width:35%') Cập nhật:
-                                                            .col.timeupdate #{moment(law['_source'].updatedAt).fromNow()}
-
-                                                                              
+                                                            .col.timeupdate #{moment(law['_source'].updatedAt).fromNow()}                                                                
                         - if(paginateDisplayConfiguration)
                             .pagination
                                 .paging-container.d-flex

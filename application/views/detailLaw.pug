@@ -212,31 +212,51 @@ block content
                                                 tr
                                                     td Tình trạng hiệu lực
                                                     td
-                                                        a(href=`vbpl?tt=${lawDocument._source.effectiveStatus}`) #{lawDocument._source.effectiveStatus}
+                                                        a(href=`vbpl?tt=${lawDocument._source.effectiveStatus}`) #{lawDocument._source.effectiveStatus} #{lawDocument._source.inavailableDate ? lawDocument._source.inavailableDate : ''} 
                                                 tr
                                                     td Cập nhật
                                                     td #{moment(lawDocument._source.updatedAt).fromNow()}
-                                        .row#download
-                                            .col-md-12
-                                                table.table.table-striped.table-bordered.table-header-bg
-                                                    thead
-                                                        tr
-                                                            th.text-center(colspan="2")
-                                                                h2.h6 Download văn bản pháp luật #{lawDocument._source.docNum}
-                                            .col-md-12
-                                                table.block-table.table-bordered.text-center
-                                                    tbody
-                                                        tr
-                                                            td.bg-warning(style='width: 30%')
-                                                                .push-20.push-20-t
-                                                                    a(href=`${lawDocument._source.pdfLawsLink}`)
-                                                                        i.fa.fa-file-pdf-o.fa-3x.text-white
-                                                            td.bg-gray-lighter
-                                                                .h1.font-w700
-                                                                    span.h2.text-muted
-                                                                    a(href=`${lawDocument._source.pdfLawsLink}`) PDF
-                                                                .h5.text-muted.text-uppercase.push-5-t
-                                                                    a(href=`${lawDocument._source.pdfLawsLink}`) File văn bản gốc
-                                                                        small.font-s13 (186.3Kb)
-                        #nav-file.tab-pane.fade(role="tabpanel" aria-labelledby="nav-file-tab") World
+                                        - if(lawDocument._source.pdfLawsLink || lawDocument._source.docLawsLink)
+                                            .row#download
+                                                .col-md-12
+                                                    table.table.table-striped.table-bordered.table-header-bg
+                                                        thead
+                                                            tr
+                                                                th.text-center(colspan="2")
+                                                                    h2.h6 Download văn bản pháp luật #{lawDocument._source.docNum}
+                                                - if(lawDocument._source.pdfLawsLink)
+                                                    .col-md-12(style="margin-bottom: 15px")
+                                                        table.block-table.table-bordered.text-center(style="width:100%")
+                                                            tbody
+                                                                tr
+                                                                    td.bg-warning(style='width: 30%')
+                                                                        .push-20.push-20-t
+                                                                            a(href=`${lawDocument._source.pdfLawsLink}`)
+                                                                                i.fa.fa-file-pdf-o.fa-3x.text-white
+                                                                    td.bg-gray-lighter
+                                                                        .h1.font-w700
+                                                                            span.h2.text-muted
+                                                                            a(href=`${lawDocument._source.pdfLawsLink}`) PDF
+                                                                        .h5.text-muted.text-uppercase.push-5-t
+                                                                            a(href=`${lawDocument._source.pdfLawsLink}`) File văn bản gốc
+                                                                                small.font-s13
+                                                - if(lawDocument._source.docLawsLink)
+                                                    .col-md-12
+                                                        table.block-table.table-bordered.text-center(style="width:100%")
+                                                            tbody
+                                                                tr
+                                                                    td.bg-danger(style='width: 30%')
+                                                                        .push-20.push-20-t
+                                                                            a(href=`${lawDocument._source.docLawsLink}`)
+                                                                                i.fa.fa-file-word-o.fa-3x.text-white
+                                                                    td.bg-gray-lighter
+                                                                        .h1.font-w700
+                                                                            span.h2.text-muted
+                                                                            a(href=`${lawDocument._source.docLawsLink}`) DOC
+                                                                        .h5.text-muted.text-uppercase.push-5-t
+                                                                            a(href=`${lawDocument._source.docLawsLink}`) File văn bản word
+                                                                                small.font-s13
+                        #nav-file.tab-pane.fade(role="tabpanel" aria-labelledby="nav-file-tab")
+                            //- iframe(src=`${lawDocument._source.pdfLawsLink}` frameborder="0" width="100%" height="1000px")
+                            object(width="100%" height="1000px" type="application/pdf" data=`${lawDocument._source.pdfLawsLink}?#zoom=85&scrollbar=0&toolbar=0&navpanes=0`)
     script(src="script/detailLaw.js")

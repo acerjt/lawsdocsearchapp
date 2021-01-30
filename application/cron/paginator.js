@@ -2,7 +2,7 @@ const client = require('../connection/elastic-connect').client
 const common = require('../common')
 const {laws, variables, lawsPaging, func} = common
 const {CronJob} = require('cron')
-
+let isDoingPagingCron = false
 const get10000ThLawsDocument = async () => {
   try {
     let {body} = await client.search({
@@ -104,7 +104,7 @@ const checkPagingChanged = async (currentDocumentID, onPage) => {
 }
 const indexPageForPagination = async () => {
   try {
-    let totalLawsDocument = await laws.getTotalLawsDoc()
+    let totalLawsDocument =  await func.countTotalIndexDocument(laws.lawsIndex)
     let lastPageOverTenThousandDocument = Math.ceil(totalLawsDocument / laws.lawsSearchSize + 1)
     let {lastLawsDocumentIdForSearchAfter, lastLawsDocumentTimeForSearchAfter} = await get10000ThLawsDocument()
     let is10000thDocumentChanging = (await checkPagingChanged(lastLawsDocumentIdForSearchAfter, laws.firstPageOverTenThousandDocument))
@@ -118,7 +118,9 @@ const indexPageForPagination = async () => {
       await func.createIndex(lawsPaging.lawsPagingIndex).then(rs => console.log(`Create ${lawsPaging.lawsPagingIndex} successful: ${rs}`))
       await indexPaging(lastPageOverTenThousandDocument,lastLawsDocumentTimeForSearchAfter, lastLawsDocumentIdForSearchAfter)
       console.timeEnd('Index page')
+      isDoingPagingCron = !isDoingPagingCron
     } else {
+      isDoingPagingCron = !isDoingPagingCron
       console.log('Paging not changed')
     }
   } catch (error) {
@@ -218,9 +220,13 @@ const indexPageForPagination1 = async () => {
 }
 
 calculatePaging = () => {
-  let job = new CronJob('0 */10 * * * *', function() {
+  let job = new CronJob('0 * * * * *', function() {
     console.log(new Date())
-    indexPageForPagination()
+    if(!isDoingPagingCron) {
+      isDoingPagingCron = !isDoingPagingCron
+      console.log(isDoingPagingCron)
+      indexPageForPagination()
+    }
   }, null, true, 'Asia/Ho_Chi_Minh');
   job.start();
 }

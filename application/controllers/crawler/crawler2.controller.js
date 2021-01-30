@@ -118,12 +118,16 @@ const extractLawsData = async (selector) => {
       .text()
       .trim().split(', ');
 
-    const effectiveStatus = await dataDocLaw
+    let effectiveStatus = await dataDocLaw
       .find("tr:nth-child(10) > td:nth-child(2)")
       .text()
       .trim()
-      .replace(/\d{2}\/\d{2}\/\d{4}/g, '');
-
+    let matchEffectiveStatusWithDate = effectiveStatus.match(/\d{2}\/\d{2}\/\d{4}/)
+    let inavailableDate = ''
+    if(matchEffectiveStatusWithDate) {
+      inavailableDate = matchEffectiveStatusWithDate.input.slice(matchEffectiveStatusWithDate.index, effectiveStatus.length)
+      effectiveStatus = matchEffectiveStatusWithDate.input.slice(0, matchEffectiveStatusWithDate.index - 1)
+    }
     const lawContent = await selector1("body").find(".row > .col-md-8");
 
     const contentText = await lawContent.text();
@@ -181,7 +185,10 @@ const extractLawsData = async (selector) => {
       docLawsLink: docLawsLink,
       contentText: contentText,
       contentHtml: contentHtml,
+      inavailableDate: inavailableDate
     };
+    if(!inavailableDate)
+      delete law.inavailableDate
     writeLawsDataFile(
       laws.filePathStoreLawsData,
       JSON.stringify(law) + "\n"
@@ -278,13 +285,12 @@ const hexIdGeneration = () => {
 
 module.exports.crawler = async () => {
   try {
-    const totalPagesVBPL = 15; // 11372
-    for (let page = 1; page <= totalPagesVBPL; page++) {
+    const totalPagesVBPL = 11380; // 11372
+    for (let page = 11370; page <= totalPagesVBPL; page++) {
       const lawURL = `${baseURL}/csdl/van-ban-phap-luat?p=${page}`;
       let startCrawlerOnePage = process.hrtime()
       await crawLawsPerPage(lawURL)
         .then((rs) => {
-          
           console.log(`page ${page} has crawled`);
         })
         .catch((error) => console.log("Index error: " + error));
@@ -292,6 +298,7 @@ module.exports.crawler = async () => {
         CrawlerLogger.info('crawler one page time: ' + endCrawlerOnePage[1] / 1000000 + 'ms')
 
     }
+    return Promise.resolve()
   } catch (error) {
     console.log(error);
   }
