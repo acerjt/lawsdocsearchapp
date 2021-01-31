@@ -4,6 +4,7 @@ const crypto = require('crypto')
 const fs = require('fs');
 const moment = require("moment");
 const path = require('path')
+const https = require('https')
 // moment().tz("Asia/Ho_Chi_Minh").format();
 
 const { laws } = require('../../common');
@@ -126,7 +127,7 @@ const extractLawsData = async (selector) => {
     let inavailableDate = ''
     if(matchEffectiveStatusWithDate) {
       inavailableDate = matchEffectiveStatusWithDate.input.slice(matchEffectiveStatusWithDate.index, effectiveStatus.length)
-      effectiveStatus = matchEffectiveStatusWithDate.input.slice(0, matchEffectiveStatusWithDate.index - 1)
+      effectiveStatus = matchEffectiveStatusWithDate.input.slice(0, matchEffectiveStatusWithDate.index - 1).trim()
     }
     const lawContent = await selector1("body").find(".row > .col-md-8");
 
@@ -147,9 +148,9 @@ const extractLawsData = async (selector) => {
     let docLawsLink = ''
     if(pdfLawsLinkRequestForDownload[0]) {
       pdfLawsLink = pdfLawsLinkRequestForDownload[0].attribs.href
-      fs.mkdir(path.resolve(__dirname, '../../public/' + pdfLawsLink.slice(0,pdfLawsLink.lastIndexOf('/'))), { recursive: true }, (err) => {
+      fs.mkdir(path.resolve(__dirname, '../../public/' + pdfLawsLink.slice(0,pdfLawsLink.lastIndexOf('/'))), { recursive: true }, async (err) => {
         if (err) throw err;
-        downloadFile(baseURL + pdfLawsLink, path.resolve(__dirname, '../../public' + pdfLawsLink))
+        await downloadFile(baseURL + pdfLawsLink, path.resolve(__dirname, '../../public' + pdfLawsLink))
         .catch(err => {
           CrawlerLogger.error(`Download file error: ${pdfLawsLink} ${err}`)
         })
@@ -157,9 +158,9 @@ const extractLawsData = async (selector) => {
     } 
     if(docLawsLinkRequestForDownload[0]) {
       docLawsLink = docLawsLinkRequestForDownload[0].attribs.href
-      fs.mkdir(path.resolve(__dirname, '../../public/' + docLawsLink.slice(0,docLawsLink.lastIndexOf('/'))), { recursive: true }, (err) => {
+      fs.mkdir(path.resolve(__dirname, '../../public/' + docLawsLink.slice(0,docLawsLink.lastIndexOf('/'))), { recursive: true }, async (err) => {
         if (err) throw err;
-        downloadFile(baseURL + docLawsLink, path.resolve(__dirname, '../../public/' + docLawsLink))
+        await downloadFile(baseURL + docLawsLink, path.resolve(__dirname, '../../public/' + docLawsLink))
         .catch(err => {
           CrawlerLogger.error(`Download file error: ${docLawsLink} ${err}`)
         })
@@ -189,31 +190,31 @@ const extractLawsData = async (selector) => {
     };
     if(!inavailableDate)
       delete law.inavailableDate
-    writeLawsDataFile(
+    let writeFile = await writeLawsDataFile(
       laws.filePathStoreLawsData,
       JSON.stringify(law) + "\n"
-    ).then(rs => {
-        let endCrawlerOneDoc = process.hrtime(startCrawlerOneDoc)
-        CrawlerLogger.info('crawler one document time:' + endCrawlerOneDoc[1] / 1000000 + 'ms')
-        return Promise.resolve(rs)
-    }).catch((err) => {
-      console.log(err);
-      Promise.reject(err);
-    });
+    )
+
+    let endCrawlerOneDoc = process.hrtime(startCrawlerOneDoc)
+    CrawlerLogger.info('crawler one document time:' + endCrawlerOneDoc[1] / 1000000 + 'ms')
+    return writeFile
   } catch(err) {
     console.log(err)
   }
 };
 const downloadFile = async (fileUrl, outputLocationPath) => {
   const writer = fs.createWriteStream(outputLocationPath);
-
   return axios({
     method: 'get',
     url: fileUrl,
     responseType: 'stream',
   }).then(response => {
     return new Promise((resolve, reject) => {
-      response.data.pipe(writer);
+      if(response.status === 200) 
+        response.data.pipe(writer);
+      else {
+        writer.close()
+      }
       let error = null;
       writer.on('error', err => {
         error = err;
@@ -221,13 +222,31 @@ const downloadFile = async (fileUrl, outputLocationPath) => {
         reject(err);
       });
       writer.on('close', () => {
+        console.log('Close stream' ,fileUrl)
         if (!error) {
           resolve(true);
         }
       });
     });
-  });
+  }).catch(error => {
+    writer.close()
+    return error
+  })
 }
+// const downloadFile = async (fileUrl, outputLocationPath) => {
+//   let file = fs.createWriteStream(outputLocationPath);
+//   let request = https.get(fileUrl, function(response) {
+//     response.pipe(file);
+//     file.on('finish', function() {
+//       file.close( (err) => {
+        
+//       });  // close() is async, call cb after close completes.
+//     });
+//   }).on('error', function(err) { // Handle errors
+//     fs.unlink(outputLocationPath); // Delete the file async. (But we don't check the result)
+//     // if (cb) cb(err.message);
+//   });
+// };
 const calculateUpdatedAt = (updatedAt) => {
   let splitUpdatedAt = updatedAt.split(" ");
   let date;
@@ -249,7 +268,7 @@ const calculateUpdatedAt = (updatedAt) => {
     date = moment().subtract(splitUpdatedAt[0], "years");
   } else if (updatedAt.indexOf("Hôm qua") > -1)
     date = moment().subtract(1, "days");
-  else if (updatedAt.indexOf("Năm ngoái") > -1)
+  else if (updatedAt.indexOf("năm ngoái") > -1)
     date = moment().subtract(1, "years");
   else {
     date = moment(formattedDate(updatedAt), "YYYYMMDD");
@@ -264,7 +283,7 @@ const formattedDate = (date) => {
 
 const writeLawsDataFile = async (filePath, data) => {
   fs.appendFile(filePath, data, function (err) {
-    if (err) throw err;
+    if (err)  console.log(err);
   });
 };
 
@@ -273,7 +292,7 @@ const hexIdGeneration = () => {
     crypto.randomBytes(16, (err, buffer) => {
       if (err) {
         console.log(err);
-        return rejeq({ s: 400, msg: err });
+        return reject({ s: 400, msg: err });
       }
       const currentTimeHexString = Date.now().toString(16);
 
@@ -285,8 +304,8 @@ const hexIdGeneration = () => {
 
 module.exports.crawler = async () => {
   try {
-    const totalPagesVBPL = 11380; // 11372
-    for (let page = 11370; page <= totalPagesVBPL; page++) {
+    const totalPagesVBPL = 100; // 11372
+    for (let page = 1; page <= totalPagesVBPL; page++) {
       const lawURL = `${baseURL}/csdl/van-ban-phap-luat?p=${page}`;
       let startCrawlerOnePage = process.hrtime()
       await crawLawsPerPage(lawURL)
@@ -296,7 +315,6 @@ module.exports.crawler = async () => {
         .catch((error) => console.log("Index error: " + error));
         let endCrawlerOnePage = process.hrtime(startCrawlerOnePage)
         CrawlerLogger.info('crawler one page time: ' + endCrawlerOnePage[1] / 1000000 + 'ms')
-
     }
     return Promise.resolve()
   } catch (error) {

@@ -283,18 +283,26 @@ const pagination = async (page) => {
     return { from : from, size : size, isOverTenThoudsandDocs : isOverTenThoudsandDocs, paginateDisplayConfiguration : paginateDisplayConfiguration}
 }
 const getLawById = async (lawDocId) => {
-    lawDocId = '/' + lawDocId
-    let {body} = await client.search({
-        index: laws.lawsIndex,
-        body: {
-            "query" : {
-                "match" : {
-                    "href": lawDocId
-                }   
+    try {
+        await client.update({
+            id: lawDocId,
+            index: laws.lawsIndex,
+            body: {    
+                "script" : {
+                    "id": scripts.laws.calculateView
+                }
             }
-        }
-    })
-    return body.hits.hits[0]
+        })
+        let {body} = await client.get({
+            index: laws.lawsIndex,
+            id: lawDocId
+        })
+        console.log(body)
+        return body
+    }
+    catch (error) {
+        return new Error(`Get document error: ${error}`)
+    }
 }
 
 const ratingDocument = async (id, ratingValue) => {
