@@ -52,6 +52,25 @@ div
                         div(style='background-color:#e5f3fb;padding: 15px')
                             form(style='margin-bottom: 0px;')
                                 .form-group.row(style='margin-bottom: 0.5rem;')
+                                    label.col-sm-2.col-form-label
+                                       
+                                    .col-sm-10.checkboxforsearch(style='width:50%; display: flex;')
+                                        //- label.col-sm-2.col-form-label(for='inputDocName') Tìm chính xác
+                                        .col-sm-3(style='margin-right:15px; padding-right: 10px;')
+                                            label.col-form-label.exactly(for='inputDocName')
+                                            |  Chính xác cụm từ trên
+                                            input(type='checkbox' checked='checked')
+                                            span.checkmark2
+                                            //- 
+                                            
+                                        .col-sm-3
+                                            label.col-form-label(for='inputDocName')
+                                            |  Có tất cả từ trên
+                                            input(type='checkbox')
+                                            span.checkmark2
+                                            i.fas.fa-info-circle(title='<b>Cách thức tìm kiếm</b>' data-toggle='popover' data-trigger='hover' data-placement='right' data-content='<b>Chính xác cụm từ trên:</b> kết quả trả về chứa chính xác cụm từ được nhập theo đúng thứ tự hiển thị của các từ khóa.<br /><b>Có tất cả từ trên:</b> kết quả trả về chứa tất cả các từ trong cụm từ khóa, không quan tâm vị trí hiển thị.<br />' data-html="true") 
+                                
+                                .form-group.row(style='margin-bottom: 0.5rem;')
                                     label.col-sm-2.col-form-label(for='inputDocName') Tên Văn Bản
                                     .col-sm-10(style='width:50%')
                                         input#inputDocName.form-control(style='width:50%' type='text' placeholder='Gõ tên văn bản cần tìm kiếm...')
@@ -162,4 +181,7 @@ div
 #autocomplete-suggestions(style="position: absolute; max-height: 300px; z-index: 9999; display:none") 
 script(src="script/common.js")
 script(src="/script/header.js")
-
+script.
+    $(document).ready(function(){
+    $('[data-toggle="popover"]').popover();
+    });

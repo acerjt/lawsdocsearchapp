@@ -585,7 +585,7 @@ div.col:empty:before {
 
 @media (min-width: 768px) {
     .col-md-4 {
-        padding: 0px 25px 0px 0px;
+        padding: 0px 10px 0px 0px;
     }
 }
 
@@ -1069,7 +1069,7 @@ h3 {
     background-color: #4c9fbf;
 }
 span.badge.badge-pill.badge-secondary.pull-right{
-    margin-right:15px;
+     margin-right:0px; 
 }
 i.fas.fa-chevron-right.fa-xs{
     color: #4c9fbf
