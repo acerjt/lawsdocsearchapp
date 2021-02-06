@@ -916,16 +916,9 @@ input[type='radio']:checked:after {
   visibility: visible; 
 }
 #autocomplete-suggestions1{
-  position: absolute;
-  max-height: 300px;
-  z-index: 9999;
-  background-color: white;
-  left: 790px !important;
-  width: 260px !important;
-  top: 319px !important;
-  display: none ;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  background: #fff;
+  overflow: auto;
 }
 
 .autocomplete-suggestion1 {
@@ -955,16 +948,9 @@ label.col-sm-4.col-form-label{
   padding: 0 0;
 }
 #autocomplete-suggestions-field{
-  position: absolute;
-  max-height: 300px;
-  z-index: 9999;
-  background-color: white;
-  left: 790px !important;
-  width: 260px !important;
-  top: 273px !important;
-  display: none ;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  background: #fff;
+  overflow: auto;
 }
 
 .autocomplete-suggestion-field {
@@ -979,5 +965,6 @@ label.col-sm-4.col-form-label{
 #autocomplete-suggestions-field .autocomplete-suggestion-field:hover {
   background-color: #e5f3fb;
 }
+
 
 
