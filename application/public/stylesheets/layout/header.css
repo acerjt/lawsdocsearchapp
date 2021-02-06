@@ -920,8 +920,8 @@ input[type='radio']:checked:after {
   max-height: 300px;
   z-index: 9999;
   background-color: white;
-  left: 316px !important;
-  width: 379px !important;
+  left: 775px !important;
+  width: 260px !important;
   top: 319px !important;
   display: none ;
   border: 1px solid #ddd;
@@ -946,4 +946,17 @@ input[type='radio']:checked:after {
   font-style: italic;
   color: #aaa;
   font-size: 24px;
+}
+label.col-sm-4.col-form-label{
+  padding: 10px 0px 0px 0px;
+  
+}
+.form-group.row .col-md-6{
+  display: flex;
+  padding-right: 0px;
+  padding-left: 25px;
+  /* padding: 0 0; */
+}
+.form-group.row .col-md-6 .col-sm-7{
+  padding: 0 0;
 }
