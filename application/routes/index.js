@@ -11,8 +11,20 @@ const {titles, pugFiles} = require('../common')
 router.use('/users', usersRouter);
 
 router.use('/crawler', crawler)
-
 router.use('/vbpl', lawsRouter)
+
+// router.use('/vbpl', (req, res, next) => {
+//     res.render(pugFiles.home, { title: titles.home });
+// });
+router.use('/cv', (req, res, next) => {
+    res.render(pugFiles.contactUs, { title: titles.home });
+});
+router.use('/tcvn', (req, res, next) => {
+    res.render(pugFiles.contactUs, { title: titles.home });
+});
+router.use('/dt', (req, res, next) => {
+    res.render(pugFiles.contactUs, { title: titles.home });
+});
 
 // router.get('/', lawsController.getLaws)
 

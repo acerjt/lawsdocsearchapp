@@ -250,6 +250,7 @@ const getLawsInParticularPage = async (page, filter, keyword) => {
     }
 }
 
+
 const pagination = async (page) => {
     const size = laws.lawsSearchSize
     const maxDocumentsResultReturn = variables.maxResultWindow  // index.max_result_window 
@@ -440,6 +441,7 @@ const aggsAllInfor = async(filter) => {
     return body
 }
 
+
 const getViFieldName = (field) => {
     if(field === 'field') 
         return 'Lĩnh vực'
@@ -594,6 +596,56 @@ const aggsForFilter = async (filter) => {
     }
 }
 
+const getUniqueDocType = async () => {
+    const ITEMS_PER_PAGE = 10000;
+    const uniqueDocType = [];
+    const body =  {
+        "index": laws.lawsIndex,
+        "size": 0,
+        "body": {
+            "aggs" : {
+                "docType": {
+                    "composite" : {
+                        "size": ITEMS_PER_PAGE,
+                        "sources" : [
+                            { "docType": { "terms" : {"script": {}} } }
+                        ]
+                    }
+                },
+            }
+        }
+    };
+    
+    let docTypeScriptString = `doc['docType'].value`
+    
+    body.body.aggs.docType.composite.sources[0].docType.terms.script = docTypeScriptString
+    
+    while (true) {
+        const result = await client.search(body);
+        const currentUniqueDocType = result.body.aggregations.docType.buckets
+    
+        uniqueDocType.push(...currentUniqueDocType);
+
+        const afterDocType = result.body.aggregations.docType.after_key;
+
+        if (afterDocType) {
+            body.body.aggs.docType.composite.after = afterDocType;
+ 
+        } else {
+            break;
+        }
+    }
+    let docType = uniqueDocType.map(item => {
+        return item.key.docType
+    })
+    // if(docType.length > 150)
+    //     docType = docType.slice(0,150)
+
+    return {
+        docType
+    }
+}
+
 const sortDocCount = (a, b) =>  {
     if(a.doc_count > b.doc_count)
         return -1
@@ -601,6 +653,26 @@ const sortDocCount = (a, b) =>  {
         return 1
     else return 0
 }
+const encodeVN = (str) => {
+    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+    str = str.replace(/đ/g, "d");
+    str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
+    str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
+    str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
+    str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
+    str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
+    str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
+    str = str.replace(/Đ/g, "D");
+    // Some system encode vietnamese combining accent as individual utf-8 characters
+    str = str.replace(/\u0300|\u0301|\u0303|\u0309|\u0323/g, ""); // Huyền sắc hỏi ngã nặng
+    str = str.replace(/\u02C6|\u0306|\u031B/g, ""); // Â, Ê, Ă, Ơ, Ư
+    return str;
+  }
 
 // module.exports.aggsForFilter = aggsForFilter
 module.exports.getLaws = async (req, res) => {
@@ -710,6 +782,23 @@ module.exports.getAutocompleteDesc = async (req, res) => {
     }
 }
 
+module.exports.getAutocompleteDocType = async (req, res) => {
+    try {
+        let {docType} = await getUniqueDocType() 
+        
+        let {text} = req.body
+        let filterDocType = docType.filter(item => {
+            item = encodeVN(item.toLowerCase())
+            text = encodeVN(text.toLowerCase())
+            return item.includes(text)
+        })
+        res.send({s:200, data: filterDocType})
+    } catch(error) {
+        console.log(error)
+        res.render(pugFiles.error404, {title: titles.error404})
+    }
+}
+
 module.exports.searchLawsDoc = async (req, res) => {
     try {
         console.log(req.query)
@@ -718,3 +807,4 @@ module.exports.searchLawsDoc = async (req, res) => {
         res.render(pugFiles.error404, {title: titles.error404})
     }
 }
+

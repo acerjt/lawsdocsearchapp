@@ -28,7 +28,7 @@ block content
                             | hợp ban hành theo thẩm quyền, hình thức, trình tự.
                         br
                         
-                        a.learn(style="margin-top: 10px;")
+                        a.learn(style="margin-top: 10px;" href='/vbpl')
                             | Tìm hiểu về Văn bản pháp luật  
                         i.fas.fa-chevron-right.fa-xs
                 .col-md-3
@@ -36,7 +36,7 @@ block content
                         a.description
                             | Hình thức văn bản hành chính dùng phổ biến trong các cơ quan, tổ chức, doanh nghiệp.
                         br
-                        a.learn(style="margin-top: 10px;")
+                        a.learn(style="margin-top: 10px;" href='/cv')
                             | Tìm hiểu về Công Văn  
                         i.fas.fa-chevron-right.fa-xs
                 .col-md-3
@@ -44,7 +44,7 @@ block content
                         a.description
                             | Quy định về đặc tính kỹ thuật và sử dụng làm chuẩn để phân loại, đánh giá chất lượng.
                         br
-                        a.learn(style="margin-top: 10px;")
+                        a.learn(style="margin-top: 10px;" href='/tcvn')
                             | Tìm hiểu về Tiêu chuẩn Việt Nam  
                         i.fas.fa-chevron-right.fa-xs
                 .col-md-3
@@ -53,14 +53,13 @@ block content
                             | Bản thảo về một đạo luật do cơ quan, tổ chức,
                             | cá nhân có quyền trình dự án luật mà mình soạn thảo.
                         br
-                        a.learn(style="margin-top: 10px;")
+                        a.learn(style="margin-top: 10px;" href='/dt')
                             | Tìm hiểu về Dự thảo  
                         i.fas.fa-chevron-right.fa-xs
             
     .content(style='margin-top:15px')
         .container(style='margin: 0 auto;')
             .row
-
                 .col-md-2(style='width:400')
                     .panel-top(style='margin-bottom: 15px')
                         a CSDL VĂN BẢN
@@ -68,83 +67,34 @@ block content
                         hr
                         ul(style='list-style-type: none; padding-inline-start: 0px;')
                             li
-                                a(href='/profileUser') Văn bản pháp luật
+                                a(href='/vbpl') Văn bản pháp luật
                             li
-                                a(href='#') Công Văn
+                                a(href='/cv') Công Văn
                             li
-                                a(href='#') TCVN
+                                a(href='/tcvn') TCVN
                             li
-                                a(href='#') Dự thảo văn bản
-                    .panel-top(style='margin-bottom: 15px')
-                            a LOẠI VĂN BẢN
-                            br
-                            hr
-                            ul(style='list-style-type: none; padding-inline-start: 0px;')
-                                li
-                                    a(href='#') Tiêu chuẩn ngành
-                                li
-                                    a(href='#') Tiêu chuẩn XD Việt Nam
-                                li
-                                    a(href='#') Quy chuẩn
-                                li
-                                    a(href='#') Công Văn
-                                li
-                                    a(href='#') Hiến pháp
-                                li
-                                    a(href='#') Sắc lệnh
-                                li
-                                    a(href='#') Nghị quyết
-                                li
-                                    a(href='#') Nghị định
-                                li
-                                    a(href='#') Thông tư
-                                li
-                                    a(href='#') Thông tư liên tịch
-                                li
-                                    a(href='#') Thông tri
-                                li
-                                    a(href='#') Chỉ định
-                                li
-                                     a(href='#') Quyết định
-                                li
-                                    a(href='#') Thông báo
-                                li
-                                    a(href='#') Quy định
-                                li
-                                    a(href='#') Quy chế
-                                li
-                                     a(href='#') Điều lệ
-                                li
-                                     a(href='#') Hướng dẫn
-                                li
-                                     a(href='#') Hiệp định
-                                li
-                                     a(href='#') Thỏa thuận
-                                li
-                                    a(href='#') Công điện
-                                li
-                                    a(href='#')
-                                        | Nghị định thư
-                                li
-                                    a(href='#')
-                                        | Văn bản hợp nhất
-                                li
-                                    a(href='#')
-                                        | Công ước
-                                li
-                                    a(href='#')
-                                        | Điều ước
-                                li
-                                    a(href='#')
-                                        | Điều ước quốc tế
-                                li
-                                    a(href='#')
-                                        | Văn bản WTO
-                                li
-                                    a(href='#')
-                                        | WTO - Cam kết Việt Nam
-                                li
-                                    a(href='#') Văn bản khác
+                                a(href='/dt') Dự thảo văn bản
+                    
+                    - for (let prop in aggs)
+                        - let fieldName = getViFieldName(prop)
+                        if (aggs.hasOwnProperty(prop))
+                            .panel-top(style='margin-bottom: 15px; padding-bottom: 10px;')
+                                - if(filter.hasOwnProperty(prop))
+                                    a(style='text-transform: uppercase;') #{fieldName}
+                                - else
+                                    a(style="padding: 5px; text-transform: uppercase;") #{fieldName}
+                                    i.fas.fa-chevron-down(style="color: #fff; margin-left: 5px")
+                                
+                                br
+                                hr
+                                .sub
+                                    ul.list-unstyled.list-filters(style='list-style-type: none; padding-inline-start: 0px; ')
+                                        - for (let item of aggs[prop])
+                                            li
+                                                - if(filter[prop] === item.key[prop])
+                                                    a.text-primary-dark(style="background-color: #8cb8d2;padding: 5px" onclick=`updateQueryStringParameter('${fieldName}', '${item.key[prop]}')` data-toggle="tooltip" title=`${item.key[prop]}`) #{item.key[prop].length > 20 ?item.key[prop].slice(0,20) + '...' : item.key[prop]}
+                                                - else 
+                                                    a.text-primary-dark(onclick=`updateQueryStringParameter('${fieldName}', '${item.key[prop]}')` data-toggle="tooltip" title=`${item.key[prop]}`) #{item.key[prop].length > 20 ?item.key[prop].slice(0,20) + '...' : item.key[prop]}
                 .col-md-10(style='width:1000; padding: 0px 0px 0px 0px;margin-bottom: 25px')
                     //- .block-header
                     .filters

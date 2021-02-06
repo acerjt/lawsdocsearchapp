@@ -13,4 +13,6 @@ router.get('/tim-kiem', controller.searchLawsDoc);
 
 router.get('/', controller.getLaws)
 
+router.post('/autocompletedoctype', controller.getAutocompleteDocType);
+
 module.exports = router;

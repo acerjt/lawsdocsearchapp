@@ -855,52 +855,6 @@ input.style4[type="checkbox"] {
   color: #aaa;
   font-size: 24px;
 }
-/* Hide the browser's default radio button */
-.col-sm-10.checkboxforsearch input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  height: 0;
-  width: 0;
-  
-}
-
-
-/* Create a custom radio button */
-.checkmark2 {
-  position: absolute;
-  top: 4;
-  left: 0;
-  height: 15px;
-  width: 15px;
-  
-  border-radius: 50%;
-  background-color: #fff;
-  border: 0.5px solid #4c9fbf;
-}
-
-/* On mouse-over, add a grey background color */
-.col-sm-10.checkboxforsearch:hover input ~ .checkmark2 {
-  background: #4c9fbf ;
-}
-
-/* When the radio button is checked, add a blue background */
-.col-sm-10.checkboxforsearch input:checked ~ .checkmark2 {
-  background-color: #fff;
-  border: 1px solid #4c9fbf;
-}
-
-/* Create the indicator (the dot/circle - hidden when not checked) */
-.checkmark2:after {
-  content: "";
-  position: absolute;
-  display: none;
-}
-
-/* Show the indicator (dot/circle) when checked */
-.col-sm-10.checkboxforsearch input:checked ~ .checkmark2:after {
-  display: block;
-}
 
 /* Style the indicator (dot/circle) */
 .col-sm-10.checkboxforsearch .checkmark2:after {
@@ -926,7 +880,7 @@ i.fas.fa-info-circle{
 .popover-line {
   color: #4c9fbf; 
   background-color: #fff;
-  width:550px;
+  width:545px;
  }
 .popover{
  
@@ -945,4 +899,51 @@ i.fas.fa-info-circle{
   color: #4c9fbf;
   width: 530px;
   background-color:#e5f3fb ;
+}
+.popover-header{
+  font-weight: 300;
+  
+}
+
+input[type='radio']:checked:after {
+  width: 13px;
+  height: 13px;
+  border-radius: 15px;
+  position: relative;
+  background-color: #4c9fbf;
+  content: '';
+  display: inline-block;
+  visibility: visible; 
+}
+#autocomplete-suggestions1{
+  position: absolute;
+  max-height: 300px;
+  z-index: 9999;
+  background-color: white;
+  left: 316px !important;
+  width: 379px !important;
+  top: 319px !important;
+  display: none ;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.autocomplete-suggestion1 {
+  overflow: hidden;
+  border-bottom: 1px solid #ddd;
+}
+
+#autocomplete-suggestions1 .autocomplete-suggestion1 p {
+  padding-left: 10px;
+}
+
+#autocomplete-suggestions1 .autocomplete-suggestion1:hover {
+  background-color: #e5f3fb;
+}
+
+
+#autocomplete-suggestions1 .autocomplete-suggestion1 .search-item .info h2 i {
+  font-style: italic;
+  color: #aaa;
+  font-size: 24px;
 }

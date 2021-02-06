@@ -18,7 +18,7 @@ div
                                 i(class="fas fa-home")
                                 |                                     Trang chủ
                         div(class="navbar-text mr-4")
-                            a(class="signup", href="/admin")
+                            a(class="signup", href="/")
                                 i(class="fas fa-book")
                                 |                                     Văn bản pháp luật
                         div(class="navbar-text mr-4")
@@ -56,40 +56,28 @@ div
                                        
                                     .col-sm-10.checkboxforsearch(style='width:50%; display: flex;')
                                         //- label.col-sm-2.col-form-label(for='inputDocName') Tìm chính xác
-                                        .col-sm-3(style='margin-right:15px; padding-right: 10px;')
-                                            label.col-form-label.exactly(for='inputDocName')
-                                            |  Chính xác cụm từ trên
-                                            input(type='checkbox' checked='checked')
-                                            span.checkmark2
-                                            //- 
-                                            
-                                        .col-sm-3
-                                            label.col-form-label(for='inputDocName')
-                                            |  Có tất cả từ trên
-                                            input(type='checkbox')
-                                            span.checkmark2
-                                            i.fas.fa-info-circle(title='<b>Cách thức tìm kiếm</b>' data-toggle='popover' data-trigger='hover' data-placement='right' data-content='<b>Chính xác cụm từ trên:</b> kết quả trả về chứa chính xác cụm từ được nhập theo đúng thứ tự hiển thị của các từ khóa.<br /><b>Có tất cả từ trên:</b> kết quả trả về chứa tất cả các từ trong cụm từ khóa, không quan tâm vị trí hiển thị.<br />' data-html="true") 
+                                        .col-sm-3(style='padding-right: 10px; padding-left:0px')
+                                            input#exactlyValueSearch(type='radio' name='cbAdvanced' checked='checked' style='margin-right:5px')
+                                            label.col-form-label.exactly(for='exactlyValueSearch')
+                                                |  Chính xác cụm từ trên
+                                        .col-sm-3(style='padding-left:0px')
+                                            input#fullTextSearch(type='radio' name='cbAdvanced' style='margin-right:5px')
+                                            label.col-form-label(for='fullTextSearch' style='margin-right:10px')
+                                                |  Có tất cả từ trên      
+                                            i.fas.fa-info-circle(title='Cách thức tìm kiếm' data-toggle='popover' data-trigger='hover' data-placement='right' data-content='<b>Chính xác cụm từ trên:</b> kết quả trả về chứa chính xác cụm từ được nhập theo đúng thứ tự hiển thị của các từ khóa.<br /><b>Có tất cả từ trên:</b> kết quả trả về chứa tất cả các từ trong cụm từ khóa, không quan tâm vị trí hiển thị.<br />' data-html="true") 
                                 
                                 .form-group.row(style='margin-bottom: 0.5rem;')
                                     label.col-sm-2.col-form-label(for='inputDocName') Tên Văn Bản
                                     .col-sm-10(style='width:50%')
-                                        input#inputDocName.form-control(style='width:50%' type='text' placeholder='Gõ tên văn bản cần tìm kiếm...')
+                                        input#inputDocName.form-control(style='width:50%' type='text' placeholder='Tên văn bản...')
                                 .form-group.row(style='margin-bottom: 0.5rem;')
                                     label.col-sm-2.col-form-label(for='inputDocType') Loại Văn Bản
                                     .col-sm-10
-                                        select#inputState.form-control(style='width:50%')
-                                            option(selected='') Tất cả
-                                            option Bộ luật của Quốc hội
-                                            option Hiến pháp
-                                            option Bộ luật của Quốc hội
-                                            option Luật của Quốc hội
-                                            option Nghị quyết của Quốc hội 
-                                            option Pháp lệnh của Ủy ban thường vụ Quốc hội
-                                            option Nghị quyết của Ủy ban thường vụ Quốc hội
+                                        input#inputDocType.form-control(style='width:50%' type='text' placeholder='Loại văn bản...' autocomplete="off" oninput="onInputAutocomplete1(this.value)" onfocus="displayAutoSuggestionPanel1()" onblur="hideAutoSuggestionPanel1()")
                                 .form-group.row(style='margin-bottom: 0.5rem;')
                                     label.col-sm-2.col-form-label(for='inputDocId') Số Hiệu
                                     .col-sm-10(style='width:50%')
-                                        input#inputDocId.form-control(style='width:50%' type='text' placeholder='Nhập số hiệu văn bản...')
+                                        input#inputDocId.form-control(style='width:50%' type='text' placeholder='Số hiệu văn bản...')
                                 .form-group.row(style='margin-bottom: 0.5rem;')
                                     label.col-sm-2.col-form-label(for='inputDocDate') Ngày Ban Hành
                                     .col-sm-10(style='width:50%')
@@ -102,13 +90,18 @@ div
                                     label.col-sm-2.col-form-label(for='inputDocType') Tình Trạng
                                     .col-sm-10
                                         select#inputState.form-control(style='width:50%')
+                                            - for (let prop in aggs)
+                                                - let fieldName = getViFieldName(prop)
+                                                if (fieldName ==='Tình trạng')
+                                                    .sub
+                                                        - for (let item of aggs[prop])
+                                                            option
+                                                                - if(filter[prop] === item.key[prop])
+                                                                    a.text-primary-dark(style="background-color: #8cb8d2;padding: 5px" onclick=`updateQueryStringParameter('${fieldName}', '${item.key[prop]}')` data-toggle="tooltip" title=`${item.key[prop]}`) #{item.key[prop].length > 20 ?item.key[prop].slice(0,20) + '...' : item.key[prop]}
+                                                                - else 
+                                                                    a.text-primary-dark(onclick=`updateQueryStringParameter('${fieldName}', '${item.key[prop]}')` data-toggle="tooltip" title=`${item.key[prop]}`) #{item.key[prop].length > 20 ?item.key[prop].slice(0,20) + '...' : item.key[prop]}
                                             option(selected='') Tất cả
-                                            option Còn hiệu lực
-                                            option Chưa có hiệu lực
-                                            option Hết hiệu lực
-                                            option Không xác định
-                                            option Không còn phù hợp 
-
+                                  
 #signUpModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
     .modal-dialog(role='document')
         .register-photo
@@ -121,10 +114,7 @@ div
                     .form-group
                         input#example-date-input.form-control(type='date' value='' placeholder='Ngày sinh')
                         .hide Ngày sinh
-                            //- i.fas.fa-calendar-alt
-
-
-                                
+                            //- i.fas.fa-calendar-alt             
                     .form-group
                         input.form-control(type='email' name='email' placeholder='Email')
                     .form-group
@@ -179,6 +169,7 @@ div
                     a.login100-social-item.bg3(href='#')
                         i.fa.fa-google
 #autocomplete-suggestions(style="position: absolute; max-height: 300px; z-index: 9999; display:none") 
+#autocomplete-suggestions1(style="") 
 script(src="script/common.js")
 script(src="/script/header.js")
 script.

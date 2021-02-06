@@ -606,7 +606,7 @@ div.col:empty:before {
 }
 
 .content .container .row .col-md-2 a {
-    font-size: 17px;
+    font-size: 16px;
     color: black;
     font-weight: 500;
 }
@@ -823,7 +823,7 @@ div.col:empty:before {
         /* margin-bottom: 5px; */
     }
     .col-md-2 {
-        padding: 0px 25px 0px 0px;
+        padding: 0px 15px 0px 0px;
     }
     .delivery-container {
         display: initial;

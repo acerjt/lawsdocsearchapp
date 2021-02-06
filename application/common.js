@@ -13,7 +13,11 @@ const titles = {
     myAccount: "Trang cá nhân",
     assignUserRole: "Chuyển đổi quyền khách hàng",
     memberShips: "Gói dịch vụ",
-    error404: "Không tìm thấy trang"
+    error404: "Không tìm thấy trang",
+    vbpl: "Văn bản pháp luật",
+    tcvn: "Tiêu chuẩn Việt Nam",
+    dt: "Dự thảo",
+    cv: "Công văn"
 }
 
 const pugFiles = {
@@ -25,12 +29,16 @@ const pugFiles = {
     roleChange: 'roleChange',
     typeUser: 'typeUser',
     detailLaw: 'detailLaw',
-    error404: 'error404'
+    error404: 'error404',
+    vbpl: 'vbpl',
+    tcvn: 'tcvn',
+    dt: 'dt',
+    cv: 'cv'
 }
 
 const laws = {
     filePathStoreLawsData : path.resolve(__dirname, "./data/lawsv1.json"),
-    lawsIndex : 'laws5',
+    lawsIndex : 'laws',
     lawsSearchSize : 20,
     firstPageOverTenThousandDocument : variables.maxResultWindow / 20 + 1,
 }

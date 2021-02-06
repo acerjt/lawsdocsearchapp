@@ -54,3 +54,37 @@ function search() {
         // })
     }
 }
+
+function onInputAutocomplete1(text) {
+    callAjax('POST', 'vbpl/autocompletedoctype', {text}).then(rs => {
+        if(rs.s === 200) {
+            let doc = rs.data
+            let text = ''
+            doc.forEach(element => {
+                text+= `<div class="autocomplete-suggestion1">
+                            <p style="font-size: 16px; color: black; margin-bottom: 0px !important; padding: 5px 10px 5px 10px;" >${element}</p>
+                        </div> `
+            });
+            let autoSuggestionElement = document.getElementById('autocomplete-suggestions1')
+            autoSuggestionElement.innerHTML = text
+        }
+    })
+}
+
+function displayAutoSuggestionPanel1() {
+    let autoSuggestionElement = document.getElementById('autocomplete-suggestions1')
+    let searchInputElement = document.getElementById('inputDocType')
+    let searchInputBoundingData = searchInputElement.getBoundingClientRect()
+    autoSuggestionElement.style.left = searchInputBoundingData.left
+    autoSuggestionElement.style.width = searchInputBoundingData.width 
+    autoSuggestionElement.style.top = searchInputBoundingData.top + searchInputBoundingData.height
+    autoSuggestionElement.style.display = 'block'
+}
+
+function hideAutoSuggestionPanel1() {
+    let autoSuggestionElement = document.getElementById('autocomplete-suggestions1')
+    setTimeout(() => {
+        autoSuggestionElement.style.display = 'none'
+    }, 1000)
+}
+
