@@ -920,7 +920,7 @@ input[type='radio']:checked:after {
   max-height: 300px;
   z-index: 9999;
   background-color: white;
-  left: 775px !important;
+  left: 790px !important;
   width: 260px !important;
   top: 319px !important;
   display: none ;
@@ -941,12 +941,6 @@ input[type='radio']:checked:after {
   background-color: #e5f3fb;
 }
 
-
-#autocomplete-suggestions1 .autocomplete-suggestion1 .search-item .info h2 i {
-  font-style: italic;
-  color: #aaa;
-  font-size: 24px;
-}
 label.col-sm-4.col-form-label{
   padding: 10px 0px 0px 0px;
   
@@ -960,3 +954,30 @@ label.col-sm-4.col-form-label{
 .form-group.row .col-md-6 .col-sm-7{
   padding: 0 0;
 }
+#autocomplete-suggestions-field{
+  position: absolute;
+  max-height: 300px;
+  z-index: 9999;
+  background-color: white;
+  left: 790px !important;
+  width: 260px !important;
+  top: 273px !important;
+  display: none ;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.autocomplete-suggestion-field {
+  overflow: hidden;
+  border-bottom: 1px solid #ddd;
+}
+
+#autocomplete-suggestions-field .autocomplete-suggestion-field p {
+  padding-left: 10px;
+}
+
+#autocomplete-suggestions-field .autocomplete-suggestion-field:hover {
+  background-color: #e5f3fb;
+}
+
+

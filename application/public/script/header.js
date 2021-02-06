@@ -88,3 +88,35 @@ function hideAutoSuggestionPanel1() {
     }, 1000)
 }
 
+function onInputAutocompleteByField(text) {
+    callAjax('POST', 'vbpl/autocompletefield', {text}).then(rs => {
+        if(rs.s === 200) {
+            let doc = rs.data
+            let text = ''
+            doc.forEach(element => {
+                text+= `<div class="autocomplete-suggestion-field">
+                            <p style="font-size: 16px; color: black; margin-bottom: 0px !important; padding: 5px 10px 5px 10px;" >${element}</p>
+                        </div> `
+            });
+            let autoSuggestionElement = document.getElementById('autocomplete-suggestions-field')
+            autoSuggestionElement.innerHTML = text
+        }
+    })
+}
+
+function displayAutoSuggestionPanelByField() {
+    let autoSuggestionElement = document.getElementById('autocomplete-suggestions-field')
+    let searchInputElement = document.getElementById('inputField')
+    let searchInputBoundingData = searchInputElement.getBoundingClientRect()
+    autoSuggestionElement.style.left = searchInputBoundingData.left
+    autoSuggestionElement.style.width = searchInputBoundingData.width 
+    autoSuggestionElement.style.top = searchInputBoundingData.top + searchInputBoundingData.height
+    autoSuggestionElement.style.display = 'block'
+}
+
+function hideAutoSuggestionPanelByField() {
+    let autoSuggestionElement = document.getElementById('autocomplete-suggestions-field')
+    setTimeout(() => {
+        autoSuggestionElement.style.display = 'none'
+    }, 1000)
+}

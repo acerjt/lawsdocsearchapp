@@ -57,12 +57,12 @@ div
                                     //.col-sm-10.checkboxforsearch(style='width:50%; display: flex;')
                                         //- label.col-sm-2.col-form-label(for='inputDocName') Tìm chính xác
                                     .exactlyandfully(style='display:flex;margin-left: 25px;')
-                                        .div(style='margin-right: 15px; padding-left:0px')
-                                            input#exactlyValueSearch(type='radio' name='cbAdvanced' checked='checked' style='margin-right:5px')
+                                        .div(style='margin-right: 35px; padding-left:0px')
+                                            input#exactlyValueSearch(type='radio' name='cbAdvanced' checked='checked' style='margin-right:10px')
                                             label.col-form-label.exactly(for='exactlyValueSearch')
                                                 |  Chính xác cụm từ trên
                                         .div(style='padding-left:0px')
-                                            input#fullTextSearch(type='radio' name='cbAdvanced' style='margin-right:5px')
+                                            input#fullTextSearch(type='radio' name='cbAdvanced' style='margin-right:10px')
                                             label.col-form-label(for='fullTextSearch' style='margin-right:10px')
                                                 |  Có tất cả từ trên      
                                             i.fas.fa-info-circle(title='Cách thức tìm kiếm' data-toggle='popover' data-trigger='hover' data-placement='right' data-content='<b>Chính xác cụm từ trên:</b> kết quả trả về chứa chính xác cụm từ được nhập theo đúng thứ tự hiển thị của các từ khóa.<br /><b>Có tất cả từ trên:</b> kết quả trả về chứa tất cả các từ trong cụm từ khóa, không quan tâm vị trí hiển thị.<br />' data-html="true") 
@@ -108,9 +108,9 @@ div
                                         .col-sm-7
                                             input#inputDocName.form-control( type='text' placeholder='Tên văn bản...')
                                     .col-md-6
-                                        label.col-sm-4.col-form-label(for='inputDocType') Lĩnh vực
+                                        label.col-sm-4.col-form-label(for='inputField') Lĩnh vực
                                         .col-sm-7
-                                            input#inputDocType.form-control(type='text' placeholder='Lĩnh vực...' autocomplete="off" oninput="onInputAutocomplete1(this.value)" onfocus="displayAutoSuggestionPanel1()" onblur="hideAutoSuggestionPanel1()")
+                                            input#inputField.form-control(type='text' placeholder='Lĩnh vực...' autocomplete="off" oninput="onInputAutocompleteByField(this.value)" onfocus="displayAutoSuggestionPanelByField()" onblur="hideAutoSuggestionPanelByField()")
 
                                 .form-group.row(style='margin-bottom: 0.5rem;')
                                     .col-md-6
@@ -227,6 +227,7 @@ div
                         i.fa.fa-google
 #autocomplete-suggestions(style="position: absolute; max-height: 300px; z-index: 9999; display:none") 
 #autocomplete-suggestions1(style="") 
+#autocomplete-suggestions-field(style="") 
 script(src="script/common.js")
 script(src="/script/header.js")
 script.

@@ -646,6 +646,54 @@ const getUniqueDocType = async () => {
     }
 }
 
+const getUniqueField = async () => {
+    const ITEMS_PER_PAGE = 10000;
+    const uniqueField = [];
+    const body =  {
+        "index": laws.lawsIndex,
+        "size": 0,
+        "body": {
+            "aggs" : {
+                "field": {
+                    "composite" : {
+                        "size": ITEMS_PER_PAGE,
+                        "sources" : [
+                            { "field": { "terms" : {"script": {}} } }
+                        ]
+                    }
+                },
+            }
+        }
+    };
+    
+    let fieldScriptString = `doc['field'].value`
+    
+    body.body.aggs.field.composite.sources[0].field.terms.script = fieldScriptString
+    
+    while (true) {
+        const result = await client.search(body);
+        const currentUniqueField = result.body.aggregations.field.buckets
+    
+        uniqueField.push(...currentUniqueField);
+
+        const afterField = result.body.aggregations.field.after_key;
+
+        if (afterField) {
+            body.body.aggs.field.composite.after = afterField;
+ 
+        } else {
+            break;
+        }
+    }
+    let field = uniqueField.map(item => {
+        return item.key.field
+    })
+    
+    return {
+        field
+    }
+}
+
 const sortDocCount = (a, b) =>  {
     if(a.doc_count > b.doc_count)
         return -1
@@ -793,6 +841,23 @@ module.exports.getAutocompleteDocType = async (req, res) => {
             return item.includes(text)
         })
         res.send({s:200, data: filterDocType})
+    } catch(error) {
+        console.log(error)
+        res.render(pugFiles.error404, {title: titles.error404})
+    }
+}
+
+module.exports.getAutocompleteField = async (req, res) => {
+    try {
+        let {field} = await getUniqueField() 
+        
+        let {text} = req.body
+        let filterField = field.filter(item => {
+            item = encodeVN(item.toLowerCase())
+            text = encodeVN(text.toLowerCase())
+            return item.includes(text)
+        })
+        res.send({s:200, data: filterField})
     } catch(error) {
         console.log(error)
         res.render(pugFiles.error404, {title: titles.error404})

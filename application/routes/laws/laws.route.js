@@ -11,8 +11,10 @@ router.post('/autocomplete', controller.getAutocompleteDesc);
 
 router.get('/tim-kiem', controller.searchLawsDoc);
 
-router.get('/', controller.getLaws)
+router.get('/', controller.getLaws);
 
 router.post('/autocompletedoctype', controller.getAutocompleteDocType);
+
+router.post('/autocompletefield', controller.getAutocompleteField);
 
 module.exports = router;
