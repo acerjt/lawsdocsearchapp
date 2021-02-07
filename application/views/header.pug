@@ -51,11 +51,7 @@ div
                     #collapseExample
                         div(style='background-color:#e5f3fb;padding: 15px')
                             form(style='margin-bottom: 0px;')
-                                .form-group.row(style='margin-bottom: 0.5rem;')
-                                    //label.col-sm-2.col-form-label
-                                       
-                                    //.col-sm-10.checkboxforsearch(style='width:50%; display: flex;')
-                                        //- label.col-sm-2.col-form-label(for='inputDocName') Tìm chính xác
+                                .form-group.row(style='margin-bottom: 0.5rem;')                         
                                     .exactlyandfully(style='display:flex;margin-left: 25px;')
                                         .div(style='margin-right: 35px; padding-left:0px')
                                             input#exactlyValueSearch(type='radio' name='cbAdvanced' checked='checked' style='margin-right:10px')
@@ -67,41 +63,6 @@ div
                                                 |  Có tất cả từ trên      
                                             i.fas.fa-info-circle(title='Cách thức tìm kiếm' data-toggle='popover' data-trigger='hover' data-placement='right' data-content='<b>Chính xác cụm từ trên:</b> kết quả trả về chứa chính xác cụm từ được nhập theo đúng thứ tự hiển thị của các từ khóa.<br /><b>Có tất cả từ trên:</b> kết quả trả về chứa tất cả các từ trong cụm từ khóa, không quan tâm vị trí hiển thị.<br />' data-html="true") 
                                 
-                                //- .form-group.row(style='margin-bottom: 0.5rem;')
-                                //-     label.col-sm-2.col-form-label(for='inputDocName') Tên Văn Bản
-                                //-     .col-sm-10(style='width:50%')
-                                //-         input#inputDocName.form-control(style='width:50%' type='text' placeholder='Tên văn bản...')
-                                //- .form-group.row(style='margin-bottom: 0.5rem;')
-                                //-     label.col-sm-2.col-form-label(for='inputDocType') Loại Văn Bản
-                                //-     .col-sm-10
-                                //-         input#inputDocType.form-control(style='width:50%' type='text' placeholder='Loại văn bản...' autocomplete="off" oninput="onInputAutocomplete1(this.value)" onfocus="displayAutoSuggestionPanel1()" onblur="hideAutoSuggestionPanel1()")
-                                //- .form-group.row(style='margin-bottom: 0.5rem;')
-                                //-     label.col-sm-2.col-form-label(for='inputDocId') Số Hiệu
-                                //-     .col-sm-10(style='width:50%')
-                                //-         input#inputDocId.form-control(style='width:50%' type='text' placeholder='Số hiệu văn bản...')
-                                //- .form-group.row(style='margin-bottom: 0.5rem;')
-                                //-     label.col-sm-2.col-form-label(for='inputDocDate') Ngày Ban Hành
-                                //-     .col-sm-10(style='width:50%')
-                                //-         input#inputDocDate.form-control(style='width:50%' type='date')
-                                //- .form-group.row(style='margin-bottom: 0.5rem;')
-                                //-     label.col-sm-2.col-form-label(for='inputDocStarted') Ngày Hiệu Lực
-                                //-     .col-sm-10(style='width:50%')
-                                //-         input#inputDocStarted.form-control(style='width:50%' type='date')
-                                //- .form-group.row(style='margin-bottom: 0rem;')
-                                //-     label.col-sm-2.col-form-label(for='inputDocType') Tình Trạng
-                                //-     .col-sm-10
-                                //-         select#inputState.form-control(style='width:50%')
-                                //-             - for (let prop in aggs)
-                                //-                 - let fieldName = getViFieldName(prop)
-                                //-                 if (fieldName ==='Tình trạng')
-                                //-                     .sub
-                                //-                         - for (let item of aggs[prop])
-                                //-                             option
-                                //-                                 - if(filter[prop] === item.key[prop])
-                                //-                                     a.text-primary-dark(style="background-color: #8cb8d2;padding: 5px" onclick=`updateQueryStringParameter('${fieldName}', '${item.key[prop]}')` data-toggle="tooltip" title=`${item.key[prop]}`) #{item.key[prop].length > 20 ?item.key[prop].slice(0,20) + '...' : item.key[prop]}
-                                //-                                 - else 
-                                //-                                     a.text-primary-dark(onclick=`updateQueryStringParameter('${fieldName}', '${item.key[prop]}')` data-toggle="tooltip" title=`${item.key[prop]}`) #{item.key[prop].length > 20 ?item.key[prop].slice(0,20) + '...' : item.key[prop]}
-                                //-             option(selected='') Tất cả
                                 .form-group.row(style='margin-bottom: 0.5rem;')
                                     .col-md-6
                                         label.col-sm-4.col-form-label(for='inputDocName') Tên Văn Bản
@@ -128,9 +89,9 @@ div
                                         .col-sm-7
                                             input#inputDocDate.form-control(type='date')
                                     .col-md-6
-                                        label.col-sm-4.col-form-label(for='inputDocType') Cơ quan ban hành
+                                        label.col-sm-4.col-form-label(for='inputAgencyIssued') Cơ quan ban hành
                                         .col-sm-7
-                                            input#inputDocType.form-control(type='text' placeholder='Cơ quan ban hành' autocomplete="off" oninput="onInputAutocomplete1(this.value)" onfocus="displayAutoSuggestionPanel1()" onblur="hideAutoSuggestionPanel1()")
+                                            input#inputAgencyIssued.form-control(type='text' placeholder='Cơ quan ban hành' autocomplete="off" oninput="onInputAutocompleteAgencyIssued(this.value)" onfocus="displayAutoSuggestionPanelAgencyIssued()" onblur="hideAutoSuggestionPanelAgencyIssued()")
 
                                 .form-group.row(style='margin-bottom: 0.5rem;')
                                     .col-md-6  
@@ -138,13 +99,13 @@ div
                                         .col-sm-7(style='')
                                             input#inputDocStarted.form-control(style='' type='date')
                                     .col-md-6
-                                        label.col-sm-4.col-form-label(for='inputDocStarted') Người ký
-                                        .col-sm-7(style='')
-                                            input#inputDocType.form-control(type='text' placeholder='Người ký' autocomplete="off" oninput="onInputAutocomplete1(this.value)" onfocus="displayAutoSuggestionPanel1()" onblur="hideAutoSuggestionPanel1()")
+                                        label.col-sm-4.col-form-label(for='inputSignedBy') Người ký
+                                        .col-sm-7
+                                            input#inputSignedBy.form-control(type='text' placeholder='Người ký' autocomplete="off" oninput="onInputAutocompleteSignedBy(this.value)" onfocus="displayAutoSuggestionPanelSignedBy()" onblur="hideAutoSuggestionPanelSignedBy()")
 
                                 .form-group.row(style='margin-bottom: 0.5rem;')
                                     .col-md-6
-                                        label.col-sm-4.col-form-label(for='inputDocType') Tình Trạng
+                                        label.col-sm-4.col-form-label(for='inputState') Tình Trạng
                                         .col-sm-7
                                             select#inputState.form-control
                                                 - for (let prop in aggs)
@@ -225,9 +186,11 @@ div
                         i.fa.fa-twitter
                     a.login100-social-item.bg3(href='#')
                         i.fa.fa-google
-#autocomplete-suggestions(style="position: absolute; max-height: 300px; z-index: 9999; display:none") 
-#autocomplete-suggestions1(style="") 
-#autocomplete-suggestions-field(style="") 
+#autocomplete-suggestions(style="position: absolute; max-height: 300px; z-index: 9999; display: none") 
+#autocomplete-suggestions1(style="position: absolute; max-height: 300px; z-index: 9999; display: none") 
+#autocomplete-suggestions-field(style="position: absolute; max-height: 300px; z-index: 9999; display: none") 
+#autocomplete-suggestions-signedby(style="position: absolute; max-height: 300px; z-index: 9999; display: none")
+#autocomplete-suggestions-agencyissued(style="position: absolute; max-height: 300px; z-index: 9999; display: none")
 script(src="script/common.js")
 script(src="/script/header.js")
 script.

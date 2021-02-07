@@ -1492,6 +1492,102 @@ const getUniqueField = async () => {
     }
 }
 
+const getUniqueSignedBy = async () => {
+    const ITEMS_PER_PAGE = 10000;
+    const uniqueSignedBy = [];
+    const body =  {
+        "index": laws.lawsIndex,
+        "size": 0,
+        "body": {
+            "aggs" : {
+                "signedBy": {
+                    "composite" : {
+                        "size": ITEMS_PER_PAGE,
+                        "sources" : [
+                            { "signedBy": { "terms" : {"script": {}} } }
+                        ]
+                    }
+                },
+            }
+        }
+    };
+    
+    let signedbyScriptString = `doc['signedBy'].value`
+    
+    body.body.aggs.signedBy.composite.sources[0].signedBy.terms.script = signedbyScriptString
+    
+    while (true) {
+        const result = await client.search(body);
+        const currentUniqueSignedBy= result.body.aggregations.signedBy.buckets
+    
+        uniqueSignedBy.push(...currentUniqueSignedBy);
+
+        const afterSignedBy = result.body.aggregations.signedBy.after_key;
+
+        if (afterSignedBy) {
+            body.body.aggs.signedBy.composite.after = afterSignedBy;
+ 
+        } else {
+            break;
+        }
+    }
+    let signedBy = uniqueSignedBy.map(item => {
+        return item.key.signedBy
+    })
+    
+    return {
+        signedBy
+    }
+}
+
+const getUniqueAgencyIssued = async () => {
+    const ITEMS_PER_PAGE = 10000;
+    const uniqueAgencyIssued = [];
+    const body =  {
+        "index": laws.lawsIndex,
+        "size": 0,
+        "body": {
+            "aggs" : {
+                "agencyIssued": {
+                    "composite" : {
+                        "size": ITEMS_PER_PAGE,
+                        "sources" : [
+                            { "agencyIssued": { "terms" : {"script": {}} } }
+                        ]
+                    }
+                },
+            }
+        }
+    };
+    
+    let agencyIssuedScriptString = `doc['agencyIssued'].value`
+    
+    body.body.aggs.agencyIssued.composite.sources[0].agencyIssued.terms.script = agencyIssuedScriptString
+    
+    while (true) {
+        const result = await client.search(body);
+        const currentUniqueAgencyIssued = result.body.aggregations.agencyIssued.buckets
+    
+        uniqueAgencyIssued.push(...currentUniqueAgencyIssued);
+
+        const afterAgencyIssued = result.body.aggregations.agencyIssued.after_key;
+
+        if (afterAgencyIssued) {
+            body.body.aggs.agencyIssued.composite.after = afterAgencyIssued;
+ 
+        } else {
+            break;
+        }
+    }
+    let agencyIssued = uniqueAgencyIssued.map(item => {
+        return item.key.agencyIssued
+    })
+        return {
+        agencyIssued
+    }
+}
+
+
 const sortDocCount = (a, b) =>  {
     if(a.doc_count > b.doc_count)
         return -1
@@ -1654,6 +1750,40 @@ module.exports.getAutocompleteField = async (req, res) => {
             return item.includes(text)
         })
         res.send({s:200, data: filterField})
+    } catch(error) {
+        console.log(error)
+        res.render(pugFiles.error404, {title: titles.error404})
+    }
+}
+
+module.exports.getAutocompleteSignedBy = async (req, res) => {
+    try {
+        let {signedBy} = await getUniqueSignedBy() 
+        
+        let {text} = req.body
+        let filterSignedBy = signedBy.filter(item => {
+            item = encodeVN(item.toLowerCase())
+            text = encodeVN(text.toLowerCase())
+            return item.includes(text)
+        })
+        res.send({s:200, data: filterSignedBy})
+    } catch(error) {
+        console.log(error)
+        res.render(pugFiles.error404, {title: titles.error404})
+    }
+}
+
+module.exports.getAutocompleteAgencyIssued = async (req, res) => {
+    try {
+        let {agencyIssued} = await getUniqueAgencyIssued() 
+        
+        let {text} = req.body
+        let filterAgencyIssued = agencyIssued.filter(item => {
+            item = encodeVN(item.toLowerCase())
+            text = encodeVN(text.toLowerCase())
+            return item.includes(text)
+        })
+        res.send({s:200, data: filterAgencyIssued})
     } catch(error) {
         console.log(error)
         res.render(pugFiles.error404, {title: titles.error404})
