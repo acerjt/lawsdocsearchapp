@@ -91,12 +91,12 @@ block content
                                     ul.list-unstyled.list-filters(style='list-style-type: none; padding-inline-start: 0px; ')
                                         - for (let item of aggs[prop])
                                             li
-                                                - if(filter[prop] === item.key[prop])
-                                                    a.text-primary-dark(style="background-color: #8cb8d2;padding: 5px" onclick=`updateQueryStringParameter('${fieldName}', '${item.key[prop]}')` data-toggle="tooltip" title=`${item.key[prop]}`) #{item.key[prop].length > 20 ?item.key[prop].slice(0,20) + '...' : item.key[prop]}
+                                                - if(filter[prop] === item.key)
+                                                    a.text-primary-dark(style="background-color: #8cb8d2;padding: 5px" onclick=`updateQueryStringParameter('${fieldName}', '${item.key}')` data-toggle="tooltip" title=`${item.key}`) #{item.key.length > 20 ?item.key.slice(0,20) + '...' : item.key}
                                                 - else 
-                                                    a.text-primary-dark(onclick=`updateQueryStringParameter('${fieldName}', '${item.key[prop]}')` data-toggle="tooltip" title=`${item.key[prop]}`) #{item.key[prop].length > 20 ?item.key[prop].slice(0,20) + '...' : item.key[prop]}
+                                                    a.text-primary-dark(onclick=`updateQueryStringParameter('${fieldName}', '${item.key}')` data-toggle="tooltip" title=`${item.key}`) #{item.key.length > 20 ?item.key.slice(0,20) + '...' : item.key}
                 .col-md-10(style='width:1000; padding: 0px 0px 0px 0px;margin-bottom: 25px')
-                    //- .block-header
+                    .block-header
                     .filters
                         ul.list-unstyled.list-filters
                             - for (let prop in aggs)
@@ -113,10 +113,10 @@ block content
                                             ul.row.list-unstyled
                                                 - for (let item of aggs[prop])
                                                     li.col-md-4.push-5
-                                                        - if(filter[prop] === item.key[prop])
-                                                            a.text-primary-dark(style="background-color: #8cb8d2;padding: 5px" onclick=`updateQueryStringParameter('${fieldName}', '${item.key[prop]}')` data-toggle="tooltip" title=`${item.key[prop]}`) #{item.key[prop].length > 20 ?item.key[prop].slice(0,20) + '...' : item.key[prop]}
+                                                        - if(filter[prop] === item.key)
+                                                            a.text-primary-dark(style="background-color: #8cb8d2;padding: 5px" onclick=`updateQueryStringParameter('${fieldName}', '${item.key}')` data-toggle="tooltip" title=`${item.key}`) #{item.key.length > 20 ?item.key.slice(0,20) + '...' : item.key}
                                                         - else 
-                                                            a.text-primary-dark(onclick=`updateQueryStringParameter('${fieldName}', '${item.key[prop]}')` data-toggle="tooltip" title=`${item.key[prop]}`) #{item.key[prop].length > 20 ?item.key[prop].slice(0,20) + '...' : item.key[prop]}
+                                                            a.text-primary-dark(onclick=`updateQueryStringParameter('${fieldName}', '${item.key}')` data-toggle="tooltip" title=`${item.key}`) #{item.key.length > 20 ?item.key.slice(0,20) + '...' : item.key}
                                                         span.badge.badge-pill.badge-secondary.pull-right #{item.doc_count}
 
                     #pills-tabContent.tab-content

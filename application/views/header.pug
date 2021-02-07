@@ -148,15 +148,15 @@ div
                                         .col-sm-7
                                             select#inputState.form-control
                                                 - for (let prop in aggs)
-                                                    - let fieldName = getViFieldName(prop)
-                                                    if (fieldName ==='Tình trạng')
+                                                    //- - let fieldName = getViFieldName(prop)
+                                                    if (prop === 'Tình trạng')
                                                         .sub
                                                             - for (let item of aggs[prop])
                                                                 option
-                                                                    - if(filter[prop] === item.key[prop])
-                                                                        a.text-primary-dark(style="background-color: #8cb8d2;padding: 5px" onclick=`updateQueryStringParameter('${fieldName}', '${item.key[prop]}')` data-toggle="tooltip" title=`${item.key[prop]}`) #{item.key[prop].length > 20 ?item.key[prop].slice(0,20) + '...' : item.key[prop]}
+                                                                    - if(filter[prop] === item.key)
+                                                                        a.text-primary-dark(style="background-color: #8cb8d2;padding: 5px" onclick=`updateQueryStringParameter('${fieldName}', '${item.key}')` data-toggle="tooltip" title=`${item.key}`) #{item.key.length > 20 ?item.key.slice(0,20) + '...' : item.key}
                                                                     - else 
-                                                                        a.text-primary-dark(onclick=`updateQueryStringParameter('${fieldName}', '${item.key[prop]}')` data-toggle="tooltip" title=`${item.key[prop]}`) #{item.key[prop].length > 20 ?item.key[prop].slice(0,20) + '...' : item.key[prop]}
+                                                                        a.text-primary-dark(onclick=`updateQueryStringParameter('${fieldName}', '${item.key}')` data-toggle="tooltip" title=`${item.key}`) #{item.key.length > 20 ?item.key.slice(0,20) + '...' : item.key}
                                                 option(selected='') Tất cả
                                     
 #signUpModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')

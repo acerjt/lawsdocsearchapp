@@ -38,7 +38,6 @@ const crawLawsPerPage = async (lawURL) => {
               const elementSelector = selector(el);
               return extractLawsData(elementSelector);
             })
-        //     .get()
         // );
   } catch (err) {
     console.log(err)
@@ -148,23 +147,23 @@ const extractLawsData = async (selector) => {
     let docLawsLink = ''
     if(pdfLawsLinkRequestForDownload[0]) {
       pdfLawsLink = pdfLawsLinkRequestForDownload[0].attribs.href
-      fs.mkdir(path.resolve(__dirname, '../../public/' + pdfLawsLink.slice(0,pdfLawsLink.lastIndexOf('/'))), { recursive: true }, async (err) => {
-        if (err) throw err;
-        await downloadFile(baseURL + pdfLawsLink, path.resolve(__dirname, '../../public' + pdfLawsLink))
-        .catch(err => {
-          CrawlerLogger.error(`Download file error: ${pdfLawsLink} ${err}`)
-        })
-      });
+      // fs.mkdir(path.resolve(__dirname, '../../public/' + pdfLawsLink.slice(0,pdfLawsLink.lastIndexOf('/'))), { recursive: true }, async (err) => {
+      //   if (err) throw err;
+      //   await downloadFile(baseURL + pdfLawsLink, path.resolve(__dirname, '../../public' + pdfLawsLink))
+      //   .catch(err => {
+      //     CrawlerLogger.error(`Download file error: ${pdfLawsLink} ${err}`)
+      //   })
+      // });
     } 
     if(docLawsLinkRequestForDownload[0]) {
       docLawsLink = docLawsLinkRequestForDownload[0].attribs.href
-      fs.mkdir(path.resolve(__dirname, '../../public/' + docLawsLink.slice(0,docLawsLink.lastIndexOf('/'))), { recursive: true }, async (err) => {
-        if (err) throw err;
-        await downloadFile(baseURL + docLawsLink, path.resolve(__dirname, '../../public/' + docLawsLink))
-        .catch(err => {
-          CrawlerLogger.error(`Download file error: ${docLawsLink} ${err}`)
-        })
-      });
+      // fs.mkdir(path.resolve(__dirname, '../../public/' + docLawsLink.slice(0,docLawsLink.lastIndexOf('/'))), { recursive: true }, async (err) => {
+      //   if (err) throw err;
+      //   await downloadFile(baseURL + docLawsLink, path.resolve(__dirname, '../../public/' + docLawsLink))
+      //   .catch(err => {
+      //     CrawlerLogger.error(`Download file error: ${docLawsLink} ${err}`)
+      //   })
+      // });
     } 
     const law = {
       tie_breaker_id: await hexIdGeneration(),
@@ -210,22 +209,26 @@ const downloadFile = async (fileUrl, outputLocationPath) => {
     responseType: 'stream',
   }).then(response => {
     return new Promise((resolve, reject) => {
-      if(response.status === 200) 
-        response.data.pipe(writer);
+      if(response.status === 200) {
+
+        response.data.pipe(writer)
+
+      }
       else {
         writer.close()
+        resolve(true);
       }
       let error = null;
       writer.on('error', err => {
         error = err;
+        console.log(err)
         writer.close();
         reject(err);
       });
       writer.on('close', () => {
-        console.log('Close stream' ,fileUrl)
         if (!error) {
-          resolve(true);
         }
+        resolve(true);
       });
     });
   }).catch(error => {
@@ -282,7 +285,7 @@ const formattedDate = (date) => {
 };
 
 const writeLawsDataFile = async (filePath, data) => {
-  fs.appendFile(filePath, data, function (err) {
+  return fs.appendFile(filePath, data, function (err) {
     if (err)  console.log(err);
   });
 };
