@@ -966,5 +966,43 @@ label.col-sm-4.col-form-label{
   background-color: #e5f3fb;
 }
 
+#autocomplete-suggestions-signedby{
+  border: 1px solid #ddd;
+  background: #fff;
+  overflow: auto;
+}
+
+.autocomplete-suggestion-signedby {
+  overflow: hidden;
+  border-bottom: 1px solid #ddd;
+}
+
+#autocomplete-suggestions-signedby .autocomplete-suggestion-signedby p {
+  padding-left: 10px;
+}
+
+#autocomplete-suggestions-signedby .autocomplete-suggestion-signedby:hover {
+  background-color: #e5f3fb;
+}
+
+#autocomplete-suggestions-agencyissued{
+  border: 1px solid #ddd;
+  background: #fff;
+  overflow: auto;
+}
+
+.autocomplete-suggestion-agencyissued {
+  overflow: hidden;
+  border-bottom: 1px solid #ddd;
+}
+
+#autocomplete-suggestions-agencyissued .autocomplete-suggestion-agencyissued p {
+  padding-left: 10px;
+}
+
+#autocomplete-suggestions-agencyissued .autocomplete-suggestion-agencyissued:hover {
+  background-color: #e5f3fb;
+}
+
 
 

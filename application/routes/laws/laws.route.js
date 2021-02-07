@@ -17,4 +17,8 @@ router.post('/autocompletedoctype', controller.getAutocompleteDocType);
 
 router.post('/autocompletefield', controller.getAutocompleteField);
 
+router.post('/autocompletesignedby', controller.getAutocompleteSignedBy);
+
+router.post('/autocompleteagencyissued', controller.getAutocompleteAgencyIssued);
+
 module.exports = router;

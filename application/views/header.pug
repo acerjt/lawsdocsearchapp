@@ -89,9 +89,9 @@ div
                                         .col-sm-7
                                             input#inputDocDate.form-control(type='date')
                                     .col-md-6
-                                        label.col-sm-4.col-form-label(for='input') Cơ quan ban hành
+                                        label.col-sm-4.col-form-label(for='inputAgencyIssued') Cơ quan ban hành
                                         .col-sm-7
-                                            input#input.form-control(type='text' placeholder='Cơ quan ban hành')
+                                            input#inputAgencyIssued.form-control(type='text' placeholder='Cơ quan ban hành' autocomplete="off" oninput="onInputAutocompleteAgencyIssued(this.value)" onfocus="displayAutoSuggestionPanelAgencyIssued()" onblur="hideAutoSuggestionPanelAgencyIssued()")
 
                                 .form-group.row(style='margin-bottom: 0.5rem;')
                                     .col-md-6  
@@ -101,7 +101,7 @@ div
                                     .col-md-6
                                         label.col-sm-4.col-form-label(for='inputSignedBy') Người ký
                                         .col-sm-7
-                                            input#inputSignBy.form-control(type='text' placeholder='Người ký' autocomplete="off" oninput="onInputAutocompleteSignedBy(this.value)" onfocus="displayAutoSuggestionPanelSignedBy()" onblur="hideAutoSuggestionPanelSignedBy()")
+                                            input#inputSignedBy.form-control(type='text' placeholder='Người ký' autocomplete="off" oninput="onInputAutocompleteSignedBy(this.value)" onfocus="displayAutoSuggestionPanelSignedBy()" onblur="hideAutoSuggestionPanelSignedBy()")
 
                                 .form-group.row(style='margin-bottom: 0.5rem;')
                                     .col-md-6
@@ -190,6 +190,7 @@ div
 #autocomplete-suggestions1(style="position: absolute; max-height: 300px; z-index: 9999; display: none") 
 #autocomplete-suggestions-field(style="position: absolute; max-height: 300px; z-index: 9999; display: none") 
 #autocomplete-suggestions-signedby(style="position: absolute; max-height: 300px; z-index: 9999; display: none")
+#autocomplete-suggestions-agencyissued(style="position: absolute; max-height: 300px; z-index: 9999; display: none")
 script(src="script/common.js")
 script(src="/script/header.js")
 script.
