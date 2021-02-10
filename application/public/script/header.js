@@ -7,13 +7,13 @@ function onInputAutocomplete(text) {
                 text+= `<div class="autocomplete-suggestion">
                             <div class="search-item">
                                 <div class="info">
-                                <h2>
-                                    <a style="font-size: 18px" href="${element._source.href}" target="_blank" >${element._source.name}</a>
-                                    <i style="font-size: 18px">${element._source.effectiveStatus}</i>
-                                </h2>
-                                <div style="font-size: 17px">
-                                    ${element._source.desc}
-                                </div>
+                                    <h2>
+                                        <a style="font-size: 18px" href="${element._source.href}" target="_blank" >${element._source.name}</a>
+                                        <i style="font-size: 18px">${element._source.effectiveStatus}</i>
+                                    </h2>
+                                    <div style="font-size: 17px">
+                                        ${element._source.desc}
+                                    </div>
                                 </div>
                             </div>
                         </div> `
@@ -36,9 +36,7 @@ function displayAutoSuggestionPanel() {
 
 function hideAutoSuggestionPanel() {
     let autoSuggestionElement = document.getElementById('autocomplete-suggestions')
-    setTimeout(() => {
-        autoSuggestionElement.style.display = 'none'
-    }, 1000)
+    autoSuggestionElement.style.display = 'none'
 }
 
 function search() {
@@ -61,7 +59,7 @@ function onInputAutocomplete1(text) {
             let doc = rs.data
             let text = ''
             doc.forEach(element => {
-                text+= `<div class="autocomplete-suggestion1">
+                text+= `<div class="autocomplete-suggestion1" onMouseDown="bindingText(this, 'inputDocType')">
                             <p style="font-size: 16px; color: black; margin-bottom: 0px !important; padding: 5px 10px 5px 10px;" >${element}</p>
                         </div> `
             });
@@ -83,9 +81,7 @@ function displayAutoSuggestionPanel1() {
 
 function hideAutoSuggestionPanel1() {
     let autoSuggestionElement = document.getElementById('autocomplete-suggestions1')
-    setTimeout(() => {
-        autoSuggestionElement.style.display = 'none'
-    }, 1000)
+    autoSuggestionElement.style.display = 'none'
 }
 
 function onInputAutocompleteByField(text) {
@@ -94,7 +90,7 @@ function onInputAutocompleteByField(text) {
             let doc = rs.data
             let text = ''
             doc.forEach(element => {
-                text+= `<div class="autocomplete-suggestion-field">
+                text+= `<div class="autocomplete-suggestion-field" onMouseDown="bindingText(this, 'inputField')">
                             <p style="font-size: 16px; color: black; margin-bottom: 0px !important; padding: 5px 10px 5px 10px;" >${element}</p>
                         </div> `
             });
@@ -116,9 +112,7 @@ function displayAutoSuggestionPanelByField() {
 
 function hideAutoSuggestionPanelByField() {
     let autoSuggestionElement = document.getElementById('autocomplete-suggestions-field')
-    setTimeout(() => {
-        autoSuggestionElement.style.display = 'none'
-    }, 1000)
+    autoSuggestionElement.style.display = 'none'
 }
 
 function onInputAutocompleteSignedBy(text) {
@@ -127,7 +121,7 @@ function onInputAutocompleteSignedBy(text) {
             let doc = rs.data
             let text = ''
             doc.forEach(element => {
-                text+= `<div class="autocomplete-suggestion-signedby">
+                text+= `<div class="autocomplete-suggestion-signedby" onMouseDown="bindingText(this, 'inputSignedBy')">
                             <p style="font-size: 16px; color: black; margin-bottom: 0px !important; padding: 5px 10px 5px 10px;" >${element}</p>
                         </div> `
             });
@@ -149,9 +143,7 @@ function displayAutoSuggestionPanelSignedBy() {
 
 function hideAutoSuggestionPanelSignedBy() {
     let autoSuggestionElement = document.getElementById('autocomplete-suggestions-signedby')
-    setTimeout(() => {
-        autoSuggestionElement.style.display = 'none'
-    }, 1000)
+    autoSuggestionElement.style.display = 'none'
 }
 
 function onInputAutocompleteAgencyIssued(text) {
@@ -160,7 +152,7 @@ function onInputAutocompleteAgencyIssued(text) {
             let doc = rs.data
             let text = ''
             doc.forEach(element => {
-                text+= `<div class="autocomplete-suggestion-agencyissued">
+                text+= `<div class="autocomplete-suggestion-agencyissued" onMouseDown="bindingText(this, 'inputAgencyIssued')">
                             <p style="font-size: 16px; color: black; margin-bottom: 0px !important; padding: 5px 10px 5px 10px;" >${element}</p>
                         </div> `
             });
@@ -182,7 +174,22 @@ function displayAutoSuggestionPanelAgencyIssued() {
 
 function hideAutoSuggestionPanelAgencyIssued() {
     let autoSuggestionElement = document.getElementById('autocomplete-suggestions-agencyissued')
-    setTimeout(() => {
-        autoSuggestionElement.style.display = 'none'
-    }, 1000)
+    autoSuggestionElement.style.display = 'none'
 }
+
+function bindingText(element, elementID){
+    let inputID = document.getElementById(elementID)
+    inputID.value = element.children[0].innerText
+}
+
+function bindindSuggestionText(element, elementID){
+    let inputID = document.getElementById(elementID)
+    inputID.value = element.children[0].children[0].children[0].innerText
+}
+
+let today = new Date().toISOString().substr(0, 10);
+let inputEffectiveDate = document.getElementById('inputEffectiveDate')
+inputEffectiveDate.value = today
+
+let inputIssuedDate = document.getElementById('inputIssuedDate')
+inputIssuedDate.value = today

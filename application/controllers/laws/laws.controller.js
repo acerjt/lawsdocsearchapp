@@ -753,11 +753,11 @@ const getLawsInParticularPage = async (page, filter, keyword) => {
             aggsBody.query.bool.must.multi_match = {}
             aggsBody.query.bool.must.multi_match.query = keyword
             aggsBody.query.bool.must.multi_match.fields = multiMatchField
-            docTypeAggsBodyString.query = aggsBody.query
-            fieldAggsBodyString.query = aggsBody.query
-            agencyIssuedAggsBodyString.query = aggsBody.query
-            signedByAggsBodyString.query = aggsBody.query
-            effectiveStatusAggsBodyString.query = aggsBody.query
+            // docTypeAggsBodyString.query = aggsBody.query
+            // fieldAggsBodyString.query = aggsBody.query
+            // agencyIssuedAggsBodyString.query = aggsBody.query
+            // signedByAggsBodyString.query = aggsBody.query
+            // effectiveStatusAggsBodyString.query = aggsBody.query
 
         }
         for (let filterProp in filter) {
@@ -767,6 +767,8 @@ const getLawsInParticularPage = async (page, filter, keyword) => {
             filterSearchTerm.term[filterProp] = filter[filterProp]
             aggsBody.query.bool.filter.push(filterSearchTerm)
         }
+        console.log(JSON.stringify(docTypeAggsBodyString))
+
         if(!isOverTenThoudsandDocs) {
             console.time('search time')
             let {body} = await client.msearch({
@@ -1629,8 +1631,9 @@ module.exports.getLaws = async (req, res) => {
         }
         let lawsData = await getLawsInParticularPage(currentPage, filter, keyword)
         console.time('render time')
-        if(lawsData.lawsDoc && lawsData.lawsDoc.length === 0)
-            res.render(pugFiles.error404, { title: titles.error404})
+        if(lawsData.lawsDoc && lawsData.lawsDoc.length === 0) {
+            res.render(pugFiles.error404, { title: titles.error404, aggs: lawsData.aggs, getViFieldName})
+        }
         else
             res.render(pugFiles.home, {
                 title: titles.home, 
@@ -1645,7 +1648,7 @@ module.exports.getLaws = async (req, res) => {
         console.timeEnd('total time')
     } catch (error) {
         console.log(error)
-        res.render(pugFiles.error404, { title: titles.error404})
+        res.render(pugFiles.error404, { title: titles.error404, aggs: lawsData.aggs, getViFieldName})
     }
 }
 

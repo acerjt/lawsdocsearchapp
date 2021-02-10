@@ -54,11 +54,11 @@ div
                                 .form-group.row(style='margin-bottom: 0.5rem;')                         
                                     .exactlyandfully(style='display:flex;margin-left: 25px;')
                                         .div(style='margin-right: 35px; padding-left:0px')
-                                            input#exactlyValueSearch(type='radio' name='cbAdvanced' checked='checked' style='margin-right:10px')
+                                            input#exactlyValueSearch(type='radio' name='rdAdvanced' value='rdExactly'  checked='checked' style='margin-right:10px')
                                             label.col-form-label.exactly(for='exactlyValueSearch')
                                                 |  Chính xác cụm từ trên
                                         .div(style='padding-left:0px')
-                                            input#fullTextSearch(type='radio' name='cbAdvanced' style='margin-right:10px')
+                                            input#fullTextSearch(type='radio' name='rdAdvanced' value='rdFull' style='margin-right:10px')
                                             label.col-form-label(for='fullTextSearch' style='margin-right:10px')
                                                 |  Có tất cả từ trên      
                                             i.fas.fa-info-circle(title='Cách thức tìm kiếm' data-toggle='popover' data-trigger='hover' data-placement='right' data-content='<b>Chính xác cụm từ trên:</b> kết quả trả về chứa chính xác cụm từ được nhập theo đúng thứ tự hiển thị của các từ khóa.<br /><b>Có tất cả từ trên:</b> kết quả trả về chứa tất cả các từ trong cụm từ khóa, không quan tâm vị trí hiển thị.<br />' data-html="true") 
@@ -85,9 +85,9 @@ div
 
                                 .form-group.row(style='margin-bottom: 0.5rem;')
                                     .col-md-6
-                                        label.col-sm-4.col-form-label(for='inputDocDate') Ngày Ban Hành
+                                        label.col-sm-4.col-form-label(for='inputIssuedDate') Ngày Ban Hành
                                         .col-sm-7
-                                            input#inputDocDate.form-control(type='date')
+                                            input#inputIssuedDate.form-control(type='date')
                                     .col-md-6
                                         label.col-sm-4.col-form-label(for='inputAgencyIssued') Cơ quan ban hành
                                         .col-sm-7
@@ -95,9 +95,9 @@ div
 
                                 .form-group.row(style='margin-bottom: 0.5rem;')
                                     .col-md-6  
-                                        label.col-sm-4.col-form-label(for='inputDocStarted') Ngày Hiệu Lực
+                                        label.col-sm-4.col-form-label(for='inputEffectiveDate') Ngày Hiệu Lực
                                         .col-sm-7(style='')
-                                            input#inputDocStarted.form-control(style='' type='date')
+                                            input#inputEffectiveDate.form-control(style='' type='date')
                                     .col-md-6
                                         label.col-sm-4.col-form-label(for='inputSignedBy') Người ký
                                         .col-sm-7
@@ -107,18 +107,15 @@ div
                                     .col-md-6
                                         label.col-sm-4.col-form-label(for='inputState') Tình Trạng
                                         .col-sm-7
-                                            select#inputState.form-control
+                                            select#inputState.form-control(name='inputEffectiveStatus')
                                                 - for (let prop in aggs)
+                                                    //- .chotoan #{JSON.stringify(aggs)}
                                                     //- - let fieldName = getViFieldName(prop)
-                                                    if (prop === 'Tình trạng')
+                                                    if (prop === 'effectiveStatus')
                                                         .sub
                                                             - for (let item of aggs[prop])
-                                                                option
-                                                                    - if(filter[prop] === item.key)
-                                                                        a.text-primary-dark(style="background-color: #8cb8d2;padding: 5px" onclick=`updateQueryStringParameter('${fieldName}', '${item.key}')` data-toggle="tooltip" title=`${item.key}`) #{item.key.length > 20 ?item.key.slice(0,20) + '...' : item.key}
-                                                                    - else 
-                                                                        a.text-primary-dark(onclick=`updateQueryStringParameter('${fieldName}', '${item.key}')` data-toggle="tooltip" title=`${item.key}`) #{item.key.length > 20 ?item.key.slice(0,20) + '...' : item.key}
-                                                option(selected='') Tất cả
+                                                                option(value=`${item.key}` ) #{item.key}
+                                                option(selected='' value='allStatus') Tất cả
                                     
 #signUpModal.modal.fade(tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true')
     .modal-dialog(role='document')
