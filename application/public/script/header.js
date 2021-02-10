@@ -5,10 +5,10 @@ function onInputAutocomplete(text) {
             let text = ''
             doc.forEach(element => {
                 text+= `<div class="autocomplete-suggestion">
-                            <div class="search-item">
+                            <div class="search-item" onclick="bindindSuggestionText(this, 'search-input')">
                                 <div class="info">
                                     <h2>
-                                        <a style="font-size: 18px" href="${element._source.href}" target="_blank" >${element._source.name}</a>
+                                        <a style="font-size: 18px" href="vbpl/id/${element._id}" target="_blank" >${element._source.name}</a>
                                         <i style="font-size: 18px">${element._source.effectiveStatus}</i>
                                     </h2>
                                     <div style="font-size: 17px">
@@ -36,7 +36,9 @@ function displayAutoSuggestionPanel() {
 
 function hideAutoSuggestionPanel() {
     let autoSuggestionElement = document.getElementById('autocomplete-suggestions')
-    autoSuggestionElement.style.display = 'none'
+    setTimeout(() => {
+        autoSuggestionElement.style.display = 'none'
+    }, 300)
 }
 
 function search() {
