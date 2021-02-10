@@ -1,0 +1,131 @@
+{
+    "SoHieu": "63/2010/NĐ-CP",
+    "TrichYeu": "Nghị định 63/2010/NĐ-CP về kiểm soát thủ tục hành chính",
+    "NgayBanHanh": "2010-06-08T00:00:00Z",
+    "NgayHieuLuc": "2010-10-14T00:00:00Z",
+    "NgayCongBao": "2010-06-23T00:00:00Z",
+    "SoCongBao": "Từ số 367 đến số 368",
+    "IsEn": false,
+    "DOCUrl": "/2010/06/139787_63-2010-nd-cp.doc",
+    "DOCSize": 229888,
+    "PDFUrl": "/2010/06/139787_63-2010-nd-cp.pdf",
+    "PDFSize": 4766379,
+    "CoQuanBanHanh": [
+        {
+            "Title": "Chính phủ",
+            "UID": "/co-quan-ban-hanh/chinh-phu"
+        }
+    ],
+    "NguoiKy": [
+        {
+            "Title": "Nguyễn Tấn Dũng",
+            "UID": "/nguoi-ky/nguyen-tan-dung"
+        }
+    ],
+    "LinhVuc": [
+        {
+            "Title": "Bộ máy hành chính",
+            "UID": "/linh-vuc/bo-may-hanh-chinh"
+        }
+    ],
+    "Poster": "/2010/06/139787_63-2010-nd-cp.png",
+    "LoaiVanBan": {
+        "Title": "Nghị định",
+        "UID": "/loai-van-ban/nghi-dinh"
+    },
+    "KieuVanBan": {
+        "Title": "Văn bản pháp luật",
+        "UID": "/csdl/van-ban-phap-luat"
+    },
+    "TrinhTrangHieuLuc": {
+        "Title": "Còn hiệu lực",
+        "UID": "/tinh-trang-hieu-luc/con-hieu-luc"
+    },
+    "LuocDo": {
+        "VanBanDuocDanChieu": [
+            {
+                "Title": "Quyết định 30/QĐ-TTg Phê duyệt Đề án Đơn giản hoá thủ tục hành chính lĩnh vực quản lý nhà nước giai đoạn 2007 - 2010",
+                "UID": "/quyet-dinh-30-qd-ttg-phe-duyet-de-an-don-gian-hoa-thu-tuc-hanh-chinh-linh-vuc-quan-ly-nha-nuoc-giai-doan-2007-2010"
+            }
+        ],
+        "VanBanHuongDan": [
+            {
+                "Title": "Thông tư 224/2010/TT-BTC lập dự toán, quản lý và sử dụng kinh phí",
+                "UID": "/thong-tu-224-2010-tt-btc-lap-du-toan-quan-ly-va-su-dung-kinh-phi"
+            },
+            {
+                "Title": "Thông tư liên tịch 01/2011/TTLT-VPCP-BNV hướng dẫn chức năng nhiệm vụ quyền hạn",
+                "UID": "/thong-tu-lien-tich-01-2011-ttlt-vpcp-bnv-huong-dan-chuc-nang-nhiem-vu-quyen-han"
+            },
+            {
+                "Title": "Thông tư 167/2012/TT-BTC quy định việc lập dự toán quản lý sử dụng kinh phí",
+                "UID": "/thong-tu-167-2012-tt-btc-quy-dinh-viec-lap-du-toan-quan-ly-su-dung-kinh-phi"
+            },
+            {
+                "Title": "Thông tư 07/2014/TT-BTP đánh giá tác động thủ tục hành chính",
+                "UID": "/thong-tu-07-2014-tt-btp-danh-gia-tac-dong-thu-tuc-hanh-chinh"
+            },
+            {
+                "Title": "Thông tư 19/2014/TT-BTP nhập đăng tải khai thác dữ liệu thủ tục hành chính trên Cơ sở dữ liệu quốc gia",
+                "UID": "/thong-tu-19-2014-tt-btp-nhap-dang-tai-khai-thac-du-lieu-thu-tuc-hanh-chinh-tren-co-so-du-lieu-quoc-gia"
+            },
+            {
+                "Title": "Thông tư 25/2014/TT-BTP hướng dẫn kiểm tra kiểm soát thủ tục hành chính",
+                "UID": "/thong-tu-25-2014-tt-btp-huong-dan-kiem-tra-kiem-soat-thu-tuc-hanh-chinh"
+            },
+            {
+                "Title": "Thông tư 02/2017/TT-VPCP hướng dẫn về nghiệp vụ kiểm soát thủ tục hành chính",
+                "UID": "/thong-tu-02-2017-tt-vpcp-huong-dan-ve-nghiep-vu-kiem-soat-thu-tuc-hanh-chinh"
+            },
+            {
+                "Title": "Thông tư 01/2020/TT-VPCP chế độ báo cáo định kỳ và quản lý sử dụng khai thác Hệ thống thông tin báo cáo",
+                "UID": "/thong-tu-01-2020-tt-vpcp-che-do-bao-cao-dinh-ky-va-quan-ly-su-dung-khai-thac-he-thong-thong-tin-bao-cao"
+            }
+        ],
+        "VanBanDuocHopNhat": [],
+        "VanBanDuocCanCu": [
+            {
+                "Title": "Luật Tổ chức Chính phủ 2001 32/2001/QH10",
+                "UID": "/luat-to-chuc-chinh-phu-2001-32-2001-qh10"
+            },
+            {
+                "Title": "Luật Ngân sách Nhà nước 2002 01/2002/QH11",
+                "UID": "/luat-ngan-sach-nha-nuoc-2002-01-2002-qh11"
+            },
+            {
+                "Title": "Luật Ban hành văn bản quy phạm pháp luật của Hội đồng nhân dân và Uỷ ban nhân dân 2004 31/2004/QH11",
+                "UID": "/luat-ban-hanh-van-ban-quy-pham-phap-luat-cua-hoi-dong-nhan-dan-va-uy-ban-nhan-dan-2004-31-2004-qh11"
+            },
+            {
+                "Title": "Luật ban hành văn bản quy phạm pháp luật 2008 17/2008/QH12",
+                "UID": "/luat-ban-hanh-van-ban-quy-pham-phap-luat-2008-17-2008-qh12"
+            }
+        ],
+        "VanBanHopNhat": [],
+        "VanBanThayThe": [],
+        "VanBanBiThayThe": [],
+        "VanBanDinhChinh": [],
+        "VanBanDuocHuongDan": [],
+        "VanBanBiDinhChinh": [],
+        "VanBanSuaDoiBoSung": [
+            {
+                "Title": "Nghị định 48/2013/NĐ-CP sửa đổi Nghị định liên quan kiểm soát thủ tục hành chính",
+                "UID": "/nghi-dinh-48-2013-nd-cp-sua-doi-nghi-dinh-lien-quan-kiem-soat-thu-tuc-hanh-chinh"
+            },
+            {
+                "Title": "Nghị định 92/2017/NĐ-CP sửa đổi Nghị định liên quan đến kiểm soát thủ tục hành chính",
+                "UID": "/nghi-dinh-92-2017-nd-cp-sua-doi-nghi-dinh-lien-quan-den-kiem-soat-thu-tuc-hanh-chinh"
+            }
+        ],
+        "VanBanLienQuanNgonNgu": [],
+        "VanBanBiSuaDoiBoSung": [
+            {
+                "Title": "Quyết định 1699/QĐ-TTg thiết lập cơ sở dữ liệu quốc gia thủ tục hành chính",
+                "UID": "/quyet-dinh-1699-qd-ttg-thiet-lap-co-so-du-lieu-quoc-gia-thu-tuc-hanh-chinh"
+            }
+        ]
+    },
+    "Title": "Nghị định 63/2010/NĐ-CP kiểm soát thủ tục hành chính",
+    "UID": "/nghi-dinh-63-2010-nd-cp-kiem-soat-thu-tuc-hanh-chinh",
+    "Updated": "2010-06-08T09:16:24Z"
+}

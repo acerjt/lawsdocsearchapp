@@ -187,10 +187,10 @@ block content
                                                             a(href=`vbpl?nk=${lawDocument._source.signedBy}`) #{lawDocument._source.signedBy}
                                                 tr
                                                     td Ngày ban hành
-                                                    td #{lawDocument._source.issuedDate}
+                                                    td #{moment(lawDocument['_source'].issuedDate).format('DD/MM/YYYY')}
                                                 tr
                                                     td Ngày hiệu lực
-                                                    td #{lawDocument._source.effectiveDate}
+                                                    td #{moment(lawDocument['_source'].effectiveDate).format('DD/MM/YYYY')}
                                                 tr
                                                     td Ngày công báo
                                                     td #{lawDocument._source.dateOfAnnouncement}

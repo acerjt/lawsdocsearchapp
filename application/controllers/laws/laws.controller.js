@@ -914,8 +914,19 @@ const pagination = async (page) => {
 }
 const getLawById = async (lawDocId) => {
     try {
+        lawDocId = '/' + lawDocId
+        let {body} = await client.search({
+            index: laws.lawsIndex,
+            body: {
+                "query": {
+                    "match": {
+                        "href": lawDocId
+                    }
+                }
+            }
+        })
         await client.update({
-            id: lawDocId,
+            id: body.hits.hits[0]._id,
             index: laws.lawsIndex,
             body: {    
                 "script" : {
@@ -923,16 +934,17 @@ const getLawById = async (lawDocId) => {
                 }
             }
         })
-        let {body} = await client.get({
+        let result = await client.get({
             index: laws.lawsIndex,
-            id: lawDocId
+            id: body.hits.hits[0]._id
         })
-        return body
+        return result.body
     }
     catch (error) {
         return new Error(`Get document error: ${error}`)
     }
 }
+
 
 const ratingDocument = async (id, ratingValue) => {
     try {

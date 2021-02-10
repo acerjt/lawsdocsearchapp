@@ -8,7 +8,7 @@ function onInputAutocomplete(text) {
                             <div class="search-item" onclick="bindindSuggestionText(this, 'search-input')">
                                 <div class="info">
                                     <h2>
-                                        <a style="font-size: 18px" href="vbpl/id/${element._id}" target="_blank" >${element._source.name}</a>
+                                        <a style="font-size: 18px" href="${element._source.href}" target="_blank" >${element._source.name}</a>
                                         <i style="font-size: 18px">${element._source.effectiveStatus}</i>
                                     </h2>
                                     <div style="font-size: 17px">

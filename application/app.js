@@ -9,8 +9,10 @@ const indexRouter = require('./routes/index');
 const pagingCron = require('./cron/paginator')
 
 const app = express();
-app.locals.moment = require('moment');
-app.locals.moment.locale('vi')
+const moment = require('moment');
+moment.locale('vi')
+// moment.tz("Asia/Ho_Chi_Minh")
+app.locals.moment = moment
 app.use(function(req, res, next) {
   // res.set('Cache-Control', 'max-age=31536000');
   res.header('Access-Control-Allow-Origin', req.get('Origin') || '*');

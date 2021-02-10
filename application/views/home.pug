@@ -128,7 +128,7 @@ block content
                                             .row 
                                                 .title
                                                     //- - let url = `#{law['_source'].tie_breaker_id}`
-                                                    a(href=`vbpl/id/${law['_id']}` style="color:#33829c")
+                                                    a(href=`${law._source.href}` style="color:#33829c")
                                                         | #{law['_source'].name}
                                             .row 
                                                 .col-md-9
@@ -165,10 +165,10 @@ block content
                                                     .container(style='margin-left:0px')
                                                         .row
                                                             .col(style='max-width:35%') Ban hành:
-                                                            .col.datecome #{law['_source'].issuedDate}
+                                                            .col.datecome #{moment(law['_source'].issuedDate).format('DD/MM/YYYY')}
                                                             .w-100
                                                             .col(style='max-width:35%') Ngày HL:
-                                                            .col.datestart #{law['_source'].effectiveDate}
+                                                            .col.datestart #{moment(law['_source'].effectiveDate).format('DD/MM/YYYY')}
                                                             .w-100
                                                             .col(style='max-width:35%') Hiệu lực:
                                                             - if (law['_source'].effectiveStatus === "Còn hiệu lực")
@@ -184,7 +184,7 @@ block content
                                                                 .col.iseffect(style='color:red') #{law['_source'].inavailableDate}
                                                                 .w-100
                                                             .col(style='max-width:35%') Cập nhật:
-                                                            .col.timeupdate #{moment(law['_source'].updatedAt).fromNow()}                                                                
+                                                            .col.timeupdate #{moment(law['_source'].updatedAt.replace('Z','')).fromNow()}                                                              
                         - if(paginateDisplayConfiguration)
                             .pagination
                                 .paging-container.d-flex

@@ -64,7 +64,7 @@ router.get('/admin/allDocs', function(req, res, next) {
     res.render('admin/allDocs', { title: 'Văn bản pháp lý' });
 });
 
-// router.get('/:id', lawsController.getLawById)
+router.get('/:id', lawsController.getLawById)
 
 router.get('*',function (req, res) {
     res.redirect('/vbpl');
