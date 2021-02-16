@@ -582,7 +582,7 @@ const getLawsInParticularPage1 = async (page, filter, keyword) => {
         return Promise.reject(new Error(`Get laws document on page ${page}: ` + error.message))
     }
 }
-const getLawsInParticularPage = async (page, filter, keyword) => {
+const getLawsInParticularPage = async (page, filter, keyword, searchAdvanced) => {
     try {
         page = page && page > 1 ? Number(page) : 1
         console.time('paging time')
@@ -683,11 +683,11 @@ const getLawsInParticularPage = async (page, filter, keyword) => {
             }
         }
 
-
         let aggsBody = {
             "query": {
                 "bool": {
-                    "filter": []
+                    "filter": [],
+                    "must": []
                 }
             },
             "sort": {
@@ -767,8 +767,164 @@ const getLawsInParticularPage = async (page, filter, keyword) => {
             filterSearchTerm.term[filterProp] = filter[filterProp]
             aggsBody.query.bool.filter.push(filterSearchTerm)
         }
-        console.log(JSON.stringify(docTypeAggsBodyString))
-
+        // console.log(searchAdvanced)
+        if(searchAdvanced.rdAdvanced === 'rdExactly'){
+            for(let searchInput in searchAdvanced){
+                if(searchInput === 'ipDocName'){
+                    // aggsBody.query.must = []
+                    // if (searchAdvanced[searchInput]){
+                        let searchNameQueryString = {}
+                        searchNameQueryString.match_phrase = {}
+                        searchNameQueryString.match_phrase.name = searchAdvanced[searchInput]
+                        aggsBody.query.bool.must.push(searchNameQueryString)
+                    // }
+                }
+                else if(searchInput === 'ipDocNum'){
+                    // if (searchAdvanced[searchInput]){
+                        let searchNameQueryString = {}
+                        searchNameQueryString.match_phrase = {}
+                        searchNameQueryString.match_phrase.docNum = searchAdvanced[searchInput]
+                        aggsBody.query.bool.must.push(searchNameQueryString)
+                    // }
+                }
+                else if(searchInput === 'ipIssuedDate'){
+                    let searchNameQueryString = {}
+                    searchNameQueryString.range = {}
+                    searchNameQueryString.range.issuedDate = {}
+                    searchNameQueryString.range.issuedDate.gte = searchAdvanced[searchInput]
+                    searchNameQueryString.range.issuedDate.lte = searchAdvanced[searchInput]
+                    aggsBody.query.bool.must.push(searchNameQueryString)
+                }
+                else if(searchInput === 'ipEffectiveDate'){
+                    let searchNameQueryString = {}
+                    searchNameQueryString.range = {}
+                    searchNameQueryString.range.effectiveDate = {}
+                    searchNameQueryString.range.effectiveDate.gte = searchAdvanced[searchInput]
+                    searchNameQueryString.range.effectiveDate.lte = searchAdvanced[searchInput]
+                    aggsBody.query.bool.must.push(searchNameQueryString)
+                }
+                else if(searchInput === 'ipEffectiveDate'){
+                    let searchNameQueryString = {}
+                    searchNameQueryString.range = {}
+                    searchNameQueryString.range.effectiveDate = {}
+                    searchNameQueryString.range.effectiveDate.gte = searchAdvanced[searchInput]
+                    searchNameQueryString.range.effectiveDate.lte = searchAdvanced[searchInput]
+                    aggsBody.query.bool.must.push(searchNameQueryString)
+                }
+                else if(searchInput === 'ipEffectiveStatus' && searchAdvanced[searchInput] !== 'allStatus' ){
+                    let searchNameQueryString = {}
+                        searchNameQueryString.term = {}
+                        searchNameQueryString.term.effectiveStatus = {}
+                        searchNameQueryString.term.effectiveStatus = searchAdvanced[searchInput]
+                        aggsBody.query.bool.filter.push(searchNameQueryString)
+                }
+                else if(searchInput === 'ipField'){
+                    let searchNameQueryString = {}
+                        searchNameQueryString.term = {}
+                        searchNameQueryString.term.field = {}
+                        searchNameQueryString.term.field = searchAdvanced[searchInput]
+                        aggsBody.query.bool.filter.push(searchNameQueryString)
+                }
+                else if(searchInput === 'ipDocType'){
+                    let searchNameQueryString = {}
+                        searchNameQueryString.term = {}
+                        searchNameQueryString.term.docType = {}
+                        searchNameQueryString.term.docType = searchAdvanced[searchInput]
+                        aggsBody.query.bool.filter.push(searchNameQueryString)
+                }
+                else if(searchInput === 'ipAgencyIssued'){
+                    let searchNameQueryString = {}
+                        searchNameQueryString.term = {}
+                        searchNameQueryString.term.agencyIssued = {}
+                        searchNameQueryString.term.agencyIssued = searchAdvanced[searchInput]
+                        aggsBody.query.bool.filter.push(searchNameQueryString)
+                }
+                else if(searchInput === 'ipSignedBy'){
+                    let searchNameQueryString = {}
+                        searchNameQueryString.term = {}
+                        searchNameQueryString.term.signedBy = {}
+                        searchNameQueryString.term.signedBy = searchAdvanced[searchInput]
+                        aggsBody.query.bool.filter.push(searchNameQueryString)
+                }
+            }
+        }
+        else{
+            for(let searchInput in searchAdvanced){
+                if(searchInput === 'ipDocName'){
+                    let searchNameQueryString = {}
+                    searchNameQueryString.match = {}
+                    searchNameQueryString.match.name = searchAdvanced[searchInput]
+                    aggsBody.query.bool.must.push(searchNameQueryString)
+                }
+                else if(searchInput === 'ipDocNum'){
+                    let searchNameQueryString = {}
+                    searchNameQueryString.match = {}
+                    searchNameQueryString.matc.docNum = searchAdvanced[searchInput]
+                    aggsBody.query.bool.must.push(searchNameQueryString)
+                }
+                else if(searchInput === 'ipIssuedDate'){
+                    let searchNameQueryString = {}
+                    searchNameQueryString.range = {}
+                    searchNameQueryString.range.issuedDate = {}
+                    searchNameQueryString.range.issuedDate.gte = searchAdvanced[searchInput]
+                    searchNameQueryString.range.issuedDate.lte = searchAdvanced[searchInput]
+                    aggsBody.query.bool.must.push(searchNameQueryString)
+                }
+                else if(searchInput === 'ipEffectiveDate'){
+                    let searchNameQueryString = {}
+                    searchNameQueryString.range = {}
+                    searchNameQueryString.range.effectiveDate = {}
+                    searchNameQueryString.range.effectiveDate.gte = searchAdvanced[searchInput]
+                    searchNameQueryString.range.effectiveDate.lte = searchAdvanced[searchInput]
+                    aggsBody.query.bool.must.push(searchNameQueryString)
+                }
+                else if(searchInput === 'ipEffectiveDate'){
+                    let searchNameQueryString = {}
+                    searchNameQueryString.range = {}
+                    searchNameQueryString.range.effectiveDate = {}
+                    searchNameQueryString.range.effectiveDate.gte = searchAdvanced[searchInput]
+                    searchNameQueryString.range.effectiveDate.lte = searchAdvanced[searchInput]
+                    aggsBody.query.bool.must.push(searchNameQueryString)
+                }
+                else if(searchInput === 'ipEffectiveStatus' && searchAdvanced[searchInput] !== 'allStatus' ){
+                    let searchNameQueryString = {}
+                    searchNameQueryString.term = {}
+                    searchNameQueryString.term.effectiveStatus = {}
+                    searchNameQueryString.term.effectiveStatus = searchAdvanced[searchInput]
+                    aggsBody.query.bool.filter.push(searchNameQueryString)
+                }
+                else if(searchInput === 'ipField'){
+                    let searchNameQueryString = {}
+                    searchNameQueryString.term = {}
+                    searchNameQueryString.term.field = {}
+                    searchNameQueryString.term.field = searchAdvanced[searchInput]
+                    aggsBody.query.bool.filter.push(searchNameQueryString)
+                }
+                else if(searchInput === 'ipDocType'){
+                    let searchNameQueryString = {}
+                    searchNameQueryString.term = {}
+                    searchNameQueryString.term.docType = {}
+                    searchNameQueryString.term.docType = searchAdvanced[searchInput]
+                    aggsBody.query.bool.filter.push(searchNameQueryString)
+                }
+                else if(searchInput === 'ipAgencyIssued'){
+                    let searchNameQueryString = {}
+                    searchNameQueryString.term = {}
+                    searchNameQueryString.term.agencyIssued = {}
+                    searchNameQueryString.term.agencyIssued = searchAdvanced[searchInput]
+                    aggsBody.query.bool.filter.push(searchNameQueryString)
+                }
+                else if(searchInput === 'ipSignedBy'){
+                    let searchNameQueryString = {}
+                    searchNameQueryString.term = {}
+                    searchNameQueryString.term.signedBy = {}
+                    searchNameQueryString.term.signedBy = searchAdvanced[searchInput]
+                    aggsBody.query.bool.filter.push(searchNameQueryString)
+                }
+            }
+        }
+        // console.log(JSON.stringify(aggsBody))
+        
         if(!isOverTenThoudsandDocs) {
             console.time('search time')
             let {body} = await client.msearch({
@@ -798,6 +954,8 @@ const getLawsInParticularPage = async (page, filter, keyword) => {
                 // body: aggsBody
             })
             // console.log(body.hits.total.value)
+            // console.log(body.responses[0])
+
             let docType = body.responses[1].aggregations.docType.buckets
             let field = body.responses[2].aggregations.field.buckets
             let agencyIssued = body.responses[3].aggregations.agencyIssued.buckets
@@ -1635,13 +1793,21 @@ module.exports.getLaws = async (req, res) => {
     try {
         console.time('total time')
         let currentPage = req.query.p
+        let {rdAdvanced, ipDocName, ipField, ipDocNum, ipDocType, ipIssuedDate, ipAgencyIssued, ipEffectiveDate, ipSignedBy, ipEffectiveStatus} = req.query
+        let searchAdvanced = {rdAdvanced, ipDocName, ipField, ipDocNum, ipDocType, ipIssuedDate, ipAgencyIssued, ipEffectiveDate, ipSignedBy, ipEffectiveStatus}
+        
         const {keyword, lv: field, lvb: docType, nk: signedBy, tt: effectiveStatus, cqbh: agencyIssued} = req.query
         const filter = {field, docType, signedBy, effectiveStatus, agencyIssued}
         for (let prop in filter) {
             if(filter[prop] === undefined)
-            delete filter[prop]
+                delete filter[prop]
         }
-        let lawsData = await getLawsInParticularPage(currentPage, filter, keyword)
+        for (let searchInput in searchAdvanced){
+            // if(searchAdvanced[searchInput] === undefined)
+            if(!searchAdvanced[searchInput])
+                delete searchAdvanced[searchInput]
+        }
+        let lawsData = await getLawsInParticularPage(currentPage, filter, keyword, searchAdvanced)
         console.time('render time')
         if(lawsData.lawsDoc && lawsData.lawsDoc.length === 0) {
             res.render(pugFiles.error404, { title: titles.error404, aggs: lawsData.aggs, getViFieldName})

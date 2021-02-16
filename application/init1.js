@@ -15,15 +15,15 @@ const createLawsIndex = async () => {
         "index.analyze.max_token_count": 20000,
         "analysis": {
           "analyzer": {
-            "custom_vi_analyzer": {
-              "type": "custom",
-              "tokenizer": "vi_tokenizer",
-              "filter": [
-                "lowercase",
-                "stop",
-                "token_limit"
-              ]
-            },
+            // "custom_vi_analyzer": {
+            //   "type": "custom",
+            //   "tokenizer": "vi_tokenizer",
+            //   "filter": [
+            //     "lowercase",
+            //     "stop",
+            //     "token_limit"
+            //   ]
+            // },
             "keyword_analyzer": {
               "filter": [
                 "lowercase",
@@ -254,7 +254,12 @@ const createLawsIndex = async () => {
             "type": "keyword"
           },
           "name": {
-            "type": "keyword"
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
           },
           "desc": {
             "type": "text",
@@ -298,7 +303,12 @@ const createLawsIndex = async () => {
             "type": "keyword"
           },
           "docNum": {
-            "type": "keyword"
+            "type": "text",
+            "fields": {
+              "keyword": {
+                "type": "keyword"
+              }
+            }
           },
           "agencyIssued": {
             "type": "keyword"
@@ -308,22 +318,22 @@ const createLawsIndex = async () => {
           },
           "issuedDate": {
             "type": "date",
-            "format": "dd/MM/yyyy||epoch_millis",
+            "format": "yyyy-MM-dd||dd/MM/yyyy||epoch_millis||date_time||date_hour_minute_second||date_time_no_millis",
             "ignore_malformed": true
           },
           "effectiveDate": {
             "type": "date",
-            "format": "dd/MM/yyyy||epoch_millis",
+            "format": "yyyy-MM-dd||dd/MM/yyyy||epoch_millis||date_time||date_hour_minute_second||date_time_no_millis",
             "ignore_malformed": true
           },
           "inavailableDate": {
             "type": "date",
-            "format": "dd/MM/yyyy||epoch_millis",
+            "format": "yyyy-MM-dd||dd/MM/yyyy||epoch_millis||date_time||date_hour_minute_second||date_time_no_millis",
             "ignore_malformed": true
           },
           "dateOfAnnouncement": {
             "type": "date",
-            "format": "dd/MM/yyyy||epoch_millis",
+            "format": "yyyy-MM-dd||dd/MM/yyyy||epoch_millis||date_time||date_hour_minute_second||date_time_no_millis",
             "ignore_malformed": true
           },
           "numOfAnnouncement": {

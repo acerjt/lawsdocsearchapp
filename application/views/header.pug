@@ -50,7 +50,7 @@ div
                     input#advanced-search.style4(type='checkbox')
                     #collapseExample
                         div(style='background-color:#e5f3fb;padding: 15px')
-                            form(style='margin-bottom: 0px;')
+                            form#advanced-search-form(style='margin-bottom: 0px;')
                                 .form-group.row(style='margin-bottom: 0.5rem;')                         
                                     .exactlyandfully(style='display:flex;margin-left: 25px;')
                                         .div(style='margin-right: 35px; padding-left:0px')
@@ -67,47 +67,47 @@ div
                                     .col-md-6
                                         label.col-sm-4.col-form-label(for='inputDocName') Tên Văn Bản
                                         .col-sm-7
-                                            input#inputDocName.form-control( type='text' placeholder='Tên văn bản...')
+                                            input#inputDocName.form-control(name='ipDocName' type='text' placeholder='Tên văn bản...')
                                     .col-md-6
                                         label.col-sm-4.col-form-label(for='inputField') Lĩnh vực
                                         .col-sm-7
-                                            input#inputField.form-control(type='text' placeholder='Lĩnh vực...' autocomplete="off" oninput="onInputAutocompleteByField(this.value)" onfocus="displayAutoSuggestionPanelByField()" onblur="hideAutoSuggestionPanelByField()")
+                                            input#inputField.form-control(name='ipField' type='text' placeholder='Lĩnh vực...' autocomplete="off" oninput="onInputAutocompleteByField(this.value)" onfocus="displayAutoSuggestionPanelByField()" onblur="hideAutoSuggestionPanelByField()")
 
                                 .form-group.row(style='margin-bottom: 0.5rem;')
                                     .col-md-6
-                                        label.col-sm-4.col-form-label(for='inputDocId') Số Hiệu
+                                        label.col-sm-4.col-form-label(for='inputDocNum') Số Hiệu
                                         .col-sm-7
-                                            input#inputDocId.form-control(type='text' placeholder='Số hiệu văn bản...')
+                                            input#inputDocNum.form-control(name='ipDocNum' type='text' placeholder='Số hiệu văn bản...')
                                     .col-md-6
                                         label.col-sm-4.col-form-label(for='inputDocType') Loại Văn Bản
                                         .col-sm-7
-                                            input#inputDocType.form-control(type='text' placeholder='Loại văn bản...' autocomplete="off" oninput="onInputAutocomplete1(this.value)" onfocus="displayAutoSuggestionPanel1()" onblur="hideAutoSuggestionPanel1()")
+                                            input#inputDocType.form-control(name='ipDocType' type='text' placeholder='Loại văn bản...' autocomplete="off" oninput="onInputAutocomplete1(this.value)" onfocus="displayAutoSuggestionPanel1()" onblur="hideAutoSuggestionPanel1()")
 
                                 .form-group.row(style='margin-bottom: 0.5rem;')
                                     .col-md-6
                                         label.col-sm-4.col-form-label(for='inputIssuedDate') Ngày Ban Hành
                                         .col-sm-7
-                                            input#inputIssuedDate.form-control(type='date')
+                                            input#inputIssuedDate.form-control(name='ipIssuedDate' type='date')
                                     .col-md-6
                                         label.col-sm-4.col-form-label(for='inputAgencyIssued') Cơ quan ban hành
                                         .col-sm-7
-                                            input#inputAgencyIssued.form-control(type='text' placeholder='Cơ quan ban hành' autocomplete="off" oninput="onInputAutocompleteAgencyIssued(this.value)" onfocus="displayAutoSuggestionPanelAgencyIssued()" onblur="hideAutoSuggestionPanelAgencyIssued()")
+                                            input#inputAgencyIssued.form-control(name='ipAgencyIssued' type='text' placeholder='Cơ quan ban hành' autocomplete="off" oninput="onInputAutocompleteAgencyIssued(this.value)" onfocus="displayAutoSuggestionPanelAgencyIssued()" onblur="hideAutoSuggestionPanelAgencyIssued()")
 
                                 .form-group.row(style='margin-bottom: 0.5rem;')
                                     .col-md-6  
                                         label.col-sm-4.col-form-label(for='inputEffectiveDate') Ngày Hiệu Lực
                                         .col-sm-7(style='')
-                                            input#inputEffectiveDate.form-control(style='' type='date')
+                                            input#inputEffectiveDate.form-control(name='ipEffectiveDate' style='' type='date')
                                     .col-md-6
                                         label.col-sm-4.col-form-label(for='inputSignedBy') Người ký
                                         .col-sm-7
-                                            input#inputSignedBy.form-control(type='text' placeholder='Người ký' autocomplete="off" oninput="onInputAutocompleteSignedBy(this.value)" onfocus="displayAutoSuggestionPanelSignedBy()" onblur="hideAutoSuggestionPanelSignedBy()")
+                                            input#inputSignedBy.form-control(name='ipSignedBy' type='text' placeholder='Người ký' autocomplete="off" oninput="onInputAutocompleteSignedBy(this.value)" onfocus="displayAutoSuggestionPanelSignedBy()" onblur="hideAutoSuggestionPanelSignedBy()")
 
                                 .form-group.row(style='margin-bottom: 0.5rem;')
                                     .col-md-6
                                         label.col-sm-4.col-form-label(for='inputState') Tình Trạng
                                         .col-sm-7
-                                            select#inputState.form-control(name='inputEffectiveStatus')
+                                            select#inputState.form-control(name='ipEffectiveStatus')
                                                 - for (let prop in aggs)
                                                     //- .chotoan #{JSON.stringify(aggs)}
                                                     //- - let fieldName = getViFieldName(prop)
