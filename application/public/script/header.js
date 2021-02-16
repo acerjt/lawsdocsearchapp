@@ -44,14 +44,19 @@ function hideAutoSuggestionPanel() {
 function search() {
     let keyword = document.getElementById('search-input').value
     let isAdvancedSearch = document.getElementById('advanced-search').checked
-
+    console.log(isAdvancedSearch)
     if(!isAdvancedSearch) {
         if(!keyword)
             return false
         window.location.href = `vbpl?keyword=${keyword}`
-            // callAjax('GET', 'vbpl', {keyword}).then(rs => {
-        //     console.log(rs)
-        // })
+    }
+    else {
+        let formElement = document.getElementById('advanced-search-form')
+        let formData = new FormData(formElement)
+        url = new URL(window.location.origin + '/' + 'vbpl')
+        url.search = new URLSearchParams(formData).toString()
+        console.log(url)
+        window.location.href = url
     }
 }
 
@@ -189,9 +194,9 @@ function bindindSuggestionText(element, elementID){
     inputID.value = element.children[0].children[0].children[0].innerText
 }
 
-let today = new Date().toISOString().substr(0, 10);
-let inputEffectiveDate = document.getElementById('inputEffectiveDate')
-inputEffectiveDate.value = today
+// let today = new Date().toISOString().substr(0, 10);
+// let inputEffectiveDate = document.getElementById('inputEffectiveDate')
+// inputEffectiveDate.value = today
 
-let inputIssuedDate = document.getElementById('inputIssuedDate')
-inputIssuedDate.value = today
+// let inputIssuedDate = document.getElementById('inputIssuedDate')
+// inputIssuedDate.value = today
