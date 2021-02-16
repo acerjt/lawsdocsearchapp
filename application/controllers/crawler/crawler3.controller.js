@@ -11,7 +11,7 @@ const { laws } = require("../../common");
 const { CrawlerLogger } = require("../../util/logger");
 
 const baseURL = "https://vanbanphapluat.co";
-
+let isDownLoadFile = true
 const fetchHtml = async (url) => {
   try {
     const { data } = await axios.get(url);
@@ -26,18 +26,32 @@ const fetchHtml = async (url) => {
 const crawLawsPerPage = async (lawURL) => {
   try {
     const html = await fetchHtml(lawURL);
+    const $ = await cheerio.load(html);
 
-    const selector = await cheerio.load(html);
-
-    const searchResults = selector("body").find(
+    const searchResults = await $("body").find(
       ".row .items-push > .col-md-12 > .row"
     );
+    // console.log(searchResults)
     return Promise.all(
-    searchResults.map(async (idx, el) => {
-      const elementSelector = selector(el);
-      return extractLawsData(elementSelector);
-    }).get()
-    );
+        searchResults.map(async (idx, el) => {
+            // console.log(el)
+            const elementSelector = $(el);
+            return extractLawsData(elementSelector);
+        }).
+        get()
+    )
+    // console.log(searchResults)
+    // Promise.all(() => { 
+    // return new Promise((resolve, reject) => {
+    //     for(let i = 0; i < 20; i++) {
+    //         const elementSelector = $(searchResults[i]);
+    //         // console.log(elementSelector)
+    //         extractLawsData(elementSelector).then(rs => {
+    //             return resolve()
+    //         });
+    //     }
+    // })   
+    // })
   } catch (err) {
     console.log(err);
   }
@@ -81,20 +95,23 @@ const extractLawsData = async (selector) => {
     const contentHtml = html.ToanVan
     const diagram = html.LuocDo
     const inavailableDate =  ''
-    if(pdfLawsLink)
-        fs.mkdir(path.resolve(__dirname, '../../public/' + pdfLawsLink.slice(0,pdfLawsLink.lastIndexOf('/'))), { recursive: true }, async (err) => {
-            if (err) throw err;
-            await downloadFile(baseURL + pdfLawsLink, path.resolve(__dirname, '../../public' + pdfLawsLink)).catch(err => {
-                CrawlerLogger.error(`Download file error: ${pdfLawsLink} ${err}`)
-            })
-        });
-    if(docLawsLink)
-        fs.mkdir(path.resolve(__dirname, '../../public/' + docLawsLink.slice(0,docLawsLink.lastIndexOf('/'))), { recursive: true }, async (err) => {
-            if (err) throw err;
-            await downloadFile(baseURL + docLawsLink, path.resolve(__dirname, '../../public/' + docLawsLink)).catch(err => {
-                CrawlerLogger.error(`Download file error: ${docLawsLink} ${err}`)
-            })
-        });
+    // if(isDownLoadFile) {
+
+        // if(pdfLawsLink)
+        // await fs.mkdir(path.resolve(__dirname, '../../public/' + pdfLawsLink.slice(0,pdfLawsLink.lastIndexOf('/'))), { recursive: true }, async (err) => {
+        //     if (err) throw err;
+        //     await downloadFile(baseURL + pdfLawsLink, path.resolve(__dirname, '../../public' + pdfLawsLink)).catch(err => {
+        //         CrawlerLogger.error(`Download file error: ${pdfLawsLink} ${err}`)
+        //     })
+        // });
+        // if(docLawsLink)
+        // await fs.mkdir(path.resolve(__dirname, '../../public/' + docLawsLink.slice(0,docLawsLink.lastIndexOf('/'))), { recursive: true }, async (err) => {
+        //     if (err) throw err;
+        //     await downloadFile(baseURL + docLawsLink, path.resolve(__dirname, '../../public/' + docLawsLink)).catch(err => {
+        //         CrawlerLogger.error(`Download file error: ${docLawsLink} ${err}`)
+        //     })
+        // });
+    // }
     const law = {
         tie_breaker_id: await hexIdGeneration(),
         href: href,
@@ -236,7 +253,7 @@ const hexIdGeneration = () => {
 
 module.exports.crawler = async () => {
   try {
-    const totalPagesVBPL = 1; // 11372
+    const totalPagesVBPL = 1; // 11391
     for (let page = 1; page <= totalPagesVBPL; page++) {
       const lawURL = `${baseURL}/csdl/van-ban-phap-luat?p=${page}`;
       let startCrawlerOnePage = process.hrtime();
@@ -249,6 +266,8 @@ module.exports.crawler = async () => {
       CrawlerLogger.info(
         "crawler one page time: " + endCrawlerOnePage[1] / 1000000 + "ms"
       );
+    //   if(page === 100)
+    //     isDownLoadFile = !isDownLoadFile
     }
     return Promise.resolve();
   } catch (error) {

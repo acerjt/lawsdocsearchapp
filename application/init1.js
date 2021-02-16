@@ -308,22 +308,22 @@ const createLawsIndex = async () => {
           },
           "issuedDate": {
             "type": "date",
-            "format": "dd/MM/yyyy||epoch_millis",
-            "ignore_malformed": true
+            "format": "dd/MM/yyyy||epoch_millis||date_time||date_hour_minute_second||date_time_no_millis",
+            // "ignore_malformed": true
           },
           "effectiveDate": {
             "type": "date",
-            "format": "dd/MM/yyyy||epoch_millis",
-            "ignore_malformed": true
+            "format": "dd/MM/yyyy||epoch_millis||date_time||date_hour_minute_second||date_time_no_millis",
+            // "ignore_malformed": true
           },
           "inavailableDate": {
             "type": "date",
-            "format": "dd/MM/yyyy||epoch_millis",
+            "format": "dd/MM/yyyy||epoch_millis||date_time||date_hour_minute_second||date_time_no_millis",
             "ignore_malformed": true
           },
           "dateOfAnnouncement": {
             "type": "date",
-            "format": "dd/MM/yyyy||epoch_millis",
+            "format": "dd/MM/yyyy||epoch_millis||date_time||date_hour_minute_second||date_time_no_millis",
             "ignore_malformed": true
           },
           "numOfAnnouncement": {
@@ -523,10 +523,10 @@ const run = async () => {
   await lawsCalculateViewScript()
   await createLawsIndex()
   let startMeasureAllStuff = process.hrtime();
-  let startCrawlerAllDoc = process.hrtime();
-  await crawler.crawler()
-  let endCrawlerAllDoc = process.hrtime(startCrawlerAllDoc);
-  CrawlerLogger.info('total crawler time: '  + endCrawlerAllDoc[1] / 1000000 + 'ms')
+  // let startCrawlerAllDoc = process.hrtime();
+  // await crawler.crawler()
+  // let endCrawlerAllDoc = process.hrtime(startCrawlerAllDoc);
+  // CrawlerLogger.info('total crawler time: '  + endCrawlerAllDoc[1] / 1000000 + 'ms')
   let startBulkAllDoc = process.hrtime();
   await bulkIndex(laws.lawsIndex, laws.filePathStoreLawsData, pipeline.laws.initLawsData) 
   let endBulkAllDoc = process.hrtime(startBulkAllDoc);
