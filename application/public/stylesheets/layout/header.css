@@ -852,8 +852,8 @@ input.style4[type="checkbox"] {
 
 #autocomplete-suggestions .autocomplete-suggestion .search-item .info h2 i {
   font-style: italic;
-  color: #aaa;
-  font-size: 24px;
+  color: #038a40;
+  font-size: 17px;
 }
 
 /* Style the indicator (dot/circle) */

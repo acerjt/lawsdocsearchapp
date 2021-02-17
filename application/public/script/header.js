@@ -9,7 +9,7 @@ function onInputAutocomplete(text) {
                                 <div class="info">
                                     <h2>
                                         <a style="font-size: 18px" href="${element._source.href}" target="_blank" >${element._source.name}</a>
-                                        <i style="font-size: 18px">${element._source.effectiveStatus}</i>
+                                        <i class="iEffectiveStatus" style="color:${element._source.effectiveStatus === 'Hết hiệu lực' ? 'red !important' : element._source.effectiveStatus === 'Không xác định'|| element._source.effectiveStatus === 'Chưa có hiệu lực' ? '#aaa !important' : '#038a40'}">${element._source.effectiveStatus}</i>      
                                     </h2>
                                     <div style="font-size: 17px">
                                         ${element._source.desc}
@@ -18,9 +18,11 @@ function onInputAutocomplete(text) {
                             </div>
                         </div> `
             });
+            
             let autoSuggestionElement = document.getElementById('autocomplete-suggestions')
             autoSuggestionElement.innerHTML = text
-        }
+           
+        }   
     })
 }
 
@@ -32,6 +34,8 @@ function displayAutoSuggestionPanel() {
     autoSuggestionElement.style.width = searchInputBoundingData.width 
     autoSuggestionElement.style.top = searchInputBoundingData.top + searchInputBoundingData.height
     autoSuggestionElement.style.display = 'block'
+
+    
 }
 
 function hideAutoSuggestionPanel() {
