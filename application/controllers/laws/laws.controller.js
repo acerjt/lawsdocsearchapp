@@ -594,11 +594,11 @@ const getLawsInParticularPage = async (page, filter, keyword, searchAdvanced) =>
             "desc.2gram",
             "desc.3gram_vi",
             "desc.3gram",
-            "contentText",
-            "contentText.2gram_vi",
-            "contentText.2gram",
-            "contentText.3gram_vi",
-            "contentText.3gram",
+            // "contentText",
+            // "contentText.2gram_vi",
+            // "contentText.2gram",
+            // "contentText.3gram_vi",
+            // "contentText.3gram",
             "agencyIssued", 
             "docNum", 
             "docType", 
@@ -1826,7 +1826,7 @@ module.exports.getLaws = async (req, res) => {
         console.timeEnd('total time')
     } catch (error) {
         console.log(error)
-        res.render(pugFiles.error404, { title: titles.error404, aggs: lawsData.aggs, getViFieldName})
+        res.render(pugFiles.error404, { title: titles.error404, aggs: [], getViFieldName})
     }
 }
 
