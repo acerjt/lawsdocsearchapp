@@ -180,8 +180,8 @@ block content
                                                                 .col.iseffect #{law['_source'].effectiveStatus}
                                                             .w-100
                                                             - if (law['_source'].effectiveStatus.indexOf("Hết hiệu lực") > -1)
-                                                                .col(style='max-width:35%') Ngày hết hiệu lực:
-                                                                .col.iseffect(style='color:red') #{law['_source'].inavailableDate}
+                                                                .col(style='max-width:35%') Hết HL:
+                                                                .col.iseffect(style='color:red') #{moment(law['_source'].inavailableDate).format('DD/MM/YYYY')}
                                                                 .w-100
                                                             .col(style='max-width:35%') Cập nhật:
                                                             .col.timeupdate #{moment(law['_source'].updatedAt.replace('Z','')).fromNow()}                                                              
@@ -192,7 +192,7 @@ block content
                                         a.paging-item(onclick=`updateQueryStringParameter('page','${currentPage - 1 < 1 ?  1 : currentPage - 1}')` style='color: #4c9fbf') <
                                     - for (let page = paginateDisplayConfiguration[0].startingPage; page < paginateDisplayConfiguration[0].endingPage ; page += paginateDisplayConfiguration[0].pageIncrementJumping)
                                         if(page === currentPage)
-                                            a.paging-item(onclick=`updateQueryStringParameter('page',${page})` style='color: #4c9fbf') #{page}
+                                            a.paging-item(onclick=`updateQueryStringParameter('page',${page})` style='color: #00395f; font-weight: bold') #{page}
                                         else 
                                             a.paging-item(onclick=`updateQueryStringParameter('page',${page})` style='color: #4c9fbf') #{page}
                                     - if (currentPage !== paginateDisplayConfiguration[0].endingPage - 1)

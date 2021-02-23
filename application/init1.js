@@ -13,17 +13,43 @@ const createLawsIndex = async () => {
     body: {
       "settings": {
         "index.analyze.max_token_count": 20000,
+        // "refresh_interval" : -1,
+        // "number_of_replicas": 0,
+        // "number_of_shards" : 2,
         "analysis": {
           "analyzer": {
-            // "custom_vi_analyzer": {
-            //   "type": "custom",
-            //   "tokenizer": "vi_tokenizer",
-            //   "filter": [
-            //     "lowercase",
-            //     "stop",
-            //     "token_limit"
-            //   ]
-            // },
+            "custom_vi_analyzer_folding": {
+              "type": "custom",
+              "tokenizer": "vi_tokenizer",
+              "filter": [
+                "asciifolding",
+                "vietnamese_stop_word",
+                "lowercase"
+              ]
+            },
+            "custom_vi_analyzer_without_folding": {
+              "type": "custom",
+              "tokenizer": "vi_tokenizer",
+              "filter": [
+                "vietnamese_stop_word",
+                "lowercase"
+              ]
+            },
+            "custom_vi_analyzer_folding_without_stopword": {
+              "type": "custom",
+              "tokenizer": "vi_tokenizer",
+              "filter": [
+                "asciifolding",
+                "lowercase"
+              ]
+            },
+            "custom_vi_analyzer_without_folding_without_stopword": {
+              "type": "custom",
+              "tokenizer": "vi_tokenizer",
+              "filter": [
+                "lowercase"
+              ]
+            },
             "keyword_analyzer": {
               "filter": [
                 "lowercase",
@@ -258,7 +284,39 @@ const createLawsIndex = async () => {
             "fields": {
               "keyword": {
                 "type": "keyword"
-              }
+              },
+              "vi_analyzer_folding_ascii" : {
+                "type": "text",
+                "analyzer": "custom_vi_analyzer_folding"
+              },
+              "vi_analyzer_without_folding_ascii" : {
+                "type": "text",
+                "analyzer": "custom_vi_analyzer_without_folding"
+              },
+              "vi_analyzer_folding_ascii_without_stopword" : {
+                "type": "text",
+                "analyzer": "custom_vi_analyzer_folding_without_stopword"
+              },
+              "vi_analyzer_without_folding_ascii_without_stopword" : {
+                "type": "text",
+                "analyzer": "custom_vi_analyzer_without_folding_without_stopword"
+              },
+              // "2gram_vi": {
+              //   "type": "text",
+              //   "analyzer": "2gram_analyzer_vi"
+              // },
+              // "2gram": {
+              //   "type": "text",
+              //   "analyzer": "2gram_analyzer"
+              // },
+              // "3gram_vi": {
+              //   "type": "text",
+              //   "analyzer": "3gram_analyzer_vi"
+              // },
+              // "3gram": {
+              //   "type": "text",
+              //   "analyzer": "3gram_analyzer"
+              // },
             }
           },
           "desc": {
@@ -295,26 +353,176 @@ const createLawsIndex = async () => {
               "autocomplete_vi": {
                 "type": "text",
                 "analyzer": "autocomplete_analyzer_vi"
-              }
+              },
+              // "vi_analyzer_folding_ascii" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_folding"
+              // },
+              // "vi_analyzer_without_folding_ascii" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_without_folding"
+              // },
+              // "vi_analyzer_folding_ascii_without_stopword" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_folding_without_stopword"
+              // },
+              // "vi_analyzer_without_folding_ascii_without_stopword" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_without_folding_without_stopword"
+              // }
             },
             "analyzer": "standard"
           },
           "docType": {
-            "type": "keyword"
+            "type": "keyword",
+            "fields": {
+              // "vi_analyzer_folding_ascii" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_folding"
+              // },
+              // "vi_analyzer_without_folding_ascii" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_without_folding"
+              // },
+              // "vi_analyzer_folding_ascii_without_stopword" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_folding_without_stopword"
+              // },
+              // "vi_analyzer_without_folding_ascii_without_stopword" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_without_folding_without_stopword"
+              // }
+              "2gram_vi": {
+                "type": "text",
+                "analyzer": "2gram_analyzer_vi"
+              },
+              "2gram": {
+                "type": "text",
+                "analyzer": "2gram_analyzer"
+              },
+              "3gram_vi": {
+                "type": "text",
+                "analyzer": "3gram_analyzer_vi"
+              },
+              "3gram": {
+                "type": "text",
+                "analyzer": "3gram_analyzer"
+              },
+            }
           },
           "docNum": {
             "type": "text",
             "fields": {
               "keyword": {
                 "type": "keyword"
-              }
+              },
+              // "vi_analyzer_folding_ascii" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_folding"
+              // },
+              // "vi_analyzer_without_folding_ascii" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_without_folding"
+              // },
+              // "vi_analyzer_folding_ascii_without_stopword" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_folding_without_stopword"
+              // },
+              // "vi_analyzer_without_folding_ascii_without_stopword" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_without_folding_without_stopword"
+              // }
+              "2gram_vi": {
+                "type": "text",
+                "analyzer": "2gram_analyzer_vi"
+              },
+              "2gram": {
+                "type": "text",
+                "analyzer": "2gram_analyzer"
+              },
+              "3gram_vi": {
+                "type": "text",
+                "analyzer": "3gram_analyzer_vi"
+              },
+              "3gram": {
+                "type": "text",
+                "analyzer": "3gram_analyzer"
+              },
             }
           },
           "agencyIssued": {
-            "type": "keyword"
+            "type": "keyword",
+            "fields": {
+              // "vi_analyzer_folding_ascii" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_folding"
+              // },
+              // "vi_analyzer_without_folding_ascii" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_without_folding"
+              // },
+              // "vi_analyzer_folding_ascii_without_stopword" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_folding_without_stopword"
+              // },
+              // "vi_analyzer_without_folding_ascii_without_stopword" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_without_folding_without_stopword"
+              // }
+              "2gram_vi": {
+                "type": "text",
+                "analyzer": "2gram_analyzer_vi"
+              },
+              "2gram": {
+                "type": "text",
+                "analyzer": "2gram_analyzer"
+              },
+              "3gram_vi": {
+                "type": "text",
+                "analyzer": "3gram_analyzer_vi"
+              },
+              "3gram": {
+                "type": "text",
+                "analyzer": "3gram_analyzer"
+              },
+            }
           },
           "signedBy": {
-            "type": "keyword"
+            "type": "keyword",
+            "fields": {
+              // "vi_analyzer_folding_ascii" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_folding"
+              // },
+              // "vi_analyzer_without_folding_ascii" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_without_folding"
+              // },
+              // "vi_analyzer_folding_ascii_without_stopword" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_folding_without_stopword"
+              // },
+              // "vi_analyzer_without_folding_ascii_without_stopword" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_without_folding_without_stopword"
+              // }
+              "2gram_vi": {
+                "type": "text",
+                "analyzer": "2gram_analyzer_vi"
+              },
+              "2gram": {
+                "type": "text",
+                "analyzer": "2gram_analyzer"
+              },
+              "3gram_vi": {
+                "type": "text",
+                "analyzer": "3gram_analyzer_vi"
+              },
+              "3gram": {
+                "type": "text",
+                "analyzer": "3gram_analyzer"
+              },
+            }
           },
           "issuedDate": {
             "type": "date",
@@ -347,35 +555,116 @@ const createLawsIndex = async () => {
             "ignore_malformed": true
           },
           "numOfAnnouncement": {
-            "type": "keyword"
+            "type": "keyword",
+            "fields": {
+              // "vi_analyzer_folding_ascii" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_folding"
+              // },
+              // "vi_analyzer_without_folding_ascii" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_without_folding"
+              // },
+              // "vi_analyzer_folding_ascii_without_stopword" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_folding_without_stopword"
+              // },
+              // "vi_analyzer_without_folding_ascii_without_stopword" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_without_folding_without_stopword"
+              // }
+              "2gram_vi": {
+                "type": "text",
+                "analyzer": "2gram_analyzer_vi"
+              },
+              "2gram": {
+                "type": "text",
+                "analyzer": "2gram_analyzer"
+              },
+              "3gram_vi": {
+                "type": "text",
+                "analyzer": "3gram_analyzer_vi"
+              },
+              "3gram": {
+                "type": "text",
+                "analyzer": "3gram_analyzer"
+              },
+            }
           },
           "field": {
-            "type": "keyword"
+            "type": "keyword",
+            "fields": {
+              // "vi_analyzer_folding_ascii" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_folding"
+              // },
+              // "vi_analyzer_without_folding_ascii" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_without_folding"
+              // },
+              // "vi_analyzer_folding_ascii_without_stopword" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_folding_without_stopword"
+              // },
+              // "vi_analyzer_without_folding_ascii_without_stopword" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_without_folding_without_stopword"
+              // }
+              "2gram_vi": {
+                "type": "text",
+                "analyzer": "2gram_analyzer_vi"
+              },
+              "2gram": {
+                "type": "text",
+                "analyzer": "2gram_analyzer"
+              },
+              "3gram_vi": {
+                "type": "text",
+                "analyzer": "3gram_analyzer_vi"
+              },
+              "3gram": {
+                "type": "text",
+                "analyzer": "3gram_analyzer"
+              },
+            }
           },
           "effectiveStatus": {
-            "type": "keyword"
+            "type": "keyword",
+            "fields": {
+              // "vi_analyzer_folding_ascii" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_folding"
+              // },
+              // "vi_analyzer_without_folding_ascii" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_without_folding"
+              // },
+              // "vi_analyzer_folding_ascii_without_stopword" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_folding_without_stopword"
+              // },
+              // "vi_analyzer_without_folding_ascii_without_stopword" : {
+              //   "type": "text",
+              //   "analyzer": "custom_vi_analyzer_without_folding_without_stopword"
+              // }
+              "2gram_vi": {
+                "type": "text",
+                "analyzer": "2gram_analyzer_vi"
+              },
+              "2gram": {
+                "type": "text",
+                "analyzer": "2gram_analyzer"
+              },
+              "3gram_vi": {
+                "type": "text",
+                "analyzer": "3gram_analyzer_vi"
+              },
+              "3gram": {
+                "type": "text",
+                "analyzer": "3gram_analyzer"
+              },
+            }
           },
-        //   "contentText": {
-        //     "type": "text",
-        //     "fields": {
-        //       "2gram_vi": {
-        //         "type": "text",
-        //         "analyzer": "2gram_analyzer_vi"
-        //       },
-        //       "2gram": {
-        //         "type": "text",
-        //         "analyzer": "2gram_analyzer"
-        //       },
-        //       "3gram_vi": {
-        //         "type": "text",
-        //         "analyzer": "3gram_analyzer_vi"
-        //       },
-        //       "3gram": {
-        //         "type": "text",
-        //         "analyzer": "3gram_analyzer"
-        //       }
-        //     }
-        //   },
           "contentHtml": {
             "type": "text",
             "fields": {
@@ -397,7 +686,7 @@ const createLawsIndex = async () => {
                 }
               },
             // "ignore_above": 32000,
-            "index": false
+            // "index": false
           },
           "tie_breaker_id" : {
             "type": "keyword"
@@ -424,7 +713,7 @@ const createLawsIndex = async () => {
           "stars" : {
             "type" : "long"
           },
-          "view" : {
+          "views" : {
             "type" : "long"
           },
           "wilson-score" : {
@@ -434,13 +723,18 @@ const createLawsIndex = async () => {
       }
     }
   }, { ignore: [400] })
-//   console.log(body)
+  // console.log(body)
   return body
 }
 
 const bulkIndex = async (index, source, pipeline) => {
   const result = await client.helpers.bulk({
     datasource: createReadStream(source).pipe(split(JSON.parse)),
+    // flushInterval: 3000,
+    // flushBytes: 1000000,
+    // wait: 5000,
+    // concurrency: 5,
+    // retries: 3,
     onDocument (doc) {
       return {
         index: { _id: doc.tie_breaker_id, _index : index, pipeline : pipeline }
@@ -543,10 +837,10 @@ const run = async () => {
   await lawsCalculateViewScript()
   await createLawsIndex()
   let startMeasureAllStuff = process.hrtime();
-  // let startCrawlerAllDoc = process.hrtime();
-  // await crawler.crawler()
-  // let endCrawlerAllDoc = process.hrtime(startCrawlerAllDoc);
-  // CrawlerLogger.info('total crawler time: '  + endCrawlerAllDoc[1] / 1000000 + 'ms')
+  let startCrawlerAllDoc = process.hrtime();
+  await crawler.crawler()
+  let endCrawlerAllDoc = process.hrtime(startCrawlerAllDoc);
+  CrawlerLogger.info('total crawler time: '  + endCrawlerAllDoc[1] / 1000000 + 'ms')
   let startBulkAllDoc = process.hrtime();
   await bulkIndex(laws.lawsIndex, laws.filePathStoreLawsData, pipeline.laws.initLawsData) 
   let endBulkAllDoc = process.hrtime(startBulkAllDoc);

@@ -42,8 +42,12 @@ block content
                 #nav-tab.nav.nav-tabs(role="tablist")
                     a#nav-content-tab.nav-item.nav-link.active(href="#nav-content" data-toggle="tab" role="tab" aria-controls="nav-content" aria-selected="true") 
                         i.fas.fa-book-open    Nội dung
-                    a#nav-file-tab.nav-item.nav-link(href="#nav-file" data-toggle="tab" role="tab" aria-controls="nav-file" aria-selected="false") 
-                        i.fas.fa-file-pdf Văn bản gốc
+                    - if(lawDocument._source.pdfLawsLink)
+                        a#nav-file-tab.nav-item.nav-link(href="#nav-file" data-toggle="tab" role="tab" aria-controls="nav-file" aria-selected="false") 
+                            i.fas.fa-file-pdf Văn bản gốc
+                    - if(lawDocument._source.diagram && Object.keys(lawDocument._source.diagram).length !== 0)
+                        a#nav-diagram-tab.nav-item.nav-link(href="#nav-diagram" data-toggle="tab" role="tab" aria-controls="nav-diagram" aria-selected="false") 
+                            i.fas.fa-project-diagram    Lược đồ 
                 #nav-tabContent.tab-content(style='margin-bottom: 25px;')
                         #nav-content.tab-pane.fade.show.active(role="tabpanel" aria-labelledby="nav-content-tab")
                             .block-content
@@ -212,7 +216,7 @@ block content
                                                 tr
                                                     td Tình trạng hiệu lực
                                                     td
-                                                        a(href=`vbpl?tt=${lawDocument._source.effectiveStatus}`) #{lawDocument._source.effectiveStatus} #{lawDocument._source.inavailableDate ? lawDocument._source.inavailableDate : ''} 
+                                                        a(href=`vbpl?tt=${lawDocument._source.effectiveStatus}`) #{lawDocument._source.effectiveStatus} #{lawDocument._source.inavailableDate ? moment(lawDocument['_source'].inavailableDate).format('DD/MM/YYYY') : ''} 
                                                 tr
                                                     td Cập nhật
                                                     td #{moment(lawDocument._source.updatedAt).fromNow()}
@@ -257,6 +261,28 @@ block content
                                                                             a(href=`${lawDocument._source.docLawsLink}`) File văn bản word
                                                                                 small.font-s13
                         #nav-file.tab-pane.fade(role="tabpanel" aria-labelledby="nav-file-tab")
-                            //- iframe(src=`${lawDocument._source.pdfLawsLink}` frameborder="0" width="100%" height="1000px")
                             object(width="100%" height="1000px" type="application/pdf" data=`${lawDocument._source.pdfLawsLink}?#zoom=85&scrollbar=0&toolbar=0&navpanes=0`)
+                            //- iframe(src=`${lawDocument._source.pdfLawsLink}` frameborder="0" width="100%" height="1000px")
+                        #nav-diagram.tab-pane.fade(role="tabpanel" aria-labelledby="nav-diagram-tab")
+                            - let numOfCols = 3
+                            - let rowCount = 3
+                            - let boootstrapColWidth = 12 / numOfCols
+                            - let objectLength = Object.keys(lawDocument._source.diagram).length
+                            - let diagramArray = Object.keys(lawDocument._source.diagram).map(key => ({key: [key], value: lawDocument._source.diagram[key]}));
+                            - for(let i = 0; i < 5; i++)
+                                .row
+                                    each a, b in diagramArray.slice(i * 3, i * 3 + 3)
+                                        div(class=`col-md-${boootstrapColWidth}`)
+                                            .card
+                                                - let title = getLawsNameVi(a.key)
+                                                .card-header #{title}
+                                                .card-body(style="height: 200px; overflow-y: scroll;")
+                                                    each c, d in a.value
+                                                        div
+                                                            a(href=`${c.UID}`) #{c.Title}
+                            //- - for (const [index, [key, value]] of Object.entries(Object.entries(lawDocument._source.diagram)))
+                            //-     - if(rowCount % numOfCols == 0)
+                            //-         .row
+                            //-             - each _, x in lawDocument._source.diagram[key]
+                            //-             div(class=`cold-md-3`) #{key}
     script(src="script/detailLaw.js")

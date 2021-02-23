@@ -94,24 +94,24 @@ const extractLawsData = async (selector) => {
     const docLawsSize = html.DOCSize ? html.DOCSize : 0
     const contentHtml = html.ToanVan
     const diagram = html.LuocDo
-    const inavailableDate =  ''
-    // if(isDownLoadFile) {
+    const inavailableDate =  html.NgayHetHieuLuc ? html.NgayHetHieuLuc : ''
+    if(isDownLoadFile) {
 
-        // if(pdfLawsLink)
-        // await fs.mkdir(path.resolve(__dirname, '../../public/' + pdfLawsLink.slice(0,pdfLawsLink.lastIndexOf('/'))), { recursive: true }, async (err) => {
-        //     if (err) throw err;
-        //     await downloadFile(baseURL + pdfLawsLink, path.resolve(__dirname, '../../public' + pdfLawsLink)).catch(err => {
-        //         CrawlerLogger.error(`Download file error: ${pdfLawsLink} ${err}`)
-        //     })
-        // });
-        // if(docLawsLink)
-        // await fs.mkdir(path.resolve(__dirname, '../../public/' + docLawsLink.slice(0,docLawsLink.lastIndexOf('/'))), { recursive: true }, async (err) => {
-        //     if (err) throw err;
-        //     await downloadFile(baseURL + docLawsLink, path.resolve(__dirname, '../../public/' + docLawsLink)).catch(err => {
-        //         CrawlerLogger.error(`Download file error: ${docLawsLink} ${err}`)
-        //     })
-        // });
-    // }
+        if(pdfLawsLink)
+        await fs.mkdir(path.resolve(__dirname, '../../public/' + pdfLawsLink.slice(0,pdfLawsLink.lastIndexOf('/'))), { recursive: true }, async (err) => {
+            if (err) throw err;
+            await downloadFile(baseURL + pdfLawsLink, path.resolve(__dirname, '../../public' + pdfLawsLink)).catch(err => {
+                CrawlerLogger.error(`Download file error: ${pdfLawsLink} ${err}`)
+            })
+        });
+        if(docLawsLink)
+        await fs.mkdir(path.resolve(__dirname, '../../public/' + docLawsLink.slice(0,docLawsLink.lastIndexOf('/'))), { recursive: true }, async (err) => {
+            if (err) throw err;
+            await downloadFile(baseURL + docLawsLink, path.resolve(__dirname, '../../public/' + docLawsLink)).catch(err => {
+                CrawlerLogger.error(`Download file error: ${docLawsLink} ${err}`)
+            })
+        });
+    }
     const law = {
         tie_breaker_id: await hexIdGeneration(),
         href: href,
@@ -253,7 +253,7 @@ const hexIdGeneration = () => {
 
 module.exports.crawler = async () => {
   try {
-    const totalPagesVBPL = 1; // 11391
+    const totalPagesVBPL = 11393; // 11391
     for (let page = 1; page <= totalPagesVBPL; page++) {
       const lawURL = `${baseURL}/csdl/van-ban-phap-luat?p=${page}`;
       let startCrawlerOnePage = process.hrtime();

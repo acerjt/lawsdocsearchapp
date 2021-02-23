@@ -58,8 +58,11 @@ function search() {
         let formElement = document.getElementById('advanced-search-form')
         let formData = new FormData(formElement)
         url = new URL(window.location.origin + '/' + 'vbpl')
-        url.search = new URLSearchParams(formData).toString()
-        console.log(url)
+        let params = new URLSearchParams(formData)
+        if(keyword)
+            params.append('keyword', keyword);
+        let queryString = params.toString()
+        url.search = queryString
         window.location.href = url
     }
 }

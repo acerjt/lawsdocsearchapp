@@ -40,7 +40,7 @@ div
             .input-link
                 .parse_button
                     div
-                        input.parse#search-input(type='text' placeholder='Gõ từ khóa cần tìm kiếm...' autocomplete="off" oninput="onInputAutocomplete(this.value)" onfocus="displayAutoSuggestionPanel()" onblur="hideAutoSuggestionPanel()")
+                        input.parse#search-input(type='text' placeholder='Gõ từ khóa cần tìm kiếm...' autocomplete="off" oninput="onInputAutocomplete(this.value)" onfocus="displayAutoSuggestionPanel()" onblur="hideAutoSuggestionPanel()" value=`${keyword ? keyword : ''}`)
                     div
                         button.btn_create(role='button' onclick="search()")
                             | Tìm Kiếm

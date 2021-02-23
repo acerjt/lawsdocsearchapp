@@ -2,13 +2,14 @@ const { Client, ConnectionPool, events, errors } = require('@elastic/elasticsear
 const {ClientLogger} = require('../util/logger')
 // const client = new Client({ node: 'http://localhost:9200' , auth : { username: 'elastic', password: 'DT2403'}})
 // class MyConnectionPool extends ConnectionPool {
+//     size = 20
 //     markAlive(connection) {
 //         super.markAlive(connection)
 //     }
 // }
 
-// const client = new Client({ node: 'http://localhost:9200', ConnectionPool: MyConnectionPool})
-const client = new Client({ node: 'http://localhost:9200' })
+// const client = new Client({ node: 'http://localhost:9200', ConnectionPool: MyConnectionPool, requestTimeout: 600000})
+const client = new Client({ node: 'http://localhost:9200', requestTimeout: 3600000 })
 
 client.on('response', (err, reseult) => {
     if(err)

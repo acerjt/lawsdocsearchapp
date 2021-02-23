@@ -3,585 +3,6 @@ const {client} = require('../../connection/elastic-connect')
 const {titles, pugFiles, laws, variables, lawsPaging, scripts, func} = require('../../common')
 let lastPage = 0 
 
-const getLawsInParticularPage2 = async (page, filter, keyword) => {
-    try {
-        page = page && page > 1 ? Number(page) : 1
-        console.time('paging time')
-        const {from, size, isOverTenThoudsandDocs, paginateDisplayConfiguration } =  await pagination(page)
-        console.timeEnd('paging time')
-
-        let aggsBody = {
-            "query": {
-                "bool": {
-                    "filter": []
-                }
-            },
-            "post_filter": {
-                "bool": {
-                    "filter": []
-                }
-            },
-            // "aggs": {
-            //     "docType": {
-            //         "aggs": {
-            //             "Loại văn bản": {
-            //                 "terms": {
-            //                     "field": "docType",
-            //                     "size": 10000
-            //                 }
-            //             }
-            //         },
-            //         "filter": {
-            //             "bool": {
-            //                 "must": []
-            //             }
-            //         }
-            //     },
-            //     "field": {
-            //         "aggs": {
-            //             "Lĩnh vực" : {
-            //                 "terms": {
-            //                     "field": "field",
-            //                     "size": 10000
-            //                 }
-            //             }
-            //         },
-            //         "filter": {
-            //             "bool": {
-            //                 "must": []
-            //             }
-            //         }
-            //     },
-            //     "signedBy": {
-            //         "aggs": {
-            //             "Người ký" : {
-            //                 "terms": {
-            //                     "field": "signedBy",
-            //                     "size": 10000
-            //                 }
-            //             }
-            //         },
-            //         "filter": {
-            //             "bool": {
-            //                 "must": []
-            //             }
-            //         }
-            //     },
-            //     "effectiveStatus": {
-            //         "aggs": {
-            //             "Tình trạng": {
-            //                 "terms": {
-            //                     "field": "effectiveStatus",
-            //                     "size": 10000
-            //                 }
-            //             }
-            //         },
-            //         "filter": {
-            //             "bool": {
-            //                 "must": []
-            //             }
-            //         }
-            //     },
-            //     "agencyIssued": {
-            //         "aggs": {
-            //             "Cơ quan ban hành": {
-            //                 "terms": {
-            //                     "field": "agencyIssued",
-            //                     "size": 10000
-            //                 }
-            //             }
-            //         },
-            //         "filter": {
-            //             "bool": {
-            //                 "must": []
-            //             }
-            //         }
-            //     }
-            // },
-            "sort": {
-                "issuedDate": {
-                    "order": "desc"
-                },
-                "tie_breaker_id": {
-                    "order" : "desc"
-                }
-            },
-            "highlight": {
-                "pre_tags" : ["<mark style='background-color:yellow'>"],
-                "post_tags" : ["</mark>"],
-                "fields": {
-                    "desc": {}
-                    // "agencyIssued": {},
-                    // "contentText": {},
-                    // "docNum": {},
-                    // "docType": {},
-                    // "field": {},
-                    // "name": {},
-                    // "signedBy": {}
-                }
-            }
-        }
-        if(keyword) {
-            delete(aggsBody.sort)
-            aggsBody.query.bool.must = {}
-            aggsBody.query.bool.must.multi_match = {}
-            aggsBody.query.bool.must.multi_match.query = keyword
-            aggsBody.query.bool.must.multi_match.fields = [
-                "desc",
-                "desc.2gram_vi",
-                "desc.2gram",
-                "desc.3gram_vi",
-                "desc.3gram",
-                "contentText",
-                "contentText.2gram_vi",
-                "contentText.2gram",
-                "contentText.3gram_vi",
-                "contentText.3gram",
-                "agencyIssued", 
-				"docNum", 
-				"docType", 
-				"field", 
-				"name",
-				"signedBy"
-            ]
-
-        }
-        for (let filterProp in filter) {
-            let filterSearchTerm = {
-                "term": {}   
-            }
-            filterSearchTerm.term[filterProp] = filter[filterProp]
-            aggsBody.query.bool.filter.push(filterSearchTerm)
-            aggsBody.post_filter.bool.filter.push(filterSearchTerm)
-
-            // for (let aggsBodyProp in aggsBody.aggs) {
-            //     if(filterProp !== aggsBodyProp) {
-            //         let filterTerm = {
-            //             "term": {}   
-            //         }
-            //         filterTerm.term[filterProp] = filter[filterProp]
-            //         aggsBody.aggs[aggsBodyProp].filter.bool.must.push(filterTerm)
-            //     }
-            // }
-        }
-        console.log(JSON.stringify(aggsBody))
-        if(!isOverTenThoudsandDocs) {
-            console.time('search time')
-            let {body} = await client.search({
-                index : laws.lawsIndex,
-                from: from,
-                size: size,
-                // filterPath: 'took,hits.hits',
-                // _source: [
-                //     "name",
-                //     "desc",
-                //     "issuedDate",
-                //     "effectiveDate",
-                //     "effectiveStatus",
-                // ],
-                body: aggsBody
-            })
-            console.log(body.hits.total.value)
-
-            if(body.hits.total.value < variables.maxResultWindow) {
-                let endingPage = Math.ceil(body.hits.total.value / laws.lawsSearchSize)
-                paginateDisplayConfiguration[0].endingPage = paginateDisplayConfiguration[0].endingPage > endingPage ? endingPage + 1 : paginateDisplayConfiguration[0].endingPage
-                console.log(endingPage)
-            }
-            let {aggs} = await aggsForFilter(filter)
-            console.timeEnd('search time')
-            return Promise.resolve({ lawsDoc: body.hits.hits, page, paginateDisplayConfiguration, aggs})
-        }
-        else {
-            console.time('search time')
-            console.time('search page id time')
-            let {body} = await client.search({
-                index: lawsPaging.lawsPagingIndex,
-                body: {
-                    query : {
-                        match : {
-                            "page" : page
-                        }
-                    }
-                }
-            })
-            console.timeEnd('search page id time')
-            if(body.hits.hits[0]) {
-                console.time('search page time')
-                let {lastLawsDocument, sortIssueDate} = body.hits.hits[0]._source
-                let result = await client.search({
-                    index : laws.lawsIndex,
-                    size: laws.lawsSearchSize,
-                    // _source: [
-                    //     "name",
-                    //     "desc",
-                    //     "docType",
-                    //     "docNum",
-                    //     "issuedDate",
-                    //     "effectiveDate",
-                    //     "numOfAnnouncement",
-                    //     "effectiveStatus",
-                    // ],
-                    body: {
-                        "query": {
-                            "match_all": {}
-                        },
-                        "search_after": [sortIssueDate, lastLawsDocument],
-                        "sort": [
-                            {
-                                "issuedDate": {
-                                    "order": "desc"
-                                },
-                                "tie_breaker_id": {
-                                    "order" : "desc"
-                                }
-                            }
-                        ]
-                    }
-                })                
-                console.timeEnd('search page time')
-                console.timeEnd('search time')
-                return Promise.resolve({ lawsDoc: result.body.hits.hits, page : page, paginateDisplayConfiguration : paginateDisplayConfiguration})
-            }
-            return Promise.resolve({ lawsDoc: [], page : page, paginateDisplayConfiguration : paginateDisplayConfiguration})
-        }
-    } catch (error) {
-        return Promise.reject(new Error(`Get laws document on page ${page}: ` + error.message))
-    }
-}
-
-const getLawsInParticularPage1 = async (page, filter, keyword) => {
-    try {
-        page = page && page > 1 ? Number(page) : 1
-        console.time('paging time')
-        const {from, size, isOverTenThoudsandDocs, paginateDisplayConfiguration } =  await pagination(page)
-        console.timeEnd('paging time')
-
-
-        const ITEMS_PER_PAGE = 10000;
-        let docTypeProp = 'docType'
-        let fieldProp = 'field'
-        let agencyIssuedProp = 'agencyIssued'
-        let signedByProp = 'signedBy'
-        let effectiveStatusProp = 'effectiveStatus'
-    
-
-        let docTypescriptString = `doc['${docTypeProp}'].value`
-        let fieldscriptString = `doc['${fieldProp}'].value`
-        let agencyIssuedscriptString = `doc['${agencyIssuedProp}'].value`
-        let signedByscriptString = `doc['${signedByProp}'].value`
-        let effectiveStatusscriptString = `doc['${effectiveStatusProp}'].value`
-
-
-        let aggsBody = {
-            "query": {
-                "bool": {
-                    "filter": []
-                }
-            },
-            "post_filter": {
-                "bool": {
-                    "filter": []
-                }
-            },
-            "aggs": {
-                "docType": {
-                    "terms": {
-                    "size": ITEMS_PER_PAGE, 
-                    "script": {}
-                    }
-                },
-                "field": {
-                    "terms": {
-                    "size": ITEMS_PER_PAGE, 
-                    "script": {}
-                    }
-                },
-                "agencyIssued": {
-                    "terms": {
-                    "size": ITEMS_PER_PAGE, 
-                    "script": {}
-                    }
-                },
-                "signedBy": {
-                    "terms": {
-                    "size": ITEMS_PER_PAGE, 
-                    "script": {}
-                    }
-                },
-                "effectiveStatus": {
-                    "terms": {
-                    "size": ITEMS_PER_PAGE, 
-                    "script": {}
-                    }
-                }
-            },
-            // "aggs": {
-            //     "docType": {
-            //         "aggs": {
-            //             "Loại văn bản": {
-            //                 "terms": {
-            //                     "field": "docType",
-            //                     "size": 10000
-            //                 }
-            //             }
-            //         },
-            //         "filter": {
-            //             "bool": {
-            //                 "must": []
-            //             }
-            //         }
-            //     },
-            //     "field": {
-            //         "aggs": {
-            //             "Lĩnh vực" : {
-            //                 "terms": {
-            //                     "field": "field",
-            //                     "size": 10000
-            //                 }
-            //             }
-            //         },
-            //         "filter": {
-            //             "bool": {
-            //                 "must": []
-            //             }
-            //         }
-            //     },
-            //     "signedBy": {
-            //         "aggs": {
-            //             "Người ký" : {
-            //                 "terms": {
-            //                     "field": "signedBy",
-            //                     "size": 10000
-            //                 }
-            //             }
-            //         },
-            //         "filter": {
-            //             "bool": {
-            //                 "must": []
-            //             }
-            //         }
-            //     },
-            //     "effectiveStatus": {
-            //         "aggs": {
-            //             "Tình trạng": {
-            //                 "terms": {
-            //                     "field": "effectiveStatus",
-            //                     "size": 10000
-            //                 }
-            //             }
-            //         },
-            //         "filter": {
-            //             "bool": {
-            //                 "must": []
-            //             }
-            //         }
-            //     },
-            //     "agencyIssued": {
-            //         "aggs": {
-            //             "Cơ quan ban hành": {
-            //                 "terms": {
-            //                     "field": "agencyIssued",
-            //                     "size": 10000
-            //                 }
-            //             }
-            //         },
-            //         "filter": {
-            //             "bool": {
-            //                 "must": []
-            //             }
-            //         }
-            //     }
-            // },
-            "sort": {
-                "issuedDate": {
-                    "order": "desc"
-                },
-                "tie_breaker_id": {
-                    "order" : "desc"
-                }
-            },
-            "highlight": {
-                "pre_tags" : ["<mark style='background-color:yellow'>"],
-                "post_tags" : ["</mark>"],
-                "fields": {
-                    "desc": {}
-                    // "agencyIssued": {},
-                    // "contentText": {},
-                    // "docNum": {},
-                    // "docType": {},
-                    // "field": {},
-                    // "name": {},
-                    // "signedBy": {}
-                }
-            }
-        }
-        aggsBody.aggs.docType.terms.script = docTypescriptString
-        aggsBody.aggs.field.terms.script = fieldscriptString
-        aggsBody.aggs.agencyIssued.terms.script = agencyIssuedscriptString
-        aggsBody.aggs.signedBy.terms.script = signedByscriptString
-        aggsBody.aggs.effectiveStatus.terms.script = effectiveStatusscriptString
-    
-        let str = `if(`
-        let strArr = []
-    
-        for (let aggsBodyProp in aggsBody.aggs) {
-            let str = `if(`
-            let strArr = []
-            for (let filterProp in filter) {
-                if(filterProp !== aggsBodyProp) {
-                    strArr.push(` doc['${filterProp}'].value == '${filter[filterProp]}' `)
-                }
-            }
-            str += strArr.join('&&') + ')' + ` return doc['${aggsBodyProp}'].value;`
-            if(strArr.length)
-                aggsBody.aggs[aggsBodyProp].terms.script = str
-        }
-
-        if(keyword) {
-            delete(aggsBody.sort)
-            aggsBody.query.bool.must = {}
-            aggsBody.query.bool.must.multi_match = {}
-            aggsBody.query.bool.must.multi_match.query = keyword
-            aggsBody.query.bool.must.multi_match.fields = [
-                "desc",
-                "desc.2gram_vi",
-                "desc.2gram",
-                "desc.3gram_vi",
-                "desc.3gram",
-                "contentText",
-                "contentText.2gram_vi",
-                "contentText.2gram",
-                "contentText.3gram_vi",
-                "contentText.3gram",
-                "agencyIssued", 
-				"docNum", 
-				"docType", 
-				"field", 
-				"name",
-				"signedBy"
-            ]
-
-        }
-        for (let filterProp in filter) {
-            let filterSearchTerm = {
-                "term": {}   
-            }
-            filterSearchTerm.term[filterProp] = filter[filterProp]
-            aggsBody.query.bool.filter.push(filterSearchTerm)
-            aggsBody.post_filter.bool.filter.push(filterSearchTerm)
-
-            // for (let aggsBodyProp in aggsBody.aggs) {
-            //     if(filterProp !== aggsBodyProp) {
-            //         let filterTerm = {
-            //             "term": {}   
-            //         }
-            //         filterTerm.term[filterProp] = filter[filterProp]
-            //         aggsBody.aggs[aggsBodyProp].filter.bool.must.push(filterTerm)
-            //     }
-            // }
-        }
-        if(!isOverTenThoudsandDocs) {
-            console.time('search time')
-            let {body} = await client.search({
-                index : laws.lawsIndex,
-                from: from,
-                size: size,
-                // filterPath: 'took,hits.hits',
-                // _source: [
-                //     "name",
-                //     "desc",
-                //     "issuedDate",
-                //     "effectiveDate",
-                //     "effectiveStatus",
-                // ],
-                body: aggsBody
-            })
-            console.log(body.hits.total.value)
-            let docType = body.aggregations.docType.buckets
-            let field = body.aggregations.field.buckets
-            let agencyIssued = body.aggregations.agencyIssued.buckets
-            let signedBy = body.aggregations.signedBy.buckets
-            let effectiveStatus = body.aggregations.effectiveStatus.buckets
-        
-            if(docType.length > 150)
-                docType = docType.slice(0,150)
-            if(field.length > 150)
-                field = field.slice(0,150)
-            if(agencyIssued .length > 150)
-                agencyIssued     = agencyIssued .slice(0,150)
-            if(signedBy .length > 150)
-                signedBy     = agencyIssued .slice(0,150)
-            if(effectiveStatus.length > 150)
-                effectiveStatus = effectiveStatus.slice(0,150)
-            if(body.hits.total.value < variables.maxResultWindow) {
-                let endingPage = Math.ceil(body.hits.total.value / laws.lawsSearchSize)
-                paginateDisplayConfiguration[0].endingPage = paginateDisplayConfiguration[0].endingPage > endingPage ? endingPage + 1 : paginateDisplayConfiguration[0].endingPage
-                console.log(endingPage)
-            }
-            // let {aggs} = await aggsForFilter(filter)
-            console.timeEnd('search time')
-            return Promise.resolve({ lawsDoc: body.hits.hits, page, paginateDisplayConfiguration, aggs : {
-                docType, field, agencyIssued, signedBy, effectiveStatus
-            }       })
-        }
-        else {
-            console.time('search time')
-            console.time('search page id time')
-            let {body} = await client.search({
-                index: lawsPaging.lawsPagingIndex,
-                body: {
-                    query : {
-                        match : {
-                            "page" : page
-                        }
-                    }
-                }
-            })
-            console.timeEnd('search page id time')
-            if(body.hits.hits[0]) {
-                console.time('search page time')
-                let {lastLawsDocument, sortIssueDate} = body.hits.hits[0]._source
-                let result = await client.search({
-                    index : laws.lawsIndex,
-                    size: laws.lawsSearchSize,
-                    // _source: [
-                    //     "name",
-                    //     "desc",
-                    //     "docType",
-                    //     "docNum",
-                    //     "issuedDate",
-                    //     "effectiveDate",
-                    //     "numOfAnnouncement",
-                    //     "effectiveStatus",
-                    // ],
-                    body: {
-                        "query": {
-                            "match_all": {}
-                        },
-                        "search_after": [sortIssueDate, lastLawsDocument],
-                        "sort": [
-                            {
-                                "issuedDate": {
-                                    "order": "desc"
-                                },
-                                "tie_breaker_id": {
-                                    "order" : "desc"
-                                }
-                            }
-                        ]
-                    }
-                })                
-                console.timeEnd('search page time')
-                console.timeEnd('search time')
-                return Promise.resolve({ lawsDoc: result.body.hits.hits, page : page, paginateDisplayConfiguration : paginateDisplayConfiguration})
-            }
-            return Promise.resolve({ lawsDoc: [], page : page, paginateDisplayConfiguration : paginateDisplayConfiguration})
-        }
-    } catch (error) {
-        return Promise.reject(new Error(`Get laws document on page ${page}: ` + error.message))
-    }
-}
 const getLawsInParticularPage = async (page, filter, keyword, searchAdvanced) => {
     try {
         page = page && page > 1 ? Number(page) : 1
@@ -589,22 +10,37 @@ const getLawsInParticularPage = async (page, filter, keyword, searchAdvanced) =>
         const ITEMS_PER_PAGE = 10000;
         const fieldName = ['docType', 'field', 'agencyIssued', 'signedBy', 'effectiveStatus']
         const multiMatchField = [
+            "contentHtml",
+            "contentHtml.2gram_vi",
+            "contentHtml.2gram",
+            "contentHtml.3gram_vi",
+            "contentHtml.3gram",
             "desc",
+            // "desc.vi_analyzer_folding_ascii",
+            // "desc.vi_analyzer_without_folding_ascii",  
             "desc.2gram_vi",
             "desc.2gram",
             "desc.3gram_vi",
             "desc.3gram",
-            // "contentText",
-            // "contentText.2gram_vi",
-            // "contentText.2gram",
-            // "contentText.3gram_vi",
-            // "contentText.3gram",
-            "agencyIssued", 
-            "docNum", 
-            "docType", 
-            "field", 
+            // "issuedDate",
+            "agencyIssued",
+            "docNum",
+            "docType",
+            "field",
             "name",
             "signedBy"
+            // "agencyIssued.vi_analyzer_folding_ascii",
+            // "agencyIssued.vi_analyzer_without_folding_ascii",  
+            // "docNum.vi_analyzer_folding_ascii",
+            // "docNum.vi_analyzer_without_folding_ascii",  
+            // "docType.vi_analyzer_folding_ascii",
+            // "docType.vi_analyzer_without_folding_ascii", 
+            // "field.vi_analyzer_folding_ascii",
+            // "field.vi_analyzer_without_folding_ascii", 
+            // "name.vi_analyzer_folding_ascii",
+            // "name.vi_analyzer_without_folding_ascii",
+            // "signedBy.vi_analyzer_folding_ascii",
+            // "signedBy.vi_analyzer_without_folding_ascii",
         ]
         const {from, size, isOverTenThoudsandDocs, paginateDisplayConfiguration } =  await pagination(page)
         console.timeEnd('paging time')
@@ -687,7 +123,9 @@ const getLawsInParticularPage = async (page, filter, keyword, searchAdvanced) =>
             "query": {
                 "bool": {
                     "filter": [],
-                    "must": []
+                    "must": [],
+                    "should": [
+                    ]
                 }
             },
             "sort": {
@@ -749,10 +187,21 @@ const getLawsInParticularPage = async (page, filter, keyword, searchAdvanced) =>
         }
         if(keyword) {
             delete(aggsBody.sort)
-            aggsBody.query.bool.must = {}
-            aggsBody.query.bool.must.multi_match = {}
-            aggsBody.query.bool.must.multi_match.query = keyword
-            aggsBody.query.bool.must.multi_match.fields = multiMatchField
+            // aggsBody.sort = [
+            //     { "_score": { "order": "desc" }},
+            //     { "issuedDate":   { "order": "desc" }},
+            // ]
+            let queryString = {
+                "multi_match": {
+                    "query": keyword,
+                    "fields": multiMatchField
+                }
+            }
+            aggsBody.query.bool.must.push(queryString)
+            // aggsBody.query.bool.must = {}
+            // aggsBody.query.bool.must.multi_match = {}
+            // aggsBody.query.bool.must.multi_match.query = keyword
+            // aggsBody.query.bool.must.multi_match.fields = multiMatchField
             // docTypeAggsBodyString.query = aggsBody.query
             // fieldAggsBodyString.query = aggsBody.query
             // agencyIssuedAggsBodyString.query = aggsBody.query
@@ -777,6 +226,7 @@ const getLawsInParticularPage = async (page, filter, keyword, searchAdvanced) =>
                         searchNameQueryString.match_phrase = {}
                         searchNameQueryString.match_phrase.name = searchAdvanced[searchInput]
                         aggsBody.query.bool.must.push(searchNameQueryString)
+                        console.log(aggsBody.query.bool.must)
                     // }
                 }
                 else if(searchInput === 'ipDocNum'){
@@ -923,7 +373,35 @@ const getLawsInParticularPage = async (page, filter, keyword, searchAdvanced) =>
                 }
             }
         }
-        // console.log(JSON.stringify(aggsBody))
+        if(!filter.hasOwnProperty("effectiveStatus") && keyword) {
+            let boostScoreString =   {
+                            "match": {
+                                "effectiveStatus": {
+                                    "query": "Còn hiệu lực",
+                                    "boost": 100
+                                }
+                            },
+                        }
+            aggsBody.query.bool.should.push(boostScoreString)
+            boostScoreString = {
+                "boosting": {
+                    "positive": {
+                      "term": {
+                        "effectiveStatus": "Còn hiệu lực"
+                      }
+                    },
+                    "negative": {
+                      "term": {
+                        "effectiveStatus": "Hết hiệu lực"
+                      }
+                    },
+                    "negative_boost": 10
+                }
+            }
+            aggsBody.query.bool.should.push(boostScoreString)
+
+        }   
+        console.log(JSON.stringify(aggsBody))
         
         if(!isOverTenThoudsandDocs) {
             console.time('search time')
@@ -954,7 +432,7 @@ const getLawsInParticularPage = async (page, filter, keyword, searchAdvanced) =>
                 // body: aggsBody
             })
             // console.log(body.hits.total.value)
-            // console.log(body.responses[0])
+            // console.log(body.responses)
 
             let docType = body.responses[1].aggregations.docType.buckets
             let field = body.responses[2].aggregations.field.buckets
@@ -998,9 +476,26 @@ const getLawsInParticularPage = async (page, filter, keyword, searchAdvanced) =>
             if(body.hits.hits[0]) {
                 console.time('search page time')
                 let {lastLawsDocument, sortIssueDate} = body.hits.hits[0]._source
-                let result = await client.search({
-                    index : laws.lawsIndex,
-                    size: laws.lawsSearchSize,
+                let searchBody = {
+                    "query": {
+                        "match_all": {}
+                    },
+                    "size": 20,
+                    "search_after": [sortIssueDate, lastLawsDocument],
+                    "sort": [
+                        {
+                            "issuedDate": {
+                                "order": "desc"
+                            },
+                            "tie_breaker_id": {
+                                "order" : "desc"
+                            }
+                        }
+                    ]
+                }
+                let result = await client.msearch({
+                    // index : laws.lawsIndex,
+                    // size: laws.lawsSearchSize,
                     // _source: [
                     //     "name",
                     //     "desc",
@@ -1011,26 +506,48 @@ const getLawsInParticularPage = async (page, filter, keyword, searchAdvanced) =>
                     //     "numOfAnnouncement",
                     //     "effectiveStatus",
                     // ],
-                    body: {
-                        "query": {
-                            "match_all": {}
-                        },
-                        "search_after": [sortIssueDate, lastLawsDocument],
-                        "sort": [
-                            {
-                                "issuedDate": {
-                                    "order": "desc"
-                                },
-                                "tie_breaker_id": {
-                                    "order" : "desc"
-                                }
-                            }
-                        ]
-                    }
-                })                
+                    body: [
+                        {index : laws.lawsIndex},
+                        searchBody,
+                        {index : laws.lawsIndex},
+                        docTypeAggsBodyString,
+                        {index : laws.lawsIndex},
+                        fieldAggsBodyString,
+                        {index : laws.lawsIndex},
+                        agencyIssuedAggsBodyString,
+                        {index : laws.lawsIndex},
+                        signedByAggsBodyString,
+                        {index : laws.lawsIndex},
+                        effectiveStatusAggsBodyString
+                    ]
+                })            
+                // console.log(JSON.stringify(result)    
+                // console.log(result.body.responses[0])    
+                let docType = result.body.responses[1].aggregations.docType.buckets
+                let field = result.body.responses[2].aggregations.field.buckets
+                let agencyIssued = result.body.responses[3].aggregations.agencyIssued.buckets
+                let signedBy = result.body.responses[4].aggregations.signedBy.buckets
+                let effectiveStatus = result.body.responses[5].aggregations.effectiveStatus.buckets
+            
+                if(docType.length > 150)
+                    docType = docType.slice(0,150)
+                if(field.length > 150)
+                    field = field.slice(0,150)
+                if(agencyIssued .length > 150)
+                    agencyIssued     = agencyIssued .slice(0,150)
+                if(signedBy .length > 150)
+                    signedBy     = agencyIssued .slice(0,150)
+                if(effectiveStatus.length > 150)
+                    effectiveStatus = effectiveStatus.slice(0,150)
+                if(result.body.responses[0].hits.total.value < variables.maxResultWindow) {
+                    let endingPage = Math.ceil(result.body.responses[0].hits.total.value / laws.lawsSearchSize)
+                    paginateDisplayConfiguration[0].endingPage = paginateDisplayConfiguration[0].endingPage > endingPage ? endingPage + 1 : paginateDisplayConfiguration[0].endingPage
+                    console.log(endingPage)
+                }
+                aggs = {docType, field, agencyIssued, signedBy, effectiveStatus}
                 console.timeEnd('search page time')
                 console.timeEnd('search time')
-                return Promise.resolve({ lawsDoc: result.body.hits.hits, page : page, paginateDisplayConfiguration : paginateDisplayConfiguration})
+                return Promise.resolve({ lawsDoc: result.body.responses[0].hits.hits, page : page, paginateDisplayConfiguration : paginateDisplayConfiguration, aggs})
             }
             return Promise.resolve({ lawsDoc: [], page : page, paginateDisplayConfiguration : paginateDisplayConfiguration})
         }
@@ -1083,6 +600,8 @@ const getLawById = async (lawDocId) => {
                 }
             }
         })
+        if(body.hits.hits.length === 0)
+            return
         await client.update({
             id: body.hits.hits[0]._id,
             index: laws.lawsIndex,
@@ -1788,6 +1307,36 @@ const encodeVN = (str) => {
     return str;
   }
 
+const getLawsNameVi = (name) => {
+    if(name[0] === 'VanBanHuongDan')
+        return 'Văn Bản Hướng Dẫn'
+    else if (name[0] === 'VanBanBiDinhChinh')
+        return 'Văn Bản Bị Đính Chính'
+    else if (name[0] === 'VanBanDuocHuongDan')
+        return 'Văn Bản Được Hướng Dẫn'
+    else if (name[0] === 'VanBanLienQuanNgonNgu')
+        return 'Văn Bản Liên Quan Ngôn Ngữ'
+    else if (name[0] === 'VanBanBiSuaDoiBoSung')
+        return 'Văn Bản Bị Sửa Đổi Bổ Sung'
+    else if (name[0] === 'VanBanDinhChinh')
+        return 'Văn Bản Đính Chính'
+    else if (name[0] === 'VanBanDuocDanChieu')
+        return 'Văn Bản Được Dân Chiếu'
+    else if (name[0] === 'VanBanThayThe')
+        return 'Văn Bản Thay Thế'   
+    else if (name[0] === 'VanBanBiThayThe')
+        return 'Văn Bản Bị Thay Thế'   
+    else if (name[0] === 'VanBanSuaDoiBoSung')
+        return 'Văn Bản Sửa Đổi Bổ Sung'
+    else if (name[0] === 'VanBanDuocHopNhat')
+        return 'Văn Bản Được Hợp Nhất'
+    else if (name[0] === 'VanBanDuocCanCu')
+        return 'Văn Bản Được Căn Cứ'
+    else if (name[0] === 'VanBanHopNhat')
+        return 'Văn Bản Hợp Nhất'
+} 
+
+
 // module.exports.aggsForFilter = aggsForFilter
 module.exports.getLaws = async (req, res) => {
     try {
@@ -1810,7 +1359,7 @@ module.exports.getLaws = async (req, res) => {
         let lawsData = await getLawsInParticularPage(currentPage, filter, keyword, searchAdvanced)
         console.time('render time')
         if(lawsData.lawsDoc && lawsData.lawsDoc.length === 0) {
-            res.render(pugFiles.error404, { title: titles.error404, aggs: lawsData.aggs, getViFieldName})
+            res.render(pugFiles.error404, { title: titles.error404, aggs: lawsData.aggs, getViFieldName, keyword})
         }
         else
             res.render(pugFiles.home, {
@@ -1820,7 +1369,8 @@ module.exports.getLaws = async (req, res) => {
                 paginateDisplayConfiguration : lawsData.paginateDisplayConfiguration,
                 aggs: lawsData.aggs,
                 getViFieldName,
-                filter
+                filter,
+                keyword
             })
         console.timeEnd('render time')
         console.timeEnd('total time')
@@ -1835,7 +1385,7 @@ module.exports.getLawById = async (req,res) => {
         let lawsDocId = req.params.id
         let lawDocument  = await getLawById(lawsDocId)
         if(lawDocument !== undefined)
-            res.render(pugFiles.detailLaw, {lawDocument : lawDocument})
+            res.render(pugFiles.detailLaw, {lawDocument : lawDocument, getLawsNameVi})
         else
             res.render(pugFiles.error404, { title: titles.error404})
     } catch (error) {
